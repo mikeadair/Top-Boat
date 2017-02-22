@@ -6,6 +6,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,7 +21,7 @@ public class ViewController implements Initializable  {
         @FXML
         ScrollPane scrollpane;
         @FXML
-        SplitPane splitpane;
+        HBox root;
         @FXML
         ListView loglist;
         @Override
