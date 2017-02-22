@@ -1,4 +1,11 @@
-Authors:
-Kaleb Baldwin, Nolan Sliger, Michael "Mikey" Adair, Zach Toney
+# Top Boat
+Final Project for CS222. A Battleship clone in Java with some twists!
 
-This is our final project for CS222. It's a Battleship clone with some of our own twists.
+## Built With
+[![N|Solid](http://i.imgur.com/u6KsIUx.png)](https://www.jetbrains.com/idea/)
+
+## Authors
+* **Michael "Mikey" Adair** - *Main Developer* - [MikeAdair](https://github.com/mikeadair)
+* **Kaleb Baldwin** - *Main Developer* - [KojoBald](https://github.com/KojoBald)
+* **Nolan Sliger** - *Main Developer* - [Slig12](https://github.com/slig12)
+* **Zachary Toney** - *Main Developer* - [Slig12](https://github.com/)
