@@ -1,5 +1,6 @@
 package cs222.topboat;
 
+import com.sun.javafx.css.StyleManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,8 +17,9 @@ public class TopBoatApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("views/main.fxml"));
         Scene scene = new Scene(root, 1072, 495);
+        Application.setUserAgentStylesheet(null);
         primaryStage.setTitle("Top Boats");
         primaryStage.setScene(scene);
         primaryStage.show();
