@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Button?>
 
-<AnchorPane minHeight="0.0" minWidth="265.0" prefHeight="495.0" prefWidth="269.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs222.topboat.controllers.LogController">
+<AnchorPane minHeight="0.0" minWidth="265.0" prefHeight="495.0" prefWidth="269.0" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs222.topboat.controllers.LogController">
     <children>
         <TabPane prefHeight="441.0" prefWidth="269.0" tabClosingPolicy="UNAVAILABLE" >
             <tabs>
                 <Tab text="Game">
                     <content>
-                        <ScrollPane prefHeight="430.0" prefWidth="269.0" fx:id="sp_game" >
-                            <content>
-                                <ListView fx:id="loglist_game" prefHeight="416.0" prefWidth="267.0" />
-                            </content>
-                        </ScrollPane>
+                        <ListView fx:id="loglist_game" prefHeight="416.0" prefWidth="267.0" />
                     </content>
                 </Tab>
                 <Tab text="Messages">
                     <content>
-                        <ScrollPane prefHeight="413.0" prefWidth="260.0" fx:id="sp_messages" >
-                            <content>
-                                <ListView fx:id="loglist_messages" prefHeight="407.0" prefWidth="267.0" />
-                            </content>
-                        </ScrollPane>
+                        <ListView fx:id="loglist_messages" prefHeight="407.0" prefWidth="267.0" />
                     </content>
                 </Tab>
             </tabs>

@@ -6,13 +6,10 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Created by michaeladair on 2/21/17.
- */
 public class ViewController implements Initializable  {
 
-        @FXML
-        HBox root;
+        @FXML HBox root;
+
         @Override
         public void initialize(URL location, ResourceBundle resources) {
 
