@@ -2,6 +2,8 @@ package cs222.topboat.controllers;
 
 import cs222.topboat.models.Log;
 import cs222.topboat.models.Log.Message;
+import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.fxml.Initializable;
@@ -28,17 +30,19 @@ public class LogController implements Initializable{
         gameLog = Log.gameLog();
         chatLog = Log.chatLog();
 
-        gameLog.addMessageReceivedListener(newMessage -> {
-            Text message = new Text(newMessage.getContents());
-            message.setFill(newMessage.getColor());
-            loglist_game.getItems().add(message);
-        });
+        gameLog.addMessageReceivedListener(newMessage -> showMessageInLog(loglist_game, newMessage));
+        chatLog.addMessageReceivedListener(newMessage -> showMessageInLog(loglist_messages, newMessage));
+    }
 
-        chatLog.addMessageReceivedListener(newMessage -> {
-            Text message = new Text(newMessage.getContents());
-            message.setFill(newMessage.getColor());
-            loglist_messages.getItems().add(message);
-        });
+    private void showMessageInLog(ListView log, Message newMessage) {
+        Text messageView = new Text(newMessage.getContents());
+        messageView.setFill(newMessage.getColor());
+
+        if(Platform.isFxApplicationThread()) {
+            log.getItems().add(messageView);
+        } else {
+            Platform.runLater(() -> log.getItems().add(messageView));
+        }
     }
 
     private class RandomMessageThread implements Runnable {
