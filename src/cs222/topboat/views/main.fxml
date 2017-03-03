@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
 <?scenebuilder-stylesheet style.css?>
-
+<?import javafx.scene.layout.HBox?>
 <?import java.net.URL?>
+
 <HBox fx:id="root" maxHeight="495.0" maxWidth="1072.0" minHeight="495.0" minWidth="1072.0" prefHeight="495.0" prefWidth="1072.0" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs222.topboat.controllers.ViewController" stylesheets="@../styles/style.css">
     <children>
         <!-- Log Import-->
@@ -13,14 +11,10 @@
         <!-- End Log Import-->
         <!-- Game Board Import -->
         <fx:include source="gameboard.fxml" />
-        <!--End Game Board Import -->
-        <VBox prefHeight="495.0" prefWidth="266.0">
-            <children>
-                <Text fontSmoothingType="LCD" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Weapon" textAlignment="CENTER" wrappingWidth="265.71484375">
-                </Text>
-                <ListView prefHeight="468.0" prefWidth="266.0" />
-            </children>
-        </VBox>
+        <!-- End Game Board Import -->
+        <!-- Arsenal Import -->
+        <fx:include source="arsenal.fxml" />
+        <!-- End Arsenal Import -->
     </children>
     <stylesheets>
         <URL value="@../styles/style.css" />

@@ -3,10 +3,9 @@ package cs222.topboat.controllers;
 import cs222.topboat.models.Log;
 import cs222.topboat.models.Log.Message;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
 import java.net.URL;
