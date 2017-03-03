@@ -2,11 +2,9 @@ package cs222.topboat.models;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.util.HashMap;
@@ -55,13 +53,13 @@ public class Board {
     }
 
     public static class Tile extends StackPane {
-        private static final Background BACKGROUND;
-        private static final BackgroundFill BACKGROUND_FILL;
-        static {
-            CornerRadii cornerRadii = new CornerRadii(0);
-            Insets insets = new Insets(0, 0, 0, 0);
-            BACKGROUND_FILL = new BackgroundFill(Color.BLUE, cornerRadii, insets);
-            BACKGROUND = new Background(BACKGROUND_FILL);
+        private final Background BACKGROUND;
+        private final BackgroundImage BACKGROUND_IMAGE;
+        Image image = new Image(getClass().getResourceAsStream("../images/ocean.png"));
+        {
+            BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
+            BACKGROUND_IMAGE = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+            BACKGROUND = new Background(BACKGROUND_IMAGE);
         }
 
         private Board board;
@@ -99,7 +97,7 @@ public class Board {
         private String name;
 
         private TileName(int x, int y) {
-            name = (yValues.get(y) + x);
+            name = (yValues.get(y) + (x + 1));
         }
 
         @Override

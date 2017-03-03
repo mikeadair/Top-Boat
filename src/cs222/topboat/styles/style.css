@@ -2,3 +2,7 @@
     -fx-focus-color: transparent;
     -fx-font-family: "Comic Sans MS";
 }
+GridPane {
+    -fx-hgap: 1;
+    -fx-vgap: 1;
+}
