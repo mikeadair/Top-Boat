@@ -32,21 +32,23 @@ public class GameBoardController implements Initializable {
 
     private void initTabPane() {
         Tab playerGridTab = tabPane.getTabs().get(0);
+        selectedBoard = Board.playerBoard();
+        fireButton.setVisible(false);
+        Board.playerBoard().hoverTileProperty.addListener(selectedTileListener);
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
            if (newTab == playerGridTab) {
                selectedBoard = Board.playerBoard();
                fireButton.setVisible(false);
+               selectedTileText.setText("");
+               Board.playerBoard().hoverTileProperty.addListener(selectedTileListener);
            } else {
                selectedBoard = Board.opponentBoard();
                fireButton.setVisible(true);
+               selectedTileText.setText("");
+               Board.opponentBoard().hoverTileProperty.addListener(selectedTileListener);
            }
-            rebindHoverListener();
         });
-    }
-
-    private void rebindHoverListener() {
-        selectedBoard.hoverTileProperty.addListener(selectedTileListener);
     }
 
     private void initGameBoards() {
@@ -54,10 +56,11 @@ public class GameBoardController implements Initializable {
         initBoard(opponentGrid, Board.opponentBoard());
     }
 
-    private void initBoard(GridPane board, Board source) {
+    private void initBoard(GridPane grid, Board board) {
         for(int y = 0; y < Board.HEIGHT; y++) {
-            for(int x = 0; y < Board.WIDTH; x++) {
-                board.add(source.get(x, y), x, y);
+            for(int x = 0; x < Board.WIDTH; x++) {
+                Board.Tile tile = board.get(x, y);
+                grid.add(tile, x, y);
             }
         }
     }
@@ -66,8 +69,11 @@ public class GameBoardController implements Initializable {
         @Override
         public void changed(ObservableValue observable, Board.Tile oldValue, Board.Tile newValue) {
             if (newValue == null) {
-                Board.Tile selectedTile = selectedBoard.selectedTileProperty.get();
-                selectedTileText.setText(selectedTile.name.toString());
+                try {
+                    selectedTileText.setText(selectedBoard.selectedTile.name.toString());
+                } catch (NullPointerException e) {
+                    selectedTileText.setText("");
+                }
             } else {
                 selectedTileText.setText(newValue.name.toString());
             }

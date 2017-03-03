@@ -1,7 +1,6 @@
 package cs222.topboat.models;
 
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -17,11 +16,11 @@ public class Board {
     public static final int HEIGHT = 10;
     public static final int WIDTH = 10;
 
-    private static final Board playerBoard = new Board();
-    private static final Board opponentBoard = new Board();
+    private static Board playerBoard = new Board();
+    private static Board opponentBoard = new Board();
 
     private Tile[][] tileMap;
-    public SimpleObjectProperty<Tile> selectedTileProperty = new SimpleObjectProperty<>();
+    public Tile selectedTile;
     public SimpleObjectProperty<Tile> hoverTileProperty = new SimpleObjectProperty<>();
 
     private Board() {
@@ -38,10 +37,16 @@ public class Board {
     }
 
     public static Board playerBoard() {
+        if(playerBoard == null) {
+            playerBoard = new Board();
+        }
         return playerBoard;
     }
 
     public static Board opponentBoard() {
+        if(opponentBoard == null) {
+            opponentBoard = new Board();
+        }
         return opponentBoard;
     }
 
@@ -73,7 +78,7 @@ public class Board {
 
             addEventHandler(MouseEvent.MOUSE_ENTERED, event -> board.hoverTileProperty.set(this));
             addEventHandler(MouseEvent.MOUSE_EXITED, event -> board.hoverTileProperty.set(null));
-            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> board.selectedTileProperty.set(this));
+            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> board.selectedTile = this);
         }
     }
 
