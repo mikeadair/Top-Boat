@@ -1,10 +1,6 @@
 package cs222.topboat;
 
-import com.sun.javafx.css.StyleManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
