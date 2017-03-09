@@ -17,11 +17,6 @@ public class TopBoatApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("views/main.fxml"));
-        Scene scene = new Scene(root, 1072, 495);
-        Application.setUserAgentStylesheet(null);
-        primaryStage.setTitle("Top Boats");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        UI.initialize(primaryStage);
     }
 }

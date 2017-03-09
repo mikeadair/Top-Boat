@@ -22,7 +22,6 @@ public class LogController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeLogs();
-        new Thread(new RandomMessageThread(), "RandomMessageThread").start();
     }
 
     private void initializeLogs() {
