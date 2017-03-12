@@ -86,7 +86,10 @@ public class MainMenuController implements Initializable {
     private class UsernameButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            UI.changeView(UI.Views.MAIN_GAME);
+            if (handleNoUsername() == false){
+                UI.changeView(UI.Views.MAIN_GAME);
+            }
+
 
         }
     }
