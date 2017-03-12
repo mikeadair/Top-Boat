@@ -17,7 +17,7 @@
             <Button fx:id="connectSelect" layoutX="59.0" layoutY="136.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Connect" visible="false"/>
             <Label layoutX="202.0" layoutY="25.0" text="Username:" />
             <TextField fx:id="usernameInput" layoutX="271.0" layoutY="20.0" prefHeight="27.0" prefWidth="145.0" promptText="Username" />
-            <Button fx:id="submitUsername" layoutX="313.0" layoutY="51.0" mnemonicParsing="false" text="Go" visible="false"/>
+            <Button fx:id="submitUsername" layoutX="313.0" layoutY="51.0" mnemonicParsing="false" text="Go" visible="false" />
          </children>
       </AnchorPane>
    </children>

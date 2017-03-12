@@ -15,6 +15,7 @@ public class UI {
         primaryStage.setTitle("Top Boat");
         changeView(Views.MAIN_MENU);
         primaryStage.show();
+
     }
 
     public static void changeView(UI.Views view) {

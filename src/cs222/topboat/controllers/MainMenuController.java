@@ -1,15 +1,13 @@
 package cs222.topboat.controllers;
 
-import cs222.topboat.ConnectMultiplayerGame;
-import cs222.topboat.Game;
-import cs222.topboat.LocalMultiplayerGame;
-import cs222.topboat.SinglePlayerGame;
+import cs222.topboat.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,11 +47,15 @@ public class MainMenuController implements Initializable {
         }
     }
 
+
+
+
     private class SinglePlayerSelectListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
             game = new SinglePlayerGame();
             handleNoUsername();
+
         }
     }
 
@@ -84,6 +86,7 @@ public class MainMenuController implements Initializable {
     private class UsernameButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
+            UI.changeView(UI.Views.MAIN_GAME);
 
         }
     }
