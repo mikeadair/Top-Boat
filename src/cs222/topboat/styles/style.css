@@ -1,6 +1,6 @@
 .root {
     -fx-focus-color: transparent;
-    -fx-font-family: "Comic Sans MS";
+    -fx-font-family: "Times New Roman";
 }
 GridPane {
     -fx-hgap: 1;

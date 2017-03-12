@@ -89,8 +89,6 @@ public class MainMenuController implements Initializable {
             if (handleNoUsername() == false){
                 UI.changeView(UI.Views.MAIN_GAME);
             }
-
-
         }
     }
 
