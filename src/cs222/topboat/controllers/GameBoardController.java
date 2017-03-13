@@ -47,15 +47,12 @@ public class GameBoardController implements Initializable {
         initTabPane();
         initGameBoards();
         startShipPlacement();
-        fireButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();
-                if (targetTile.occupied.get()){
-                    //targetTile.getChildren().add();
-                }
-
+        fireButton.setOnAction(event -> {
+            Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();
+            if (targetTile.occupied.get()){
+                //targetTile.getChildren().add();
             }
+
         });
     }
 

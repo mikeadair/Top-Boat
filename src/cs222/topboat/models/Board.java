@@ -109,6 +109,8 @@ public class Board {
         public TileName name;
         private Rectangle rectangle = new Rectangle(50, 50, Color.BLACK);
 
+
+
         private Tile(Board board, int x, int y) {
             setBackground(OCEAN_BACKGROUND);
             this.board = board;
