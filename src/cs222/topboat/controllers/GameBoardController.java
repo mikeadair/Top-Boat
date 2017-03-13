@@ -41,7 +41,6 @@ public class GameBoardController implements Initializable {
 
     };
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTabPane();
@@ -96,6 +95,7 @@ public class GameBoardController implements Initializable {
         Board.playerBoard().selectedTileProperty.addListener(shipPlacementTileListener);
         Board.opponentBoard().selectedTileProperty.addListener(shipPlacementTileListener);
         tabPane.setOnKeyPressed(event -> {
+            System.out.println("key pressed");
             if(event.getCode() == KeyCode.ENTER) {
 
             } else if(event.getCode() == KeyCode.UP) {
@@ -142,6 +142,7 @@ public class GameBoardController implements Initializable {
             currentShip.setX(newTile.x);
             currentShip.setY(newTile.y);
             if(!Board.playerBoard().isValidPlacementTile(currentShip)) {
+                System.out.println("not valid placement tile");
                 Log.gameLog().addMessage(new Log.Message("That tile is not a valid ship origin.", Log.Message.Type.ERROR));
                 currentShip.setX(oldTile.x);
                 currentShip.setY(oldTile.y);
@@ -164,8 +165,11 @@ public class GameBoardController implements Initializable {
             orientation.addListener((observable, oldOrientation, newOrientation) -> {
                 if(selectedTile != null) {
                     currentShip.orientation = newOrientation;
+
                     if(!Board.playerBoard().validateShipOrientation(currentShip)) {
                         currentShip.orientation = oldOrientation;
+                    } else {
+                        Board.playerBoard().occupyTilesWithShip(currentShip, oldOrientation);
                     }
                 }
             });
