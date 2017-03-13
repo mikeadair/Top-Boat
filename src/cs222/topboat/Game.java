@@ -4,8 +4,8 @@ public abstract class Game {
     private Thread gameThread;
     private GameLoop gameLoop;
 
-    static Player player1;
-    static Player player2;
+    public static Player player1;
+    public static Player player2;
 
     static State currentState;
     static Player currentPlayer;
@@ -32,9 +32,12 @@ public abstract class Game {
         /*TODO: this will be overridden by LocalMultiplayerGame to show a transition
         screen in between players placing ships
         */
+
     }
 
     public static void startGame(Game game) {
+        UI.changeView(UI.Views.MAIN_GAME);
+        currentState = State.Initializing;
         game.gameThread = new Thread(game.gameLoop, "GameThread");
         game.gameThread.start();
     }

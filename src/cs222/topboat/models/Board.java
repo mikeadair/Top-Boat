@@ -1,11 +1,16 @@
 package cs222.topboat.models;
 
+import cs222.topboat.controllers.GameBoardController;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.HashMap;
 
@@ -18,7 +23,7 @@ public class Board {
     private static Board opponentBoard = new Board();
 
     private Tile[][] tileMap;
-    public Tile selectedTile;
+    public SimpleObjectProperty<Tile> selectedTileProperty = new SimpleObjectProperty<>();
     public SimpleObjectProperty<Tile> hoverTileProperty = new SimpleObjectProperty<>();
 
     private Board() {
@@ -52,23 +57,60 @@ public class Board {
         return tileMap[y][x];
     }
 
+    public boolean isValidPlacementTile(Ship ship) {
+        if(tileMap[ship.getY()][ship.getX()].occupied.get()) {
+            return false;
+        }
+        for(Ship.Orientation orientation : Ship.Orientation.values()) {
+            ship.orientation = orientation;
+            if(validateShipOrientation(ship)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean validateShipOrientation(Ship ship) {
+        for(int i = 0; i < ship.type.length; i++) {
+            int newX = ship.getX() + (ship.orientation.xMod * i);
+            int newY = ship.getY() + (ship.orientation.yMod * i);
+
+            try {
+                if (tileMap[newY][newX].occupied.get()) {
+                    return false;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return false;
+            }
+        }
+        for(int i = 0; i < ship.type.length; i++) {
+            int newX = ship.getX() + (ship.orientation.xMod * i);
+            int newY = ship.getY() + (ship.orientation.yMod * i);
+
+            tileMap[newY][newX].occupied.set(true);
+        }
+        return true;
+    }
+
+
     public static class Tile extends StackPane {
-        private final Background BACKGROUND;
-        private final BackgroundImage BACKGROUND_IMAGE;
-        Image image = new Image(getClass().getResourceAsStream("../images/ocean.png"));
-        {
-            BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
-            BACKGROUND_IMAGE = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-            BACKGROUND = new Background(BACKGROUND_IMAGE);
+        private static final Background OCEAN_BACKGROUND;
+        static {
+            CornerRadii radii = new CornerRadii(0);
+            Insets insets = new Insets(0);
+            BackgroundFill oceanFill = new BackgroundFill(Color.rgb(33, 103, 182), radii, insets);
+            OCEAN_BACKGROUND = new Background(oceanFill);
         }
 
         private Board board;
-        private int x;
-        private int y;
+        public int x;
+        public int y;
+        public SimpleBooleanProperty occupied = new SimpleBooleanProperty(false);
         public TileName name;
+        private Rectangle rectangle = new Rectangle(50, 50, Color.BLACK);
 
         private Tile(Board board, int x, int y) {
-            setBackground(BACKGROUND);
+            setBackground(OCEAN_BACKGROUND);
             this.board = board;
             this.x = x;
             this.y = y;
@@ -76,7 +118,15 @@ public class Board {
 
             addEventHandler(MouseEvent.MOUSE_ENTERED, event -> board.hoverTileProperty.set(this));
             addEventHandler(MouseEvent.MOUSE_EXITED, event -> board.hoverTileProperty.set(null));
-            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> board.selectedTile = this);
+            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> board.selectedTileProperty.set(this));
+
+            occupied.addListener((observable, oldValue, newValue) -> {
+                if(newValue) {
+                    getChildren().remove(rectangle);
+                } else {
+                    getChildren().add(rectangle);
+                }
+            });
         }
     }
 

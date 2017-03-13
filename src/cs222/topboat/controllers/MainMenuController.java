@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,10 +40,10 @@ public class MainMenuController implements Initializable {
             connectSelect.setDisable(true);
 
             gameStartHandled = true;
-            return gameStartHandled;
-        } else {
-            return false;
+
+            Game.startGame(game);
         }
+        return gameStartHandled;
     }
 
 
@@ -54,8 +53,10 @@ public class MainMenuController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             game = new SinglePlayerGame();
-            handleNoUsername();
-
+            boolean gameStarted = handleNoUsername();
+            if(!gameStarted) {
+                Game.startGame(game);
+            }
         }
     }
 

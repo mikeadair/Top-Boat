@@ -13,11 +13,15 @@ public class Player {
         this.name = name;
     }
 
-    private void initializeShips() {
-        ships = new HashMap(Ship.Type.values().length);
-        for(Ship.Type type : Ship.Type.values()) {
-            ships.put(type, new Ship(type));
-        }
+//    private void initializeShips() {
+//        ships = new HashMap(Ship.Type.values().length);
+//        for(Ship.Type type : Ship.Type.values()) {
+//            ships.put(type, new Ship(type));
+//        }
+//    }
+
+    public void addShip(Ship ship) {
+        ships.put(ship.type, ship);
     }
 
     public void takeTurn() {
