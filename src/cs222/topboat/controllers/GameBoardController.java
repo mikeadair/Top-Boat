@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import javax.swing.text.html.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -45,6 +47,16 @@ public class GameBoardController implements Initializable {
         initTabPane();
         initGameBoards();
         startShipPlacement();
+        fireButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();
+                if (targetTile.occupied.get()){
+                    //targetTile.getChildren().add();
+                }
+
+            }
+        });
     }
 
     private void initTabPane() {
@@ -162,4 +174,5 @@ public class GameBoardController implements Initializable {
             });
         }
     }
+
 }
