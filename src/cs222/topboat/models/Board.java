@@ -64,6 +64,7 @@ public class Board {
         for(Ship.Orientation orientation : Ship.Orientation.values()) {
             ship.orientation = orientation;
             if(validateShipOrientation(ship)) {
+                occupyTilesWithShip(ship, null);
                 return true;
             }
         }
@@ -71,7 +72,7 @@ public class Board {
     }
 
     public boolean validateShipOrientation(Ship ship) {
-        for(int i = 0; i < ship.type.length; i++) {
+        for(int i = 1; i < ship.type.length; i++) {
             int newX = ship.getX() + (ship.orientation.xMod * i);
             int newY = ship.getY() + (ship.orientation.yMod * i);
 
@@ -83,13 +84,26 @@ public class Board {
                 return false;
             }
         }
+        return true;
+    }
+
+    public void occupyTilesWithShip(Ship ship, Ship.Orientation oldOrientation) {
+        if(oldOrientation != null) {
+            for(int i = 0; i < ship.type.length; i++) {
+                int oldX = ship.getX() + (oldOrientation.xMod * i);
+                int oldY = ship.getY() + (oldOrientation.yMod * i);
+
+                tileMap[oldY][oldX].occupied.set(false);
+            }
+        }
         for(int i = 0; i < ship.type.length; i++) {
             int newX = ship.getX() + (ship.orientation.xMod * i);
             int newY = ship.getY() + (ship.orientation.yMod * i);
 
-            tileMap[newY][newX].occupied.set(true);
+            Tile tile = tileMap[newY][newX];
+            tile.occupied.set(true);
+            System.out.println(tile.name.toString() + " is now occupied");
         }
-        return true;
     }
 
 
@@ -121,7 +135,8 @@ public class Board {
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> board.selectedTileProperty.set(this));
 
             occupied.addListener((observable, oldValue, newValue) -> {
-                if(newValue) {
+                System.out.println("occupied listener " + newValue);
+                if(newValue == false) {
                     getChildren().remove(rectangle);
                 } else {
                     getChildren().add(rectangle);
