@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane minHeight="0.0" minWidth="265.0" prefHeight="495.0" prefWidth="269.0" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.topboat.controllers.LogController">
+    <children>
+        <TabPane prefHeight="441.0" prefWidth="269.0" tabClosingPolicy="UNAVAILABLE" >
+            <tabs>
+                <Tab text="Game">
+                    <content>
+                        <ListView fx:id="loglist_game" prefHeight="416.0" prefWidth="267.0" />
+                    </content>
+                </Tab>
+                <Tab text="Messages">
+                    <content>
+                        <ListView fx:id="loglist_messages" prefHeight="407.0" prefWidth="267.0" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <TextField layoutX="14.0" layoutY="454.0" prefHeight="25.0" prefWidth="169.0" promptText="Message Player" />
+        <Button layoutX="196.0" layoutY="454.0" mnemonicParsing="false" text="Send" />
+    </children>
+</AnchorPane>
