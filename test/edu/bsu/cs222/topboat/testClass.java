@@ -6,9 +6,17 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class testClass {
+
+
     @Test
-    public void TestBasicTest(){
+    public void TestBasicTestFalse(){
         boolean fail = false;
         Assert.assertFalse(fail);
+    }
+
+    @Test
+    public void TestBasicTestTrue(){
+        boolean pass = true;
+        Assert.assertTrue(pass);
     }
 }
