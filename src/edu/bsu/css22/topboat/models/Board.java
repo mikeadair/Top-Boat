@@ -1,4 +1,4 @@
-package main.topboat.models;
+package edu.bsu.css22.topboat.models;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;

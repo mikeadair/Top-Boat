@@ -1,6 +1,6 @@
-package main.topboat;
+package edu.bsu.css22.topboat;
 
-import main.topboat.models.Ship;
+import edu.bsu.css22.topboat.models.Ship;
 
 import java.util.HashMap;
 import java.util.Map;

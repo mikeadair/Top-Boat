@@ -1,9 +1,9 @@
-package main.topboat.controllers;
+package edu.bsu.css22.topboat.controllers;
 
-import main.topboat.Game;
-import main.topboat.models.Board;
-import main.topboat.models.Log;
-import main.topboat.models.Ship;
+import edu.bsu.css22.topboat.models.Board;
+import edu.bsu.css22.topboat.Game;
+import edu.bsu.css22.topboat.models.Log;
+import edu.bsu.css22.topboat.models.Ship;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

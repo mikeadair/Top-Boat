@@ -1,17 +1,15 @@
-package main.topboat.controllers;
+package edu.bsu.css22.topboat.controllers;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
-import main.topboat.models.Log;
-import main.topboat.models.Log.Message;
+import edu.bsu.css22.topboat.models.Log;
+import edu.bsu.css22.topboat.models.Log.Message;
 
 import java.net.URL;
 import java.util.ResourceBundle;

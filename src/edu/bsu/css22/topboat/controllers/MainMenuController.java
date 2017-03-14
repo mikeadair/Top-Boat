@@ -1,5 +1,6 @@
-package main.topboat.controllers;
+package edu.bsu.css22.topboat.controllers;
 
+import edu.bsu.css22.topboat.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

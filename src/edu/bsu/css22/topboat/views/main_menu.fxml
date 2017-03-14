@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?scenebuilder-stylesheet style.css?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.topboat.controllers.MainMenuController" stylesheets="@../styles/style.css">
+<Pane xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.css22.topboat.controllers.MainMenuController" stylesheets="@../styles/style.css">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="422.0">
          <children>

@@ -1,4 +1,4 @@
-package main.topboat;
+package edu.bsu.css22.topboat;
 
 import java.util.Random;
 

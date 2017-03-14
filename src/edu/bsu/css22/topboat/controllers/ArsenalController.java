@@ -1,4 +1,4 @@
-package main.topboat.controllers;
+package edu.bsu.css22.topboat.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

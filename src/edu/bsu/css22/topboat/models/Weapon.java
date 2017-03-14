@@ -1,4 +1,4 @@
-package main.topboat.models;
+package edu.bsu.css22.topboat.models;
 
 public class Weapon {
     public int[][] values;

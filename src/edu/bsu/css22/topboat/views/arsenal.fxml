@@ -5,7 +5,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="495.0" prefWidth="266.0" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.topboat.controllers.ArsenalController">
+<VBox prefHeight="495.0" prefWidth="266.0" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.css22.topboat.controllers.ArsenalController">
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <children>

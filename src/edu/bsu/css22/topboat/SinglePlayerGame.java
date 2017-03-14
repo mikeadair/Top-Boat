@@ -1,4 +1,4 @@
-package main.topboat;
+package edu.bsu.css22.topboat;
 
 public class SinglePlayerGame extends Game {
 

@@ -1,4 +1,4 @@
-package main.topboat;
+package edu.bsu.css22.topboat;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

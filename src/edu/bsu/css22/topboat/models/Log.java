@@ -1,9 +1,9 @@
-package main.topboat.models;
+package edu.bsu.css22.topboat.models;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
-import main.topboat.Game;
+import edu.bsu.css22.topboat.Game;
 
 public  class Log {
     private static Log chatLog;
