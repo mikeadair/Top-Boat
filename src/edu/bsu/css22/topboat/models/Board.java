@@ -1,6 +1,5 @@
 package edu.bsu.css22.topboat.models;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -55,7 +54,7 @@ public class Board {
     }
 
     public boolean isValidPlacementTile(Ship ship) {
-        if(tileMap[ship.getY()][ship.getX()].occupied.get()) {
+        if(tileMap[ship.getY()][ship.getX()].occupied) {
             return false;
         }
         for(Ship.Orientation orientation : Ship.Orientation.values()) {
@@ -73,7 +72,7 @@ public class Board {
             int newY = ship.getY() + (ship.orientation.yMod * i);
 
             try {
-                if (tileMap[newY][newX].occupied.get()) {
+                if (tileMap[newY][newX].occupied) {
                     return false;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -126,7 +125,7 @@ public class Board {
         private Board board;
         public int x;
         public int y;
-        public SimpleBooleanProperty occupied = new SimpleBooleanProperty(false);
+        public boolean occupied;
         private SimpleObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
         private ImageView imageView = new ImageView();
         private Ship.Orientation shipOrientation;

@@ -42,7 +42,7 @@ public class GameBoardController implements Initializable {
         startShipPlacement();
         fireButton.setOnAction(event -> {
             Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();
-            if (targetTile.occupied.get()){
+            if (targetTile.occupied){
                 //targetTile.getChildren().add();
             }
 
@@ -151,7 +151,7 @@ public class GameBoardController implements Initializable {
             currentShip.setY(newTile.y);
             selectedTile = newTile;
 
-            if(newTile.occupied.get()) {
+            if(newTile.occupied) {
                 System.out.println("tile occupied");
                 Log.gameLog().addMessage(new Log.Message("That tile is already occupied!", Log.Message.Type.ERROR));
                 return;
