@@ -132,27 +132,42 @@ public class GameBoardController implements Initializable {
 
         @Override
         public void changed(ObservableValue<? extends Board.Tile> observable, Board.Tile oldTile, Board.Tile newTile) {
-            System.out.println("in ship placement listener");
             currentShip.setX(newTile.x);
             currentShip.setY(newTile.y);
-            if(!Board.playerBoard().isValidPlacementTile(currentShip)) {
-                System.out.println("not valid placement tile");
-                Log.gameLog().addMessage(new Log.Message("That tile is not a valid ship origin.", Log.Message.Type.ERROR));
-                currentShip.setX(oldTile.x);
-                currentShip.setY(oldTile.y);
+            selectedTile = newTile;
+
+            if(newTile.occupied.get()) {
+                Log.gameLog().addMessage(new Log.Message("That tile is already occupied!", Log.Message.Type.ERROR));
                 return;
             }
 
-            selectedTile = newTile;
-            currentShip.setX(selectedTile.x);
-            currentShip.setY(selectedTile.y);
+            boolean placementSuccess = initialShipPlacement();
+            if(!placementSuccess) {
+                Log.gameLog().addMessage(new Log.Message("That tile is not a valid placement option!", Log.Message.Type.ERROR));
+                currentShip.setX(oldTile.x);
+                currentShip.setY(oldTile.y);
+                selectedTile = null;
+                return;
+            }
 
-            if(oldTile == newTile){
+            if(oldTile == newTile) {
+                Log.chatLog().addMessage(new Log.Message("Placed " + currentShip.type.name() + " at " + selectedTile.name, Log.Message.Type.SUCCESS));
                 Game.player1.addShip(currentShip);
                 currentTypeIndex++;
                 currentShipType = Ship.Type.values()[currentTypeIndex];
                 selectedTile = null;
             }
+        }
+
+        private boolean initialShipPlacement() {
+            for(Ship.Orientation initialOrientation : Ship.Orientation.values()) {
+                System.out.println(initialOrientation.name());
+                orientation.set(initialOrientation);
+            }
+            if(currentShip.orientation == null) {
+                return false;
+            }
+            return true;
         }
 
         public ShipPlacementListener() {

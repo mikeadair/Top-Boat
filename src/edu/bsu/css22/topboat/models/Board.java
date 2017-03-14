@@ -3,10 +3,11 @@ package edu.bsu.css22.topboat.models;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.util.HashMap;
 
@@ -60,7 +61,6 @@ public class Board {
         for(Ship.Orientation orientation : Ship.Orientation.values()) {
             ship.orientation = orientation;
             if(validateShipOrientation(ship)) {
-                occupyTilesWithShip(ship, null);
                 return true;
             }
         }
@@ -89,7 +89,13 @@ public class Board {
                 int oldX = ship.getX() + (oldOrientation.xMod * i);
                 int oldY = ship.getY() + (oldOrientation.yMod * i);
 
-                tileMap[oldY][oldX].occupied.set(false);
+                if(i == 0) {
+                    tileMap[oldY][oldX].imageProperty.set(Tile.FRONT_IMAGE);
+                } else if(i == ship.type.length-1) {
+                    tileMap[oldY][oldX].imageProperty.set(Tile.BACK_IMAGE);
+                } else {
+                    tileMap[oldY][oldX].imageProperty.set(Tile.MIDDLE_IMAGE);
+                }
             }
         }
         for(int i = 0; i < ship.type.length; i++) {
@@ -97,8 +103,7 @@ public class Board {
             int newY = ship.getY() + (ship.orientation.yMod * i);
 
             Tile tile = tileMap[newY][newX];
-            tile.occupied.set(true);
-            System.out.println(tile.name.toString() + " is now occupied");
+            tile.imageProperty.set(null);
         }
     }
 
@@ -111,13 +116,16 @@ public class Board {
             BackgroundFill oceanFill = new BackgroundFill(Color.rgb(33, 103, 182), radii, insets);
             OCEAN_BACKGROUND = new Background(oceanFill);
         }
+        public static final Image FRONT_IMAGE = new Image(Tile.class.getResourceAsStream("../images/ship-front.png"));
+        public static final Image MIDDLE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/ship-middle.png"));
+        public static final Image BACK_IMAGE = new Image(Tile.class.getResourceAsStream("../images/ship-back.png"));
 
         private Board board;
         public int x;
         public int y;
         public SimpleBooleanProperty occupied = new SimpleBooleanProperty(false);
+        private SimpleObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
         public TileName name;
-        private Rectangle rectangle = new Rectangle(50, 50, Color.BLACK);
 
 
 
@@ -132,12 +140,11 @@ public class Board {
             addEventHandler(MouseEvent.MOUSE_EXITED, event -> board.hoverTileProperty.set(null));
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> board.selectedTileProperty.set(this));
 
-            occupied.addListener((observable, oldValue, newValue) -> {
-                System.out.println("occupied listener " + newValue);
-                if(newValue == false) {
-                    getChildren().remove(rectangle);
+            imageProperty.addListener((observable, oldImage, newImage) -> {
+                if(newImage == null) {
+                    getChildren().removeAll();
                 } else {
-                    getChildren().add(rectangle);
+                    getChildren().add(new ImageView(newImage));
                 }
             });
         }
