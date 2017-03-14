@@ -84,18 +84,14 @@ public class Board {
     }
 
     public void occupyTilesWithShip(Ship ship, Ship.Orientation oldOrientation) {
+        System.out.println("placing tiles for " + ship.type.name());
         if(oldOrientation != null) {
+            System.out.println("removing tiles for previous orientation: " + oldOrientation);
             for(int i = 0; i < ship.type.length; i++) {
                 int oldX = ship.getX() + (oldOrientation.xMod * i);
                 int oldY = ship.getY() + (oldOrientation.yMod * i);
 
-                if(i == 0) {
-                    tileMap[oldY][oldX].imageProperty.set(Tile.FRONT_IMAGE);
-                } else if(i == ship.type.length-1) {
-                    tileMap[oldY][oldX].imageProperty.set(Tile.BACK_IMAGE);
-                } else {
-                    tileMap[oldY][oldX].imageProperty.set(Tile.MIDDLE_IMAGE);
-                }
+                tileMap[oldY][oldX].imageProperty.set(null);
             }
         }
         for(int i = 0; i < ship.type.length; i++) {
@@ -103,7 +99,14 @@ public class Board {
             int newY = ship.getY() + (ship.orientation.yMod * i);
 
             Tile tile = tileMap[newY][newX];
-            tile.imageProperty.set(null);
+            tile.shipOrientation = ship.orientation;
+            if(i == 0) {
+                tile.imageProperty.set(Tile.FRONT_IMAGE);
+            } else if(i == ship.type.length-1) {
+                tile.imageProperty.set(Tile.BACK_IMAGE);
+            } else {
+                tile.imageProperty.set(Tile.MIDDLE_IMAGE);
+            }
         }
     }
 
@@ -125,6 +128,8 @@ public class Board {
         public int y;
         public SimpleBooleanProperty occupied = new SimpleBooleanProperty(false);
         private SimpleObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
+        private ImageView imageView = new ImageView();
+        private Ship.Orientation shipOrientation;
         public TileName name;
 
 
@@ -142,9 +147,28 @@ public class Board {
 
             imageProperty.addListener((observable, oldImage, newImage) -> {
                 if(newImage == null) {
-                    getChildren().removeAll();
+                    getChildren().remove(imageView);
                 } else {
-                    getChildren().add(new ImageView(newImage));
+                    imageView.setImage(newImage);
+                    switch (shipOrientation) {
+                        case UP:
+                            imageView.setRotate(180);
+                            imageView.fitHeightProperty().bind(this.heightProperty());
+                            break;
+                        case DOWN:
+                            imageView.setRotate(0);
+                            imageView.fitHeightProperty().bind(this.heightProperty());
+                            break;
+                        case LEFT:
+                            imageView.setRotate(90);
+                            imageView.fitHeightProperty().bind(this.widthProperty());
+                            break;
+                        case RIGHT:
+                            imageView.setRotate(270);
+                            imageView.fitHeightProperty().bind(this.widthProperty());
+                            break;
+                    }
+                    getChildren().add(imageView);
                 }
             });
         }

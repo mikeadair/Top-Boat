@@ -89,22 +89,37 @@ public class GameBoardController implements Initializable {
         Board.playerBoard().selectedTileProperty.addListener(shipPlacementTileListener);
         Board.opponentBoard().selectedTileProperty.addListener(shipPlacementTileListener);
         tabPane.setOnKeyPressed(event -> {
-            System.out.println("key pressed");
-            if(event.getCode() == KeyCode.ENTER) {
-
-            } else if(event.getCode() == KeyCode.UP) {
-                shipPlacementTileListener.orientation.set(Ship.Orientation.UP);
-                event.consume();
-            } else if(event.getCode() == KeyCode.DOWN) {
-                shipPlacementTileListener.orientation.set(Ship.Orientation.DOWN);
-                event.consume();
-            } else if(event.getCode() == KeyCode.LEFT) {
-                shipPlacementTileListener.orientation.set(Ship.Orientation.LEFT);
-                event.consume();
-            } else if(event.getCode() == KeyCode.RIGHT) {
-                shipPlacementTileListener.orientation.set(Ship.Orientation.RIGHT);
-                event.consume();
+            switch(event.getCode()) {
+                case UP:
+                    shipPlacementTileListener.orientation.set(Ship.Orientation.UP);
+                    event.consume();
+                    break;
+                case DOWN:
+                    shipPlacementTileListener.orientation.set(Ship.Orientation.DOWN);
+                    event.consume();
+                    break;
+                case LEFT:
+                    shipPlacementTileListener.orientation.set(Ship.Orientation.LEFT);
+                    event.consume();
+                    break;
+                case RIGHT:
+                    shipPlacementTileListener.orientation.set(Ship.Orientation.RIGHT);
+                    event.consume();
+                    break;
             }
+//            if(event.getCode() == KeyCode.UP) {
+//                shipPlacementTileListener.orientation.set(Ship.Orientation.UP);
+//                event.consume();
+//            } else if(event.getCode() == KeyCode.DOWN) {
+//                shipPlacementTileListener.orientation.set(Ship.Orientation.DOWN);
+//                event.consume();
+//            } else if(event.getCode() == KeyCode.LEFT) {
+//                shipPlacementTileListener.orientation.set(Ship.Orientation.LEFT);
+//                event.consume();
+//            } else if(event.getCode() == KeyCode.RIGHT) {
+//                shipPlacementTileListener.orientation.set(Ship.Orientation.RIGHT);
+//                event.consume();
+//            }
         });
     }
 
@@ -137,12 +152,14 @@ public class GameBoardController implements Initializable {
             selectedTile = newTile;
 
             if(newTile.occupied.get()) {
+                System.out.println("tile occupied");
                 Log.gameLog().addMessage(new Log.Message("That tile is already occupied!", Log.Message.Type.ERROR));
                 return;
             }
 
-            boolean placementSuccess = initialShipPlacement();
+            boolean placementSuccess = attemptInitialShipPlacement();
             if(!placementSuccess) {
+                System.out.println("No placement success");
                 Log.gameLog().addMessage(new Log.Message("That tile is not a valid placement option!", Log.Message.Type.ERROR));
                 currentShip.setX(oldTile.x);
                 currentShip.setY(oldTile.y);
@@ -159,25 +176,28 @@ public class GameBoardController implements Initializable {
             }
         }
 
-        private boolean initialShipPlacement() {
+        private boolean attemptInitialShipPlacement() {
             for(Ship.Orientation initialOrientation : Ship.Orientation.values()) {
-                System.out.println(initialOrientation.name());
                 orientation.set(initialOrientation);
+                if(currentShip.orientation != null) {
+                    System.out.println(currentShip.orientation + " was a success");
+                    return true;
+                }
             }
-            if(currentShip.orientation == null) {
-                return false;
-            }
-            return true;
+            return false;
         }
 
         public ShipPlacementListener() {
             orientation.addListener((observable, oldOrientation, newOrientation) -> {
                 if(selectedTile != null) {
+                    System.out.println("Trying out new orientation: " + newOrientation.name() + " from previous orientation: " + oldOrientation);
                     currentShip.orientation = newOrientation;
 
                     if(!Board.playerBoard().validateShipOrientation(currentShip)) {
+                        System.out.println(currentShip.orientation.name() + " did not work in orientation listener");
                         currentShip.orientation = oldOrientation;
                     } else {
+                        System.out.println(currentShip.orientation.name() + " worked in orientation listener");
                         Board.playerBoard().occupyTilesWithShip(currentShip, oldOrientation);
                     }
                 }
