@@ -53,19 +53,6 @@ public class Board {
         return tileMap[y][x];
     }
 
-    public boolean isValidPlacementTile(Ship ship) {
-        if(tileMap[ship.getY()][ship.getX()].occupied) {
-            return false;
-        }
-        for(Ship.Orientation orientation : Ship.Orientation.values()) {
-            ship.orientation = orientation;
-            if(validateShipOrientation(ship)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean validateShipOrientation(Ship ship) {
         for(int i = 1; i < ship.type.length; i++) {
             int newX = ship.getX() + (ship.orientation.xMod * i);
@@ -83,9 +70,7 @@ public class Board {
     }
 
     public void occupyTilesWithShip(Ship ship, Ship.Orientation oldOrientation) {
-        System.out.println("placing tiles for " + ship.type.name());
         if(oldOrientation != null) {
-            System.out.println("removing tiles for previous orientation: " + oldOrientation);
             for(int i = 0; i < ship.type.length; i++) {
                 int oldX = ship.getX() + (oldOrientation.xMod * i);
                 int oldY = ship.getY() + (oldOrientation.yMod * i);

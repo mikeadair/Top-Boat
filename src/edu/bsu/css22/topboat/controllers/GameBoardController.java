@@ -43,7 +43,7 @@ public class GameBoardController implements Initializable {
         fireButton.setOnAction(event -> {
             Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();
             if (targetTile.occupied){
-                //targetTile.getChildren().add();
+                //TODO: fire weapon functionality
             }
 
         });
@@ -107,19 +107,6 @@ public class GameBoardController implements Initializable {
                     event.consume();
                     break;
             }
-//            if(event.getCode() == KeyCode.UP) {
-//                shipPlacementTileListener.orientation.set(Ship.Orientation.UP);
-//                event.consume();
-//            } else if(event.getCode() == KeyCode.DOWN) {
-//                shipPlacementTileListener.orientation.set(Ship.Orientation.DOWN);
-//                event.consume();
-//            } else if(event.getCode() == KeyCode.LEFT) {
-//                shipPlacementTileListener.orientation.set(Ship.Orientation.LEFT);
-//                event.consume();
-//            } else if(event.getCode() == KeyCode.RIGHT) {
-//                shipPlacementTileListener.orientation.set(Ship.Orientation.RIGHT);
-//                event.consume();
-//            }
         });
     }
 
@@ -152,14 +139,12 @@ public class GameBoardController implements Initializable {
             selectedTile = newTile;
 
             if(newTile.occupied) {
-                System.out.println("tile occupied");
                 Log.gameLog().addMessage(new Log.Message("That tile is already occupied!", Log.Message.Type.ERROR));
                 return;
             }
 
             boolean placementSuccess = attemptInitialShipPlacement();
             if(!placementSuccess) {
-                System.out.println("No placement success");
                 Log.gameLog().addMessage(new Log.Message("That tile is not a valid placement option!", Log.Message.Type.ERROR));
                 currentShip.setX(oldTile.x);
                 currentShip.setY(oldTile.y);
@@ -180,7 +165,6 @@ public class GameBoardController implements Initializable {
             for(Ship.Orientation initialOrientation : Ship.Orientation.values()) {
                 orientation.set(initialOrientation);
                 if(currentShip.orientation != null) {
-                    System.out.println(currentShip.orientation + " was a success");
                     return true;
                 }
             }
@@ -190,14 +174,11 @@ public class GameBoardController implements Initializable {
         public ShipPlacementListener() {
             orientation.addListener((observable, oldOrientation, newOrientation) -> {
                 if(selectedTile != null) {
-                    System.out.println("Trying out new orientation: " + newOrientation.name() + " from previous orientation: " + oldOrientation);
                     currentShip.orientation = newOrientation;
 
                     if(!Board.playerBoard().validateShipOrientation(currentShip)) {
-                        System.out.println(currentShip.orientation.name() + " did not work in orientation listener");
                         currentShip.orientation = oldOrientation;
                     } else {
-                        System.out.println(currentShip.orientation.name() + " worked in orientation listener");
                         Board.playerBoard().occupyTilesWithShip(currentShip, oldOrientation);
                     }
                 }
