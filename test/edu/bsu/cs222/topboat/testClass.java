@@ -1,7 +1,10 @@
 package edu.bsu.cs222.topboat;
 
-import cs222.topboat.controllers.GameBoardController;
-import cs222.topboat.controllers.MainMenuController;
+import cs222.topboat.ComputerPlayer;
+import cs222.topboat.Game;
+import cs222.topboat.Player;
+import cs222.topboat.TopBoatApplication;
+import cs222.topboat.controllers.*;
 import org.junit.Assert;
 import org.junit.Test;
 
