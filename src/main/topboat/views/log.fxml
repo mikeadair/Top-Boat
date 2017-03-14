@@ -23,7 +23,7 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <TextField layoutX="14.0" layoutY="454.0" prefHeight="25.0" prefWidth="169.0" promptText="Message Player" />
-        <Button layoutX="196.0" layoutY="454.0" mnemonicParsing="false" text="Send" />
+        <TextField layoutX="14.0" layoutY="454.0" prefHeight="25.0" prefWidth="169.0" promptText="Message Player" fx:id="messageField" />
+        <Button layoutX="196.0" layoutY="454.0" mnemonicParsing="false" text="Send" fx:id="sendButton" />
     </children>
 </AnchorPane>

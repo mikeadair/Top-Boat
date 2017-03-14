@@ -1,12 +1,17 @@
 package main.topboat.controllers;
 
-import main.topboat.models.Log;
-import main.topboat.models.Log.Message;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import main.topboat.models.Log;
+import main.topboat.models.Log.Message;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,7 +20,8 @@ public class LogController implements Initializable{
 
     @FXML ListView loglist_game;
     @FXML ListView loglist_messages;
-
+    @FXML Button sendButton;
+    @FXML TextField messageField;
     Log gameLog;
     Log chatLog;
 
@@ -30,6 +36,17 @@ public class LogController implements Initializable{
 
         gameLog.addMessageReceivedListener(newMessage -> showMessageInLog(loglist_game, newMessage));
         chatLog.addMessageReceivedListener(newMessage -> showMessageInLog(loglist_messages, newMessage));
+        sendButton.setOnAction(event -> sendPlayerMessage());
+        messageField.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)  {
+                sendPlayerMessage();
+            }
+        });
+    }
+
+    private void sendPlayerMessage(){
+        chatLog.sendMessage(messageField.getText());
+        messageField.setText("");
     }
 
     private void showMessageInLog(ListView log, Message newMessage) {

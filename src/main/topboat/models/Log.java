@@ -3,6 +3,7 @@ package main.topboat.models;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
+import main.topboat.Game;
 
 public  class Log {
     private static Log chatLog;
@@ -28,6 +29,14 @@ public  class Log {
             gameLog = new Log();
         }
         return gameLog;
+    }
+
+    public void sendMessage(String text) {
+        String finalMessage = Game.player1.name + ": " + text;
+        Message message = new Message(finalMessage,Message.Type.PLAYER_MESSAGE);
+        messages.add(message);
+        messageReceivedListener.onMessageReceived(message);
+        //Send Message to Opponent
     }
 
     public void addMessage(Message message) {

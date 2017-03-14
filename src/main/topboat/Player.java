@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
-    private String name;
+    public String name;
     private HashMap<Ship.Type, Ship> ships;
 
     public Player(String name) {
