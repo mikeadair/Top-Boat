@@ -10,6 +10,7 @@ public class Ship {
         this.type = type;
         this.x = x;
         this.y = y;
+        this.orientation = null;
     }
 
     public int getY() {

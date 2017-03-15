@@ -21,7 +21,7 @@ public class Player {
 //    }
 
     public void addShip(Ship ship) {
-        ships.put(ship.type, ship);
+        //ships.put(ship.type, ship);
     }
 
     public void takeTurn() {

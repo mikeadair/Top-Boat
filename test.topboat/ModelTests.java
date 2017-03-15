@@ -1,5 +1,5 @@
-import main.topboat.models.Board;
-import main.topboat.models.Ship;
+import edu.bsu.css22.topboat.models.Board;
+import edu.bsu.css22.topboat.models.Ship;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -9,7 +9,7 @@ public class ModelTests {
     Ship carrier = new Ship(Ship.Type.CARRIER,0,0);
 
     @Test public void testTileOccupied(){
-        Assert.assertFalse(player.get(0,4).occupied.getValue());
+        Assert.assertFalse(player.get(0,4).occupied);
     }
 
     @Test public void testTileName(){

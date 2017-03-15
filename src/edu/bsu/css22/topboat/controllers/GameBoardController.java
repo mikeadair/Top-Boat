@@ -106,6 +106,10 @@ public class GameBoardController implements Initializable {
                     shipPlacementTileListener.orientation.set(Ship.Orientation.RIGHT);
                     event.consume();
                     break;
+                case ENTER:
+                    shipPlacementTileListener.confirmPlacement();
+                    event.consume();
+                    break;
             }
         });
     }
@@ -134,52 +138,46 @@ public class GameBoardController implements Initializable {
 
         @Override
         public void changed(ObservableValue<? extends Board.Tile> observable, Board.Tile oldTile, Board.Tile newTile) {
+            Ship.Orientation newOrientation = Board.playerBoard().validatePosition(newTile.x,newTile.y,currentShip.type.length,currentShipType);
+            if(newOrientation == null){
+                Log.gameLog().addMessage(new Log.Message("That tile is not a valid placement option!", Log.Message.Type.ERROR));
+                currentShip.orientation = null;
+                selectedTile = null;
+                return;
+            }
+            if(oldTile != null && oldTile != newTile && currentShip.orientation != null) {
+                Board.playerBoard().backToOcean(currentShip);
+            }
             currentShip.setX(newTile.x);
             currentShip.setY(newTile.y);
             selectedTile = newTile;
+            orientation.set(newOrientation);
+        }
 
-            if(newTile.occupied) {
-                Log.gameLog().addMessage(new Log.Message("That tile is already occupied!", Log.Message.Type.ERROR));
-                return;
-            }
-
-            boolean placementSuccess = attemptInitialShipPlacement();
-            if(!placementSuccess) {
-                Log.gameLog().addMessage(new Log.Message("That tile is not a valid placement option!", Log.Message.Type.ERROR));
-                currentShip.setX(oldTile.x);
-                currentShip.setY(oldTile.y);
-                selectedTile = null;
-                return;
-            }
-
-            if(oldTile == newTile) {
-                Log.chatLog().addMessage(new Log.Message("Placed " + currentShip.type.name() + " at " + selectedTile.name, Log.Message.Type.SUCCESS));
+        public void confirmPlacement() {
+            if(currentShip.orientation != null){
+                Log.gameLog().addMessage(new Log.Message("Placed " + currentShip.type.name() + " at " + selectedTile.name, Log.Message.Type.SUCCESS));
                 Game.player1.addShip(currentShip);
                 currentTypeIndex++;
                 currentShipType = Ship.Type.values()[currentTypeIndex];
+                currentShip = new Ship(currentShipType,0,0);
                 selectedTile = null;
+            }else{
+                Log.gameLog().addMessage(new Log.Message("You must select an orientation before confirming!", Log.Message.Type.ERROR));
             }
-        }
-
-        private boolean attemptInitialShipPlacement() {
-            for(Ship.Orientation initialOrientation : Ship.Orientation.values()) {
-                orientation.set(initialOrientation);
-                if(currentShip.orientation != null) {
-                    return true;
-                }
-            }
-            return false;
         }
 
         public ShipPlacementListener() {
             orientation.addListener((observable, oldOrientation, newOrientation) -> {
                 if(selectedTile != null) {
-                    currentShip.orientation = newOrientation;
-
-                    if(!Board.playerBoard().validateShipOrientation(currentShip)) {
-                        currentShip.orientation = oldOrientation;
-                    } else {
-                        Board.playerBoard().occupyTilesWithShip(currentShip, oldOrientation);
+                    if(Board.playerBoard().worksWithOrientation(currentShip, newOrientation)){
+                        if(currentShip.orientation != null){
+                            Board.playerBoard().backToOcean(currentShip);
+                        }
+                        currentShip.orientation = newOrientation;
+                        Board.playerBoard().occupyTilesWithShip(currentShip);
+                    }else{
+                        Log.gameLog().addMessage(new Log.Message("Ship cannot be oriented that direction", Log.Message.Type.ERROR));
                     }
                 }
             });
