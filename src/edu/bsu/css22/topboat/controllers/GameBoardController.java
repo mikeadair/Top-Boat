@@ -4,6 +4,7 @@ import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.Game;
 import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Ship;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -174,19 +175,23 @@ public class GameBoardController implements Initializable {
         }
 
         public ShipPlacementListener() {
-            orientation.addListener((observable, oldOrientation, newOrientation) -> {
+            orientation.addListener((Observable orientation) -> {
                 System.out.println("Got to Placement Listener!");
                 if(selectedTile != null) {
-                    if(newOrientation == null){
+                    if(orientation == null){
+                        System.out.println("PL: Orientation Null!");
                         return;
                     }
-                    if(Board.playerBoard().worksWithOrientation(currentShip, newOrientation)){
+                    if(Board.playerBoard().worksWithOrientation(currentShip, (Ship.Orientation) ((SimpleObjectProperty)orientation).getValue())){
                         if(currentShip.orientation != null){
+                            System.out.println("PL: Erasing Old Ship!");
                             Board.playerBoard().backToOcean(currentShip);
                         }
-                        currentShip.orientation = newOrientation;
+                        System.out.println("PL: Adding Ship!");
+                        currentShip.orientation = (Ship.Orientation) ((SimpleObjectProperty)orientation).getValue();
                         Board.playerBoard().occupyTilesWithShip(currentShip);
                     }else{
+                        System.out.println("PL: Doesn't work with Orientation!");
                         Log.gameLog().addMessage(new Log.Message("Ship cannot be oriented that direction", Log.Message.Type.ERROR));
                     }
                 }
