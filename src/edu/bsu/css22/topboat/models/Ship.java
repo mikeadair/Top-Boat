@@ -4,10 +4,12 @@ public class Ship {
     private int x;
     private int y;
     public Type type;
+    public String name;
     public Orientation orientation;
 
     public Ship(Type type, int x, int y) {
         this.type = type;
+        this.name = type.name();
         this.x = x;
         this.y = y;
         this.orientation = null;

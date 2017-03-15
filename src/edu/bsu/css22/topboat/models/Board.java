@@ -54,14 +54,14 @@ public class Board {
     }
 
     public Ship.Orientation validatePosition(int x, int y, int length, Ship.Type type){
-        if(get(x,y).occupied && get(x,y).type != type){
+        if(get(x,y).occupied && get(x,y).type != type.name()){
             return null;
         }
         for(Ship.Orientation orientation : Ship.Orientation.values()) {
             for(int i = 1; i < length; i++) {
                 System.out.println(orientation.name() + ": "+ i);
                 try {
-                    if(get(x + (orientation.xMod * i), y + (orientation.yMod * i)).occupied && get(x,y).type != type) {
+                    if(get(x + (orientation.xMod * i), y + (orientation.yMod * i)).occupied && get(x,y).type != type.name()) {
                         System.out.println("Occupied.");
                         break;
                     }
@@ -83,7 +83,7 @@ public class Board {
             try {
                 tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].imageProperty.set(null);
                 tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].occupied = false;
-                tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].type = ship.type;
+                tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].type = ship.name;
             } catch (ArrayIndexOutOfBoundsException e) {
                 //Do nothing
             }
@@ -110,7 +110,7 @@ public class Board {
 
             Tile tile = tileMap[newY][newX];
             tile.occupied = true;
-            tile.type = ship.type;
+            tile.type = ship.name;
             tile.shipOrientation = ship.orientation;
             if(i == 0) {
                 tile.imageProperty.set(Tile.FRONT_IMAGE);
@@ -139,7 +139,7 @@ public class Board {
         public int x;
         public int y;
         public boolean occupied;
-        public Ship.Type type;
+        public String type;
         private SimpleObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
         private ImageView imageView = new ImageView();
         private Ship.Orientation shipOrientation;
