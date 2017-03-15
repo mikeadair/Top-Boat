@@ -55,24 +55,24 @@ public class Board {
 
     public Ship.Orientation validatePosition(int x, int y, int length, Ship.Type type){
         if(get(x,y).occupied && get(x,y).type != type.name()){
+            System.out.println("OCCUPIED");
             return null;
         }
         for(Ship.Orientation orientation : Ship.Orientation.values()) {
+            Boolean orientationValid = true;
             for(int i = 1; i < length; i++) {
-                System.out.println(orientation.name() + ": "+ i);
                 try {
-                    if(get(x + (orientation.xMod * i), y + (orientation.yMod * i)).occupied && get(x,y).type != type.name()) {
-                        System.out.println("Occupied.");
+                    if(tileMap[y + (orientation.yMod * i)][y + (orientation.xMod * i)].occupied && tileMap[y][x].type != type.name()) {
+                        orientationValid = false;
                         break;
                     }
-                    if(i == length - 1){
-                        System.out.println("Fits on "+orientation.name());
-                        return orientation;
-                    }
                 } catch(ArrayIndexOutOfBoundsException e){
-                    System.out.println("Doesn't fit...");
+                    orientationValid = false;
                     break;
                 }
+            }
+            if(orientationValid){
+                return orientation;
             }
         }
         return null;
@@ -83,7 +83,7 @@ public class Board {
             try {
                 tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].imageProperty.set(null);
                 tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].occupied = false;
-                tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].type = ship.name;
+                tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].type = null;
             } catch (ArrayIndexOutOfBoundsException e) {
                 //Do nothing
             }
@@ -93,7 +93,9 @@ public class Board {
     public boolean worksWithOrientation(Ship ship, Ship.Orientation orientation){
         for(int i = 1; i < ship.type.length; i++) {
             try {
-                if(get(ship.getX() + (orientation.xMod * i),ship.getY() + (orientation.yMod * i)).occupied){
+                if(tileMap[ship.getY() + (orientation.yMod * i)][ship.getX() + (orientation.xMod * i)].occupied){
+                    return false;
+                }else if(tileMap[ship.getY() + (orientation.yMod * i)][ship.getX() + (orientation.xMod * i)].type != null && tileMap[ship.getY() + (orientation.yMod * i)][ship.getX() + (orientation.xMod * i)].type != ship.name){
                     return false;
                 }
             } catch(ArrayIndexOutOfBoundsException e) {

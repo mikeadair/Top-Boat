@@ -139,6 +139,10 @@ public class GameBoardController implements Initializable {
         @Override
         public void changed(ObservableValue<? extends Board.Tile> observable, Board.Tile oldTile, Board.Tile newTile) {
             Ship.Orientation newOrientation = Board.playerBoard().validatePosition(newTile.x,newTile.y,currentShip.type.length,currentShipType);
+            if(newOrientation != null){ System.out.println(newOrientation.name()); }
+            if(selectedTile != null && newTile != selectedTile){
+                Board.playerBoard().backToOcean(currentShip);
+            }
             if(newOrientation == null){
                 Log.gameLog().addMessage(new Log.Message("That tile is not a valid placement option!", Log.Message.Type.ERROR));
                 currentShip.orientation = null;
@@ -146,6 +150,7 @@ public class GameBoardController implements Initializable {
                 return;
             }
             if(oldTile != null && oldTile != newTile && currentShip.orientation != null) {
+                System.out.println("removing ship");
                 Board.playerBoard().backToOcean(currentShip);
             }
             currentShip.setX(newTile.x);
@@ -170,7 +175,11 @@ public class GameBoardController implements Initializable {
 
         public ShipPlacementListener() {
             orientation.addListener((observable, oldOrientation, newOrientation) -> {
+                System.out.println("Got to Placement Listener!");
                 if(selectedTile != null) {
+                    if(newOrientation == null){
+                        return;
+                    }
                     if(Board.playerBoard().worksWithOrientation(currentShip, newOrientation)){
                         if(currentShip.orientation != null){
                             Board.playerBoard().backToOcean(currentShip);
