@@ -151,6 +151,7 @@ public class GameBoardController implements Initializable {
             currentShip.setX(newTile.x);
             currentShip.setY(newTile.y);
             selectedTile = newTile;
+            currentShip.orientation = newOrientation;
             orientation.set(newOrientation);
         }
 
