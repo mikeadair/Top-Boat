@@ -164,10 +164,15 @@ public class GameBoardController implements Initializable {
 
         public void confirmPlacement() {
             if(currentShip.orientation != null){
-                Log.gameLog().addMessage(new Log.Message("Placed " + currentShip.type.name() + " at " + selectedTile.name, Log.Message.Type.SUCCESS));
+                Log.gameLog().addMessage(new Log.Message("Placed " + currentShip.type.name() + " at " + selectedTile.name + ": Facing " + currentShip.orientation.name(), Log.Message.Type.SUCCESS));
                 Game.player1.addShip(currentShip);
                 currentTypeIndex++;
-                currentShipType = Ship.Type.values()[currentTypeIndex];
+                try {
+                    currentShipType = Ship.Type.values()[currentTypeIndex];
+                } catch(ArrayIndexOutOfBoundsException e) {
+                    Log.gameLog().addMessage(new Log.Message("All your ships have been placed!", Log.Message.Type.SUCCESS));
+                    //End Ship Placement
+                }
                 currentShip = new Ship(currentShipType,0,0);
                 selectedTile = null;
             }else{

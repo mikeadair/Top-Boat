@@ -10,18 +10,12 @@ public class Player {
     private HashMap<Ship.Type, Ship> ships;
 
     public Player(String name) {
+        this.ships = new HashMap<>(Ship.Type.values().length);
         this.name = name;
     }
 
-//    private void initializeShips() {
-//        ships = new HashMap(Ship.Type.values().length);
-//        for(Ship.Type type : Ship.Type.values()) {
-//            ships.put(type, new Ship(type));
-//        }
-//    }
-
     public void addShip(Ship ship) {
-        //ships.put(ship.type, ship);
+        ships.put(ship.type, ship);
     }
 
     public void takeTurn() {
