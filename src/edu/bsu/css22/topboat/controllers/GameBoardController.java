@@ -158,6 +158,7 @@ public class GameBoardController implements Initializable {
             currentShip.setY(newTile.y);
             selectedTile = newTile;
             currentShip.orientation = newOrientation;
+            orientation.set(null);
             orientation.set(newOrientation);
         }
 
@@ -176,22 +177,20 @@ public class GameBoardController implements Initializable {
 
         public ShipPlacementListener() {
             orientation.addListener((Observable orientation) -> {
-                System.out.println("Got to Placement Listener!");
+                if(((SimpleObjectProperty)orientation).getValue() == null){
+                    return;
+                }
                 if(selectedTile != null) {
                     if(orientation == null){
-                        System.out.println("PL: Orientation Null!");
                         return;
                     }
                     if(Board.playerBoard().worksWithOrientation(currentShip, (Ship.Orientation) ((SimpleObjectProperty)orientation).getValue())){
                         if(currentShip.orientation != null){
-                            System.out.println("PL: Erasing Old Ship!");
                             Board.playerBoard().backToOcean(currentShip);
                         }
-                        System.out.println("PL: Adding Ship!");
                         currentShip.orientation = (Ship.Orientation) ((SimpleObjectProperty)orientation).getValue();
                         Board.playerBoard().occupyTilesWithShip(currentShip);
                     }else{
-                        System.out.println("PL: Doesn't work with Orientation!");
                         Log.gameLog().addMessage(new Log.Message("Ship cannot be oriented that direction", Log.Message.Type.ERROR));
                     }
                 }

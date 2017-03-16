@@ -55,14 +55,13 @@ public class Board {
 
     public Ship.Orientation validatePosition(int x, int y, int length, Ship.Type type){
         if(get(x,y).occupied && get(x,y).type != type.name()){
-            System.out.println("OCCUPIED");
             return null;
         }
         for(Ship.Orientation orientation : Ship.Orientation.values()) {
             Boolean orientationValid = true;
             for(int i = 1; i < length; i++) {
                 try {
-                    if(tileMap[y + (orientation.yMod * i)][y + (orientation.xMod * i)].occupied && tileMap[y][x].type != type.name()) {
+                    if(tileMap[y + (orientation.yMod * i)][x + (orientation.xMod * i)].occupied && tileMap[y][x].type != type.name()) {
                         orientationValid = false;
                         break;
                     }
