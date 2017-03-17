@@ -9,6 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class Board {
@@ -114,11 +115,11 @@ public class Board {
             tile.type = ship.name;
             tile.shipOrientation = ship.orientation;
             if(i == 0) {
-                tile.imageProperty.set(Tile.FRONT_IMAGE);
+                tile.imageProperty.set(Tile.SHIP_IMAGES.get(ship.type.imageType + "-front"));
             } else if(i == ship.type.length-1) {
-                tile.imageProperty.set(Tile.BACK_IMAGE);
+                tile.imageProperty.set(Tile.SHIP_IMAGES.get(ship.type.imageType + "-back"));
             } else {
-                tile.imageProperty.set(Tile.MIDDLE_IMAGE);
+                tile.imageProperty.set(Tile.SHIP_IMAGES.get(ship.type.imageType + "-middle"));
             }
         }
     }
@@ -132,9 +133,18 @@ public class Board {
             BackgroundFill oceanFill = new BackgroundFill(Color.rgb(33, 103, 182), radii, insets);
             OCEAN_BACKGROUND = new Background(oceanFill);
         }
-        public static final Image FRONT_IMAGE = new Image(Tile.class.getResourceAsStream("../images/ship-front.png"));
-        public static final Image MIDDLE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/ship-middle.png"));
-        public static final Image BACK_IMAGE = new Image(Tile.class.getResourceAsStream("../images/ship-back.png"));
+        public static final Map<String, Image> SHIP_IMAGES = loadShipImages();
+        public static Map<String, Image> loadShipImages() {
+            Map<String,Image> map = new HashMap<String,Image>();
+            for(Ship.Type type: Ship.Type.values()){
+                if(!map.containsKey(type.imageType)){
+                    map.put(type.imageType + "-front", new Image(Tile.class.getResourceAsStream("../images/" + type.imageType + "-front.png")));
+                    map.put(type.imageType + "-middle", new Image(Tile.class.getResourceAsStream("../images/" + type.imageType + "-middle.png")));
+                    map.put(type.imageType + "-back", new Image(Tile.class.getResourceAsStream("../images/" + type.imageType + "-back.png")));
+                }
+            }
+            return map;
+        }
 
         private Board board;
         public int x;

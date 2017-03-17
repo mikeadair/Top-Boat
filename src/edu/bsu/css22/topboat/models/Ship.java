@@ -33,17 +33,19 @@ public class Ship {
 
 
     public enum Type {
-        CARRIER(5),
-        BATTLESHIP(4),
-        CRUISER(3),
-        SUBMARINE(3),
-        DESTROYER(2);
+        CARRIER(5, "ship"),
+        BATTLESHIP(4, "ship"),
+        CRUISER(3, "ship"),
+        SUBMARINE(3, "sub"),
+        DESTROYER(2, "ship");
 
-        Type(int l) {
+        Type(int l, String imageType) {
             this.length = l;
+            this.imageType = imageType;
         }
 
         public int length;
+        public String imageType;
     }
 
     public enum Orientation {

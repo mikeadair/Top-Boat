@@ -21,7 +21,7 @@ public class UI {
     public static void changeView(UI.Views view) {
         try {
             Parent root = FXMLLoader.load(UI.class.getResource(view.resourcePath));
-            Scene scene = new Scene(root, view.width, view.height);
+            Scene scene = new Scene(root);
             primaryStage.setScene(scene);
         } catch (IOException e) {
             System.err.println("Unable to change views: caused by");
@@ -30,18 +30,14 @@ public class UI {
     }
 
     public static enum Views {
-        MAIN_MENU("views/main_menu.fxml", 440, 176),
-        GAME_SELECTION(null, 0, 0),
-        MAIN_GAME("views/main.fxml", 1072, 495);
+        MAIN_MENU("views/main_menu.fxml"),
+        GAME_SELECTION(null),
+        MAIN_GAME("views/main.fxml");
 
-        Views(String path, int width, int height) {
+        Views(String path) {
             this.resourcePath = path;
-            this.height = height;
-            this.width = width;
         }
 
         String resourcePath;
-        int height;
-        int width;
     }
 }

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import java.net.URL?>
 
-<HBox fx:id="root" maxHeight="495.0" maxWidth="1072.0" minHeight="495.0" minWidth="1072.0" prefHeight="495.0" prefWidth="1072.0" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.css22.topboat.controllers.ViewController" stylesheets="@../styles/style.css">
+<HBox fx:id="root" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.css22.topboat.controllers.ViewController" stylesheets="@../styles/style.css">
     <children>
         <!-- Log Import-->
         <fx:include source="log.fxml" />

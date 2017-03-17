@@ -1,7 +1,7 @@
 package edu.bsu.css22.topboat.controllers;
 
-import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.Game;
+import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Ship;
 import javafx.beans.Observable;
@@ -13,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
