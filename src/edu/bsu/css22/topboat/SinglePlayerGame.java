@@ -2,10 +2,14 @@ package edu.bsu.css22.topboat;
 
 public class SinglePlayerGame extends Game {
 
+    public SinglePlayerGame() {
+        player1 = new Player();
+        player2 = new ComputerPlayer();
+    }
+
     @Override
     public void init() {
-        player1 = new Player("Player 1");
-        player2 = new ComputerPlayer();
+
     }
 
     @Override

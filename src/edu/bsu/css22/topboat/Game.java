@@ -1,5 +1,10 @@
 package edu.bsu.css22.topboat;
 
+
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 public abstract class Game {
     private Thread gameThread;
     private GameLoop gameLoop;
@@ -7,7 +12,7 @@ public abstract class Game {
     public static Player player1;
     public static Player player2;
 
-    static State currentState;
+    static SimpleObjectProperty<State> currentState = new SimpleObjectProperty<>();
     static Player currentPlayer;
     static Player waitingPlayer;
 
@@ -37,7 +42,6 @@ public abstract class Game {
 
     public static void startGame(Game game) {
         UI.changeView(UI.Views.MAIN_GAME);
-        currentState = State.Initializing;
         game.gameThread = new Thread(game.gameLoop, "GameThread");
         game.gameThread.start();
     }
@@ -45,12 +49,17 @@ public abstract class Game {
     private class GameLoop implements Runnable {
         @Override
         public void run() {
+            setupStateChangeListener();
             init();
-            while (!Thread.currentThread().isInterrupted()) {
-                currentState.operation.run();
-            }
+            currentState.set(State.Initializing);
             finish();
         }
+    }
+
+    private void setupStateChangeListener() {
+        currentState.addListener((observable, oldState, newState) -> {
+            newState.operation.run();
+        });
     }
 
     enum State {
@@ -59,16 +68,20 @@ public abstract class Game {
             while(!Thread.currentThread().isInterrupted()) {
                 currentPlayer.takeTurn();
                 if (waitingPlayer.allShipsSunk()) {
-                    currentState = State.Ended;
+                    currentState.set(State.Ended);
                     return;
                 }
                 transitionPlayers();
             }
         }),
         Initializing(() -> {
-            /*TODO: code for placing ships will happen here. Local Multiplayer will handle this differently
-            because we'll want to show a transition screen between player1 and player2
-             placing their ships. The same thing will happen with taking turns*/
+            player1.attachReadyListener((observable, oldReady, newReady) -> {
+                System.out.println("player 1 ready");
+            });
+
+            player2.attachReadyListener((observable, oldReady, newReady) -> {
+
+            });
         });
 
         State(Runnable op) {

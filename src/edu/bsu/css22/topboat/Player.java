@@ -1,17 +1,29 @@
 package edu.bsu.css22.topboat;
 
+import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Ship;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
-    public String name;
+    private String name;
     private HashMap<Ship.Type, Ship> ships;
+    private SimpleBooleanProperty ready = new SimpleBooleanProperty(false);
 
-    public Player(String name) {
+    public Player() {
         this.ships = new HashMap<>(Ship.Type.values().length);
-        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String newName) {
+        name = newName;
     }
 
     public void addShip(Ship ship) {
@@ -29,5 +41,19 @@ public class Player {
             }
         }
         return true;
+    }
+
+    public void setReady(boolean isReady) {
+        if(isReady) {
+            Log.gameLog().addMessage(new Log.Message(name + " is ready!", Log.Message.Type.SUCCESS));
+        } else {
+            Log.gameLog().addMessage(new Log.Message(name + " decided they're not ready after all", Log.Message.Type.SUCCESS));
+
+        }
+        ready.set(isReady);
+    }
+
+    public void attachReadyListener(ChangeListener<Boolean> newListener) {
+        ready.addListener(newListener);
     }
 }

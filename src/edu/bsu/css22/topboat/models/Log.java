@@ -32,7 +32,7 @@ public  class Log {
     }
 
     public void sendMessage(String text) {
-        String finalMessage = Game.player1.name + ": " + text;
+        String finalMessage = Game.player1.getName() + ": " + text;
         Message message = new Message(finalMessage,Message.Type.PLAYER_MESSAGE);
         messages.add(message);
         messageReceivedListener.onMessageReceived(message);

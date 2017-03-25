@@ -31,28 +31,26 @@ public class MainMenuController implements Initializable {
     }
 
     private boolean handleNoUsername() {
-        boolean gameStartHandled = false;
         if(usernameInput.getText().equals("") || usernameInput.getText() == null) {
             submitUsername.setVisible(true);
             singlePlayerSelect.setDisable(true);
             multiplayerSelect.setDisable(true);
             localSelect.setDisable(true);
             connectSelect.setDisable(true);
-        }else{
-            Game.player1 = new Player(usernameInput.getText());
-            gameStartHandled = true;
+            return true;
+        } else {
+            Game.player1.setName(usernameInput.getText());
+            return false;
         }
-        return gameStartHandled;
     }
 
     private class SinglePlayerSelectListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
             game = new SinglePlayerGame();
-            boolean gameStarted = handleNoUsername();
-            if(gameStarted) {
-                Game.startGame(game);
-            }
+            if(handleNoUsername()) return;
+
+            Game.startGame(game);
         }
     }
 
@@ -83,9 +81,10 @@ public class MainMenuController implements Initializable {
     private class UsernameButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            if (handleNoUsername()){
-                UI.changeView(UI.Views.MAIN_GAME);
-            }
+            if(usernameInput.getText().equals("")) return;
+
+            Game.player1.setName(usernameInput.getText());
+            Game.startGame(game);
         }
     }
 

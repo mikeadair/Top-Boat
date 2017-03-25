@@ -29,7 +29,7 @@ public class GameBoardController implements Initializable {
     private Board selectedBoard;
     private HoverTileListener hoverTileListener = new HoverTileListener();
 
-    private static final ShipPlacementListener shipPlacementTileListener = new ShipPlacementListener();
+    private final ShipPlacementListener shipPlacementTileListener = new ShipPlacementListener();
 
     private static final ChangeListener<Board.Tile> mainTileListener = (observable, oldTile, newTile) -> {
 
@@ -84,10 +84,9 @@ public class GameBoardController implements Initializable {
         }
     }
 
-    private void startShipPlacement() {
+    public void startShipPlacement() {
 
         Board.playerBoard().selectedTileProperty.addListener(shipPlacementTileListener);
-        Board.opponentBoard().selectedTileProperty.addListener(shipPlacementTileListener);
         tabPane.setOnKeyPressed(event -> {
             switch(event.getCode()) {
                 case UP:
@@ -114,6 +113,10 @@ public class GameBoardController implements Initializable {
         });
     }
 
+    void endShipPlacement() {
+        Board.playerBoard().selectedTileProperty.removeListener(shipPlacementTileListener);
+    }
+
     private class HoverTileListener implements ChangeListener<Board.Tile> {
         @Override
         public void changed(ObservableValue observable, Board.Tile oldValue, Board.Tile newValue) {
@@ -129,7 +132,7 @@ public class GameBoardController implements Initializable {
         }
     }
 
-    private static class ShipPlacementListener implements ChangeListener<Board.Tile> {
+    private class ShipPlacementListener implements ChangeListener<Board.Tile> {
         private int currentTypeIndex = 0;
         private Ship.Type currentShipType = Ship.Type.values()[currentTypeIndex];
         private Ship currentShip = new Ship(currentShipType, 0, 0);
@@ -170,7 +173,8 @@ public class GameBoardController implements Initializable {
                     currentShipType = Ship.Type.values()[currentTypeIndex];
                 } catch(ArrayIndexOutOfBoundsException e) {
                     Log.gameLog().addMessage(new Log.Message("All your ships have been placed!", Log.Message.Type.SUCCESS));
-                    //End Ship Placement
+                    Game.player1.setReady(true);
+                    endShipPlacement();
                 }
                 currentShip = new Ship(currentShipType,0,0);
                 selectedTile = null;
