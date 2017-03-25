@@ -1,11 +1,28 @@
 package edu.bsu.css22.topboat;
 
 
+import edu.bsu.css22.topboat.controllers.ViewController;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public abstract class Game {
+    State Ended = new State(() -> Thread.currentThread().interrupt());
+    State Running = new State(() -> {
+        ((ViewController)UI.currentController()).gameBoardController().startGameFunctionality();
+        while(!Thread.currentThread().isInterrupted()) {
+            currentPlayer.takeTurn();
+            if (waitingPlayer.allShipsSunk()) {
+                currentState.set(Ended);
+                return;
+            }
+            transitionPlayers();
+        }
+    });
+    State Initializing = new State(() -> {
+        handleShipPlacement();
+    });
+
     private Thread gameThread;
     private GameLoop gameLoop;
 
@@ -33,11 +50,20 @@ public abstract class Game {
          */
     }
 
-    static void handleShipPlacement() {
-        /*TODO: this will be overridden by LocalMultiplayerGame to show a transition
-        screen in between players placing ships
-        */
+    void handleShipPlacement() {
+        player1.attachReadyListener((observable, oldReady, newReady) -> {
+            System.out.println("player 1 ready");
+            if(newReady && player2.isReady()) {
+                currentState.set(Running);
+            }
+        });
 
+        player2.attachReadyListener((observable, oldReady, newReady) -> {
+            if(newReady && player1.isReady()) {
+                currentState.set(Running);
+            }
+        });
+        ((ViewController)UI.currentController()).gameBoardController().startShipPlacement();
     }
 
     public static void startGame(Game game) {
@@ -51,7 +77,7 @@ public abstract class Game {
         public void run() {
             setupStateChangeListener();
             init();
-            currentState.set(State.Initializing);
+            currentState.set(Initializing);
             finish();
         }
     }
@@ -62,28 +88,7 @@ public abstract class Game {
         });
     }
 
-    enum State {
-        Ended(() -> Thread.currentThread().interrupt()),
-        Running(() -> {
-            while(!Thread.currentThread().isInterrupted()) {
-                currentPlayer.takeTurn();
-                if (waitingPlayer.allShipsSunk()) {
-                    currentState.set(State.Ended);
-                    return;
-                }
-                transitionPlayers();
-            }
-        }),
-        Initializing(() -> {
-            player1.attachReadyListener((observable, oldReady, newReady) -> {
-                System.out.println("player 1 ready");
-            });
-
-            player2.attachReadyListener((observable, oldReady, newReady) -> {
-
-            });
-        });
-
+    static class State {
         State(Runnable op) {
             this.operation = op;
         }

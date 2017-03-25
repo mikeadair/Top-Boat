@@ -26,6 +26,20 @@ public class Player {
         name = newName;
     }
 
+    public boolean isReady() {
+        return ready.get();
+    }
+
+    public void setReady(boolean isReady) {
+        if(isReady) {
+            Log.gameLog().addMessage(new Log.Message(name + " is ready!", Log.Message.Type.SUCCESS));
+        } else {
+            Log.gameLog().addMessage(new Log.Message(name + " decided they're not ready after all", Log.Message.Type.SUCCESS));
+
+        }
+        ready.set(isReady);
+    }
+
     public void addShip(Ship ship) {
         ships.put(ship.type, ship);
     }
@@ -41,16 +55,6 @@ public class Player {
             }
         }
         return true;
-    }
-
-    public void setReady(boolean isReady) {
-        if(isReady) {
-            Log.gameLog().addMessage(new Log.Message(name + " is ready!", Log.Message.Type.SUCCESS));
-        } else {
-            Log.gameLog().addMessage(new Log.Message(name + " decided they're not ready after all", Log.Message.Type.SUCCESS));
-
-        }
-        ready.set(isReady);
     }
 
     public void attachReadyListener(ChangeListener<Boolean> newListener) {

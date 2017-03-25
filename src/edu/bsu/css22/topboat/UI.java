@@ -1,6 +1,8 @@
 package edu.bsu.css22.topboat;
 
+import com.sun.org.apache.xml.internal.security.Init;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -9,6 +11,7 @@ import java.io.IOException;
 
 public class UI {
     private static Stage primaryStage;
+    private static Initializable currentController;
 
     public static void initialize(Stage pStage) throws IOException {
         primaryStage = pStage;
@@ -20,13 +23,19 @@ public class UI {
 
     public static void changeView(UI.Views view) {
         try {
-            Parent root = FXMLLoader.load(UI.class.getResource(view.resourcePath));
+            FXMLLoader loader = new FXMLLoader(UI.class.getResource(view.resourcePath));
+            Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
+            currentController = loader.getController();
         } catch (IOException e) {
             System.err.println("Unable to change views: caused by");
             e.printStackTrace();
         }
+    }
+
+    public static Initializable currentController() {
+        return currentController;
     }
 
     public static enum Views {

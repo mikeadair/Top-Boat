@@ -14,11 +14,11 @@ public class SinglePlayerGame extends Game {
 
     @Override
     public void start() {
-        boolean shouldPlay = true;
-        Player currentPlayer = player1;
-        while(true) {
-            currentPlayer.takeTurn();
-        }
+    }
+
+    @Override
+     void handleShipPlacement() {
+
     }
 
     @Override

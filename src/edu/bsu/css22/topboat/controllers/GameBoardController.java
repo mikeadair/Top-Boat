@@ -21,6 +21,8 @@ import java.util.ResourceBundle;
 
 public class GameBoardController implements Initializable {
     @FXML TabPane tabPane;
+    @FXML Tab playerTab;
+    @FXML Tab opponentTab;
     @FXML GridPane playerGrid;
     @FXML GridPane opponentGrid;
     @FXML Button fireButton;
@@ -29,9 +31,9 @@ public class GameBoardController implements Initializable {
     private Board selectedBoard;
     private HoverTileListener hoverTileListener = new HoverTileListener();
 
-    private final ShipPlacementListener shipPlacementTileListener = new ShipPlacementListener();
+    private static final ShipPlacementListener SHIP_PLACEMENT_LISTENER = new ShipPlacementListener();
 
-    private static final ChangeListener<Board.Tile> mainTileListener = (observable, oldTile, newTile) -> {
+    private static final ChangeListener<Board.Tile> MAIN_TILE_LISTENER = (observable, oldTile, newTile) -> {
 
     };
 
@@ -39,7 +41,6 @@ public class GameBoardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initTabPane();
         initGameBoards();
-        startShipPlacement();
         fireButton.setOnAction(event -> {
             Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();
             if (targetTile.occupied){
@@ -85,36 +86,41 @@ public class GameBoardController implements Initializable {
     }
 
     public void startShipPlacement() {
-
-        Board.playerBoard().selectedTileProperty.addListener(shipPlacementTileListener);
+        Board.playerBoard().selectedTileProperty.addListener(SHIP_PLACEMENT_LISTENER);
+        opponentTab.setDisable(true);
         tabPane.setOnKeyPressed(event -> {
             switch(event.getCode()) {
                 case UP:
-                    shipPlacementTileListener.orientation.set(Ship.Orientation.UP);
+                    SHIP_PLACEMENT_LISTENER.orientation.set(Ship.Orientation.UP);
                     event.consume();
                     break;
                 case DOWN:
-                    shipPlacementTileListener.orientation.set(Ship.Orientation.DOWN);
+                    SHIP_PLACEMENT_LISTENER.orientation.set(Ship.Orientation.DOWN);
                     event.consume();
                     break;
                 case LEFT:
-                    shipPlacementTileListener.orientation.set(Ship.Orientation.LEFT);
+                    SHIP_PLACEMENT_LISTENER.orientation.set(Ship.Orientation.LEFT);
                     event.consume();
                     break;
                 case RIGHT:
-                    shipPlacementTileListener.orientation.set(Ship.Orientation.RIGHT);
+                    SHIP_PLACEMENT_LISTENER.orientation.set(Ship.Orientation.RIGHT);
                     event.consume();
                     break;
                 case ENTER:
-                    shipPlacementTileListener.confirmPlacement();
+                    SHIP_PLACEMENT_LISTENER.confirmPlacement();
                     event.consume();
                     break;
             }
         });
     }
 
-    void endShipPlacement() {
-        Board.playerBoard().selectedTileProperty.removeListener(shipPlacementTileListener);
+    private static void endShipPlacement() {
+        Board.playerBoard().selectedTileProperty.removeListener(SHIP_PLACEMENT_LISTENER);
+    }
+
+    public void startGameFunctionality() {
+        Board.playerBoard().selectedTileProperty.addListener(MAIN_TILE_LISTENER);
+        opponentTab.setDisable(false);
     }
 
     private class HoverTileListener implements ChangeListener<Board.Tile> {
@@ -132,7 +138,7 @@ public class GameBoardController implements Initializable {
         }
     }
 
-    private class ShipPlacementListener implements ChangeListener<Board.Tile> {
+    private static class ShipPlacementListener implements ChangeListener<Board.Tile> {
         private int currentTypeIndex = 0;
         private Ship.Type currentShipType = Ship.Type.values()[currentTypeIndex];
         private Ship currentShip = new Ship(currentShipType, 0, 0);
