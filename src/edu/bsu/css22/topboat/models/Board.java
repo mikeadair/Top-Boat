@@ -133,6 +133,14 @@ public class Board {
             BackgroundFill oceanFill = new BackgroundFill(Color.rgb(33, 103, 182), radii, insets);
             OCEAN_BACKGROUND = new Background(oceanFill);
         }
+        public static final Map<String, Image> FIRE_IMAGES = loadFireImages();
+        public static Map<String, Image> loadFireImages() {
+            Map<String,Image> fire = new HashMap<String,Image>();
+            fire.put("front", new Image(Tile.class.getResourceAsStream("../images/fire-front.gif")));
+            fire.put("middle", new Image(Tile.class.getResourceAsStream("../images/fire-middle.gif")));
+            fire.put("back", new Image(Tile.class.getResourceAsStream("../images/fire-back.gif")));
+            return fire;
+        }
         public static final Map<String, Image> SHIP_IMAGES = loadShipImages();
         public static Map<String, Image> loadShipImages() {
             Map<String,Image> map = new HashMap<String,Image>();
