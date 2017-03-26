@@ -1,5 +1,6 @@
 package edu.bsu.css22.topboat;
 
+import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Ship;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -12,6 +13,7 @@ import java.util.Map;
 public class Player {
     private String name;
     private HashMap<Ship.Type, Ship> ships;
+    private Board board;
     private SimpleBooleanProperty ready = new SimpleBooleanProperty(false);
 
     public Player() {
@@ -38,6 +40,14 @@ public class Player {
 
         }
         ready.set(isReady);
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     public void addShip(Ship ship) {

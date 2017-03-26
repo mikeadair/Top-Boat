@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameBoardController implements Initializable {
@@ -147,12 +148,12 @@ public class GameBoardController implements Initializable {
 
         @Override
         public void changed(ObservableValue<? extends Board.Tile> observable, Board.Tile oldTile, Board.Tile newTile) {
-            Ship.Orientation newOrientation = Board.playerBoard().validatePosition(newTile.x,newTile.y,currentShip.type.length,currentShipType);
-            if(newOrientation != null){ System.out.println(newOrientation.name()); }
+            ArrayList<Ship.Orientation> validOrientations = Board.playerBoard().validatePosition(newTile.x,newTile.y,currentShip.type.length,currentShipType);
+
             if(selectedTile != null && newTile != selectedTile){
                 Board.playerBoard().backToOcean(currentShip);
             }
-            if(newOrientation == null){
+            if(validOrientations.size() == 0){
                 Log.gameLog().addMessage(new Log.Message("That tile is not a valid placement option!", Log.Message.Type.ERROR));
                 currentShip.orientation = null;
                 selectedTile = null;
@@ -165,9 +166,9 @@ public class GameBoardController implements Initializable {
             currentShip.setX(newTile.x);
             currentShip.setY(newTile.y);
             selectedTile = newTile;
-            currentShip.orientation = newOrientation;
+            currentShip.orientation = validOrientations.get(0);
             orientation.set(null);
-            orientation.set(newOrientation);
+            orientation.set(validOrientations.get(0));
         }
 
         public void confirmPlacement() {

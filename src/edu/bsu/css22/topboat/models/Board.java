@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,15 +55,22 @@ public class Board {
         return tileMap[y][x];
     }
 
-    public Ship.Orientation validatePosition(int x, int y, int length, Ship.Type type){
+    public ArrayList<Ship.Orientation> validatePosition(int x, int y, int length, Ship.Type type){
+
+        ArrayList<Ship.Orientation> availableOrientations = new ArrayList<>();
+
         if(get(x,y).occupied && get(x,y).type != type.name()){
-            return null;
+            return availableOrientations;
         }
+
         for(Ship.Orientation orientation : Ship.Orientation.values()) {
-            Boolean orientationValid = true;
+            boolean orientationValid = true;
+
             for(int i = 1; i < length; i++) {
                 try {
-                    if(tileMap[y + (orientation.yMod * i)][x + (orientation.xMod * i)].occupied && tileMap[y][x].type != type.name()) {
+                    int tryY = y + (orientation.yMod * i);
+                    int tryX = x + (orientation.xMod * i);
+                    if(tileMap[tryY][tryX].occupied && tileMap[y][x].type != type.name()) {
                         orientationValid = false;
                         break;
                     }
@@ -72,10 +80,10 @@ public class Board {
                 }
             }
             if(orientationValid){
-                return orientation;
+                availableOrientations.add(orientation);
             }
         }
-        return null;
+        return availableOrientations;
     }
 
     public void backToOcean(Ship ship){
@@ -93,9 +101,11 @@ public class Board {
     public boolean worksWithOrientation(Ship ship, Ship.Orientation orientation){
         for(int i = 1; i < ship.type.length; i++) {
             try {
-                if(tileMap[ship.getY() + (orientation.yMod * i)][ship.getX() + (orientation.xMod * i)].occupied){
+                int y = ship.getY() + (orientation.yMod * i);
+                int x = ship.getX() + (orientation.xMod * i);
+                if(tileMap[y][x].occupied){
                     return false;
-                }else if(tileMap[ship.getY() + (orientation.yMod * i)][ship.getX() + (orientation.xMod * i)].type != null && tileMap[ship.getY() + (orientation.yMod * i)][ship.getX() + (orientation.xMod * i)].type != ship.name){
+                } else if(tileMap[y][x].type != null && tileMap[y][x].type != ship.name) {
                     return false;
                 }
             } catch(ArrayIndexOutOfBoundsException e) {
@@ -134,10 +144,19 @@ public class Board {
             OCEAN_BACKGROUND = new Background(oceanFill);
         }
         public static final Image FIRE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/fire-front.gif"));
+        public static final Map<String, Image> FIRE_IMAGES = loadFireImages();
 
+        public static Map<String, Image> loadFireImages() {
+            Map<String,Image> fire = new HashMap<>();
+            fire.put("front", new Image(Tile.class.getResourceAsStream("../images/fire-front.gif")));
+            fire.put("middle", new Image(Tile.class.getResourceAsStream("../images/fire-middle.gif")));
+            fire.put("back", new Image(Tile.class.getResourceAsStream("../images/fire-back.gif")));
+            return fire;
+        }
         public static final Map<String, Image> SHIP_IMAGES = loadShipImages();
+
         public static Map<String, Image> loadShipImages() {
-            Map<String,Image> map = new HashMap<String,Image>();
+            Map<String,Image> map = new HashMap<>();
             for(Ship.Type type: Ship.Type.values()){
                 if(!map.containsKey(type.imageType)){
                     map.put(type.imageType + "-front", new Image(Tile.class.getResourceAsStream("../images/" + type.imageType + "-front.png")));
