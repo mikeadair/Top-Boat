@@ -143,8 +143,8 @@ public class Board {
             BackgroundFill oceanFill = new BackgroundFill(Color.rgb(33, 103, 182), radii, insets);
             OCEAN_BACKGROUND = new Background(oceanFill);
         }
-        public static final Image FIRE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/fire-front.gif"));
-        
+        public static final Image FIRE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/fire.gif"));
+
         public static final Map<String, Image> SHIP_IMAGES = loadShipImages();
 
         public static Map<String, Image> loadShipImages() {
