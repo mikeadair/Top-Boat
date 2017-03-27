@@ -1,6 +1,7 @@
 package edu.bsu.css22.topboat;
 
 import edu.bsu.css22.topboat.models.Board;
+import edu.bsu.css22.topboat.models.FireEvent;
 import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Ship;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -9,12 +10,15 @@ import javafx.beans.value.ObservableValue;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class Player {
     private String name;
     private HashMap<Ship.Type, Ship> ships;
     private Board board;
     private SimpleBooleanProperty ready = new SimpleBooleanProperty(false);
+    private BlockingQueue<FireEvent> fireEvents = new ArrayBlockingQueue<FireEvent>(1);
 
     public Player() {
         this.ships = new HashMap<>(Ship.Type.values().length);
@@ -55,7 +59,13 @@ public class Player {
     }
 
     public void takeTurn() {
-
+        System.out.println(name + " is taking their turn");
+        try {
+            FireEvent fireEvent = fireEvents.take();
+            System.out.println("Fire event recieved on: " + Thread.currentThread().getName());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean allShipsSunk() {
@@ -69,5 +79,9 @@ public class Player {
 
     public void attachReadyListener(ChangeListener<Boolean> newListener) {
         ready.addListener(newListener);
+    }
+
+    public void fire(FireEvent fireEvent) {
+        fireEvents.offer(fireEvent);
     }
 }

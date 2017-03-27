@@ -1,10 +1,9 @@
 package edu.bsu.css22.topboat.controllers;
 
 import edu.bsu.css22.topboat.Game;
+import edu.bsu.css22.topboat.UI;
 import edu.bsu.css22.topboat.Util.ShipPlacementHandler;
-import edu.bsu.css22.topboat.models.Board;
-import edu.bsu.css22.topboat.models.Log;
-import edu.bsu.css22.topboat.models.Ship;
+import edu.bsu.css22.topboat.models.*;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -45,11 +44,15 @@ public class GameBoardController implements Initializable {
         initTabPane();
         initGameBoards();
         fireButton.setOnAction(event -> {
-            Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();
-            if (targetTile.isOccupied()){
-                //TODO: fire weapon functionality
-            }
+            System.out.println("fire event on " + Thread.currentThread().getName());
+            ArsenalController arsenalController = ((ViewController)UI.currentController()).arsenalController;
 
+            Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();
+            Weapon weapon = arsenalController.getSelectedWeapon();
+            FireEvent fireEvent = new FireEvent(targetTile, weapon);
+            Game.player1.fire(fireEvent);
+
+            arsenalController.resetWeaponSelection();
         });
     }
 
@@ -119,9 +122,11 @@ public class GameBoardController implements Initializable {
 
     private static void endShipPlacement() {
         Board.playerBoard().selectedTileProperty.removeListener(SHIP_PLACEMENT_LISTENER);
+        Game.player1.setReady(true);
     }
 
     public void startGameFunctionality() {
+        System.out.println("starting game functionality");
         Board.playerBoard().selectedTileProperty.addListener(MAIN_TILE_LISTENER);
         opponentTab.setDisable(false);
     }

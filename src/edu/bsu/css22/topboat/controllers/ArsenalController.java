@@ -49,11 +49,20 @@ public class ArsenalController implements Initializable {
         });
     }
 
-    public void loadWeapons(){
+    private void loadWeapons(){
         int i = 0;
         arsenal = new ArrayList<>();
         for(Weapon.Type type : Weapon.Type.values()){
             arsenal.add(i, new Weapon(type));
         }
+        resetWeaponSelection();
+    }
+
+    public void resetWeaponSelection() {
+        weaponListView.getSelectionModel().select(arsenal.size() - 1);
+    }
+
+    public Weapon getSelectedWeapon() {
+        return weaponListView.getSelectionModel().getSelectedItem();
     }
 }

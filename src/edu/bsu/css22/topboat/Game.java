@@ -9,9 +9,12 @@ import javafx.beans.value.ObservableValue;
 public abstract class Game {
     State Ended = new State(() -> Thread.currentThread().interrupt());
     State Running = new State(() -> {
+        System.out.println("Game state running on " + Thread.currentThread().getName());
         ((ViewController)UI.currentController()).gameBoardController().startGameFunctionality();
+        currentPlayer = player1;
+        waitingPlayer = player2;
         while(!Thread.currentThread().isInterrupted()) {
-            currentPlayer.takeTurn();
+//            currentPlayer.takeTurn();
             if (waitingPlayer.allShipsSunk()) {
                 currentState.set(Ended);
                 return;
