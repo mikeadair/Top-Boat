@@ -38,102 +38,16 @@ public class Board {
     }
 
     public static Board playerBoard() {
-        if(playerBoard == null) {
-            playerBoard = new Board();
-        }
         return playerBoard;
     }
 
     public static Board opponentBoard() {
-        if(opponentBoard == null) {
-            opponentBoard = new Board();
-        }
         return opponentBoard;
     }
 
-    public Tile get(int x, int y) {
+    public Tile getTile(int x, int y) {
         return tileMap[y][x];
     }
-
-    public ArrayList<Ship.Orientation> validatePosition(int x, int y, int length, Ship.Type type){
-
-        ArrayList<Ship.Orientation> availableOrientations = new ArrayList<>();
-
-        if(get(x,y).occupied && get(x,y).type != type.name()){
-            return availableOrientations;
-        }
-
-        for(Ship.Orientation orientation : Ship.Orientation.values()) {
-            boolean orientationValid = true;
-
-            for(int i = 1; i < length; i++) {
-                try {
-                    int tryY = y + (orientation.yMod * i);
-                    int tryX = x + (orientation.xMod * i);
-                    if(tileMap[tryY][tryX].occupied && tileMap[y][x].type != type.name()) {
-                        orientationValid = false;
-                        break;
-                    }
-                } catch(ArrayIndexOutOfBoundsException e){
-                    orientationValid = false;
-                    break;
-                }
-            }
-            if(orientationValid){
-                availableOrientations.add(orientation);
-            }
-        }
-        return availableOrientations;
-    }
-
-    public void backToOcean(Ship ship){
-        for(int i = 0; i < ship.type.length; i++){
-            try {
-                tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].imageProperty.set(null);
-                tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].occupied = false;
-                tileMap[ship.getY() + (ship.orientation.yMod * i)][ship.getX() + (ship.orientation.xMod * i)].type = null;
-            } catch (ArrayIndexOutOfBoundsException e) {
-                //Do nothing
-            }
-        }
-    }
-
-    public boolean worksWithOrientation(Ship ship, Ship.Orientation orientation){
-        for(int i = 1; i < ship.type.length; i++) {
-            try {
-                int y = ship.getY() + (orientation.yMod * i);
-                int x = ship.getX() + (orientation.xMod * i);
-                if(tileMap[y][x].occupied){
-                    return false;
-                } else if(tileMap[y][x].type != null && tileMap[y][x].type != ship.name) {
-                    return false;
-                }
-            } catch(ArrayIndexOutOfBoundsException e) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public void occupyTilesWithShip(Ship ship) {
-        for(int i = 0; i < ship.type.length; i++) {
-            int newX = ship.getX() + (ship.orientation.xMod * i);
-            int newY = ship.getY() + (ship.orientation.yMod * i);
-
-            Tile tile = tileMap[newY][newX];
-            tile.occupied = true;
-            tile.type = ship.name;
-            tile.shipOrientation = ship.orientation;
-            if(i == 0) {
-                tile.imageProperty.set(Tile.SHIP_IMAGES.get(ship.type.imageType + "-front"));
-            } else if(i == ship.type.length-1) {
-                tile.imageProperty.set(Tile.SHIP_IMAGES.get(ship.type.imageType + "-back"));
-            } else {
-                tile.imageProperty.set(Tile.SHIP_IMAGES.get(ship.type.imageType + "-middle"));
-            }
-        }
-    }
-
 
     public static class Tile extends StackPane {
         private static final Background OCEAN_BACKGROUND;
@@ -143,30 +57,13 @@ public class Board {
             BackgroundFill oceanFill = new BackgroundFill(Color.rgb(33, 103, 182), radii, insets);
             OCEAN_BACKGROUND = new Background(oceanFill);
         }
-        public static final Image FIRE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/fire-front.gif"));
-        
-        public static final Map<String, Image> SHIP_IMAGES = loadShipImages();
-
-        public static Map<String, Image> loadShipImages() {
-            Map<String,Image> map = new HashMap<>();
-            for(Ship.Type type: Ship.Type.values()){
-                if(!map.containsKey(type.imageType)){
-                    map.put(type.imageType + "-front", new Image(Tile.class.getResourceAsStream("../images/" + type.imageType + "-front.png")));
-                    map.put(type.imageType + "-middle", new Image(Tile.class.getResourceAsStream("../images/" + type.imageType + "-middle.png")));
-                    map.put(type.imageType + "-back", new Image(Tile.class.getResourceAsStream("../images/" + type.imageType + "-back.png")));
-                }
-            }
-            return map;
-        }
+        public static final Image FIRE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/fire.gif"));
 
         private Board board;
         public int x;
         public int y;
-        public boolean occupied;
-        public String type;
-        private SimpleObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
+        public Ship ship;
         private ImageView imageView = new ImageView();
-        private Ship.Orientation shipOrientation;
         public TileName name;
 
 
@@ -181,33 +78,37 @@ public class Board {
             addEventHandler(MouseEvent.MOUSE_ENTERED, event -> board.hoverTileProperty.set(this));
             addEventHandler(MouseEvent.MOUSE_EXITED, event -> board.hoverTileProperty.set(null));
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> board.selectedTileProperty.set(this));
+        }
 
-            imageProperty.addListener((observable, oldImage, newImage) -> {
-                if(newImage == null) {
-                    getChildren().remove(imageView);
-                } else {
-                    imageView.setImage(newImage);
-                    switch (shipOrientation) {
-                        case UP:
-                            imageView.setRotate(180);
-                            imageView.fitHeightProperty().bind(this.heightProperty());
-                            break;
-                        case DOWN:
-                            imageView.setRotate(0);
-                            imageView.fitHeightProperty().bind(this.heightProperty());
-                            break;
-                        case LEFT:
-                            imageView.setRotate(90);
-                            imageView.fitHeightProperty().bind(this.widthProperty());
-                            break;
-                        case RIGHT:
-                            imageView.setRotate(270);
-                            imageView.fitHeightProperty().bind(this.widthProperty());
-                            break;
-                    }
-                    getChildren().add(imageView);
+        public boolean isOccupied() {
+            return ship != null;
+        }
+
+        public void setImage(Image newImage) {
+            if(newImage == null) {
+                getChildren().remove(imageView);
+            } else {
+                imageView.setImage(newImage);
+                switch (ship.orientation) {
+                    case UP:
+                        imageView.setRotate(180);
+                        imageView.fitHeightProperty().bind(this.heightProperty());
+                        break;
+                    case DOWN:
+                        imageView.setRotate(0);
+                        imageView.fitHeightProperty().bind(this.heightProperty());
+                        break;
+                    case LEFT:
+                        imageView.setRotate(90);
+                        imageView.fitHeightProperty().bind(this.widthProperty());
+                        break;
+                    case RIGHT:
+                        imageView.setRotate(270);
+                        imageView.fitHeightProperty().bind(this.widthProperty());
+                        break;
                 }
-            });
+                getChildren().add(imageView);
+            }
         }
     }
 

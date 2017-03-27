@@ -1,8 +1,8 @@
 package edu.bsu.css22.topboat;
 
+import edu.bsu.css22.topboat.Util.ShipPlacementHandler;
 import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Ship;
-import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,44 +27,33 @@ public class ComputerPlayer extends Player {
     }
 
     public void placeShips() {
+        ShipPlacementHandler placementHandler = new ShipPlacementHandler(this);
         new Thread(() -> {
-            int currentTypeIndex = 0;
-            Ship currentShip = new Ship(Ship.Type.values()[currentTypeIndex], -1, -1);
-            while(true) {
+            while(!placementHandler.allShipsPlaced()) {
                 Board.Tile tryTile = getRandomTile();
-                if(tryTile.occupied) {
-                    continue;
+                if (placementHandler.isValidPlacementOrigin(tryTile)) {
+                    Ship.Orientation randomOrientation = getRandomOrientationFromList(placementHandler.getValidOrientations());
+                    placementHandler.confirmShipPlacement(tryTile, randomOrientation);
                 }
-
-//                ArrayList<Ship.Orientation> validOrientations
-
-                currentTypeIndex++;
-                currentShip = new Ship(Ship.Type.values()[currentTypeIndex], -1, -1);
             }
-
-
-        }).start();
+            long waitAmount = (random.nextInt(10) + 5) * 1000;
+            try {
+                Thread.sleep(waitAmount);
+            } catch (InterruptedException e) {}
+            setReady(true);
+        }, "ComputerShipPlacementThread").start();
     }
 
     private Board.Tile getRandomTile() {
         int randomX = random.nextInt(Board.WIDTH);
         int randomY = random.nextInt(Board.HEIGHT);
 
-        return getBoard().get(randomX, randomY);
+        return getBoard().getTile(randomX, randomY);
     }
 
-    private void tryOrientationsForTile(Board.Tile tile) {
-        ArrayList<Ship.Orientation> orientations = new ArrayList<>(Arrays.asList(Ship.Orientation.values()));
-        Collections.shuffle(orientations);
-        for(Ship.Orientation orientation : orientations) {
-
-        }
-
-    }
-
-    private Ship.Orientation getRandomOrientation() {
-        int randomIndex = random.nextInt(Ship.Orientation.values().length);
-        return Ship.Orientation.values()[randomIndex];
+    private Ship.Orientation getRandomOrientationFromList(ArrayList<Ship.Orientation> validOrientations) {
+        int randomIndex = random.nextInt(validOrientations.size());
+        return validOrientations.get(randomIndex);
     }
 
 }

@@ -52,7 +52,6 @@ public abstract class Game {
 
     void handleShipPlacement() {
         player1.attachReadyListener((observable, oldReady, newReady) -> {
-            System.out.println("player 1 ready");
             if(newReady && player2.isReady()) {
                 currentState.set(Running);
             }

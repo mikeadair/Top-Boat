@@ -1,6 +1,19 @@
 package edu.bsu.css22.topboat.models;
 
+import javafx.scene.image.Image;
+
 public class Ship {
+    private static final Image[] SHIP_IMAGES = {
+            new Image(Ship.class.getResourceAsStream("../images/ship-front.png")),
+            new Image(Ship.class.getResourceAsStream("../images/ship-middle.png")),
+            new Image(Ship.class.getResourceAsStream("../images/ship-back.png"))
+    };
+    private static final Image[] SUB_IMAGES = {
+            new Image(Ship.class.getResourceAsStream("../images/sub-front.png")),
+            new Image(Ship.class.getResourceAsStream("../images/sub-middle.png")),
+            new Image(Ship.class.getResourceAsStream("../images/sub-back.png"))
+    };
+
     private int x;
     private int y;
     public Type type;
@@ -31,21 +44,36 @@ public class Ship {
         this.x = x;
     }
 
+    public int getLength() {
+        return type.length;
+    }
+
+    public Image getImageForIndex(int index) {
+        if(index == 0) {
+            return type.images[0];
+        } else if(index == type.length-1) {
+            return type.images[2];
+        } else {
+            return type.images[1];
+        }
+    }
+
 
     public enum Type {
-        CARRIER(5, "ship"),
-        BATTLESHIP(4, "ship"),
-        CRUISER(3, "ship"),
-        SUBMARINE(3, "sub"),
-        DESTROYER(2, "ship");
+        CARRIER(5, SHIP_IMAGES),
+        BATTLESHIP(4, SHIP_IMAGES),
+        CRUISER(3, SHIP_IMAGES),
+        SUBMARINE(3, SUB_IMAGES),
+        DESTROYER(2, SHIP_IMAGES);
 
-        Type(int l, String imageType) {
+        Type(int l, Image[] images) {
             this.length = l;
-            this.imageType = imageType;
+            this.images = images;
         }
 
         public int length;
-        public String imageType;
+
+        Image[] images;
     }
 
     public enum Orientation {
@@ -59,7 +87,7 @@ public class Ship {
             yMod = yM;
         }
 
-        int xMod;
-        int yMod;
+        public int xMod;
+        public int yMod;
     }
 }

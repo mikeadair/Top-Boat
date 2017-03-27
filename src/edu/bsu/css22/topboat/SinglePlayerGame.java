@@ -24,6 +24,7 @@ public class SinglePlayerGame extends Game {
     @Override
      void handleShipPlacement() {
         super.handleShipPlacement();
+        ((ComputerPlayer)player2).placeShips();
     }
 
     @Override

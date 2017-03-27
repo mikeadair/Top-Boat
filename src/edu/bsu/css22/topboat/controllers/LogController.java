@@ -75,20 +75,23 @@ public class LogController implements Initializable{
         if(Platform.isFxApplicationThread()) {
             log.getItems().add(messageView);
         } else {
-            Platform.runLater(() -> log.getItems().add(messageView));
+            Platform.runLater(() -> {
+                log.getItems().add(messageView);
+                log.scrollTo(log.getItems().toArray().length);
+                ReadOnlyObjectProperty<Tab> currentTab = logs.getSelectionModel().selectedItemProperty();
+                if (log == loglist_game && currentTab.getValue() != game_tab) {
+                    System.out.println("GAME LOG");
+                    game_message.play();
+                    notifyTab(game_tab);
+                }
+                if (log == loglist_messages && currentTab.getValue() != messages_tab) {
+                    System.out.println("MESSAGES LOG");
+                    player_message.play();
+                    notifyTab(messages_tab);
+                }
+            });
         }
-        log.scrollTo(log.getItems().toArray().length);
-        ReadOnlyObjectProperty<Tab> currentTab = logs.getSelectionModel().selectedItemProperty();
-        if(log == loglist_game && currentTab.getValue() != game_tab) {
-            System.out.println("GAME LOG");
-            game_message.play();
-            notifyTab(game_tab);
-        }
-        if(log == loglist_messages && currentTab.getValue() != messages_tab){
-            System.out.println("MESSAGES LOG");
-            player_message.play();
-            notifyTab(messages_tab);
-        }
+
     }
 
     private class RandomMessageThread implements Runnable {

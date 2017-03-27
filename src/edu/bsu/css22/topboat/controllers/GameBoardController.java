@@ -1,6 +1,7 @@
 package edu.bsu.css22.topboat.controllers;
 
 import edu.bsu.css22.topboat.Game;
+import edu.bsu.css22.topboat.Util.ShipPlacementHandler;
 import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Ship;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -44,7 +46,7 @@ public class GameBoardController implements Initializable {
         initGameBoards();
         fireButton.setOnAction(event -> {
             Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();
-            if (targetTile.occupied){
+            if (targetTile.isOccupied()){
                 //TODO: fire weapon functionality
             }
 
@@ -80,7 +82,7 @@ public class GameBoardController implements Initializable {
     private void initBoard(GridPane grid, Board board) {
         for(int y = 0; y < Board.HEIGHT; y++) {
             for(int x = 0; x < Board.WIDTH; x++) {
-                Board.Tile tile = board.get(x, y);
+                Board.Tile tile = board.getTile(x, y);
                 grid.add(tile, x, y);
             }
         }
@@ -140,76 +142,55 @@ public class GameBoardController implements Initializable {
     }
 
     private static class ShipPlacementListener implements ChangeListener<Board.Tile> {
-        private int currentTypeIndex = 0;
-        private Ship.Type currentShipType = Ship.Type.values()[currentTypeIndex];
-        private Ship currentShip = new Ship(currentShipType, 0, 0);
         SimpleObjectProperty<Ship.Orientation> orientation = new SimpleObjectProperty<>();
+        ShipPlacementHandler shipPlacementHandler = new ShipPlacementHandler(Game.player1) {
+            @Override
+            public void onNewShipPlacementInTile(Board.Tile newTile, Ship currentShip, int index) {
+                newTile.setImage(currentShip.getImageForIndex(index));
+            }
+
+            @Override
+            public void onResetShipPlacementInTile(Board.Tile resetTile) {
+                resetTile.setImage(null);
+            }
+        };
         private Board.Tile selectedTile;
 
         @Override
         public void changed(ObservableValue<? extends Board.Tile> observable, Board.Tile oldTile, Board.Tile newTile) {
-            ArrayList<Ship.Orientation> validOrientations = Board.playerBoard().validatePosition(newTile.x,newTile.y,currentShip.type.length,currentShipType);
-
-            if(selectedTile != null && newTile != selectedTile){
-                Board.playerBoard().backToOcean(currentShip);
-            }
-            if(validOrientations.size() == 0){
-                Log.gameLog().addMessage(new Log.Message("That tile is not a valid placement option!", Log.Message.Type.ERROR));
-                currentShip.orientation = null;
-                selectedTile = null;
-                return;
-            }
-            if(oldTile != null && oldTile != newTile && currentShip.orientation != null) {
-                System.out.println("removing ship");
-                Board.playerBoard().backToOcean(currentShip);
-            }
-            currentShip.setX(newTile.x);
-            currentShip.setY(newTile.y);
-            selectedTile = newTile;
-            currentShip.orientation = validOrientations.get(0);
-            orientation.set(null);
-            orientation.set(validOrientations.get(0));
-        }
-
-        public void confirmPlacement() {
-            if(currentShip.orientation != null){
-                Log.gameLog().addMessage(new Log.Message("Placed " + currentShip.type.name() + " at " + selectedTile.name + ": Facing " + currentShip.orientation.name(), Log.Message.Type.SUCCESS));
-                Game.player1.addShip(currentShip);
-                currentTypeIndex++;
-                try {
-                    currentShipType = Ship.Type.values()[currentTypeIndex];
-                } catch(ArrayIndexOutOfBoundsException e) {
-                    Log.gameLog().addMessage(new Log.Message("All your ships have been placed!", Log.Message.Type.SUCCESS));
-                    Game.player1.setReady(true);
-                    endShipPlacement();
-                }
-                currentShip = new Ship(currentShipType,0,0);
-                selectedTile = null;
-            }else{
-                Log.gameLog().addMessage(new Log.Message("You must select an orientation before confirming!", Log.Message.Type.ERROR));
+            if(shipPlacementHandler.isValidPlacementOrigin(newTile)) {
+                selectedTile = newTile;
+                Ship.Orientation validOrientation = shipPlacementHandler.getValidOrientations().get(0);
+                orientation.set(null);
+                orientation.set(validOrientation);
+            } else {
+                Log.gameLog().addMessage(new Log.Message("That is not a valid placement option!", Log.Message.Type.ERROR));
             }
         }
 
         public ShipPlacementListener() {
-            orientation.addListener((Observable orientation) -> {
-                if(((SimpleObjectProperty)orientation).getValue() == null){
+            orientation.addListener((observable, oldOrientation, newOrientation) -> {
+                if(newOrientation == null) {
                     return;
-                }
-                if(selectedTile != null) {
-                    if(orientation == null){
-                        return;
-                    }
-                    if(Board.playerBoard().worksWithOrientation(currentShip, (Ship.Orientation) ((SimpleObjectProperty)orientation).getValue())){
-                        if(currentShip.orientation != null){
-                            Board.playerBoard().backToOcean(currentShip);
-                        }
-                        currentShip.orientation = (Ship.Orientation) ((SimpleObjectProperty)orientation).getValue();
-                        Board.playerBoard().occupyTilesWithShip(currentShip);
-                    }else{
-                        Log.gameLog().addMessage(new Log.Message("Ship cannot be oriented that direction", Log.Message.Type.ERROR));
-                    }
+                } else if(shipPlacementHandler.getValidOrientations().contains(newOrientation)) {
+                    shipPlacementHandler.newShipPlacement(selectedTile, newOrientation);
+                } else {
+                    orientation.set(oldOrientation);
+                    Log.gameLog().addMessage(new Log.Message("That is not a valid orientation!", Log.Message.Type.ERROR));
                 }
             });
+        }
+
+        public void confirmPlacement() {
+            if(selectedTile == null) return;
+
+            Log.gameLog().addMessage(new Log.Message(shipPlacementHandler.getCurrentShip().name + " was placed at " + selectedTile.name, Log.Message.Type.SUCCESS));
+            shipPlacementHandler.confirmShipPlacement(selectedTile, orientation.get());
+            selectedTile = null;
+            if(shipPlacementHandler.allShipsPlaced()) {
+                Log.gameLog().addMessage(new Log.Message("All ships placed.", Log.Message.Type.SUCCESS));
+                endShipPlacement();
+            }
         }
     }
 
