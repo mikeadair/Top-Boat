@@ -9,11 +9,11 @@ public class ModelTests {
     Ship carrier = new Ship(Ship.Type.CARRIER,0,0);
 
     @Test public void testTileOccupied(){
-        Assert.assertFalse(player.get(0,4).occupied);
+        Assert.assertFalse(player.getTile(0,4).isOccupied());
     }
 
     @Test public void testTileName(){
-        Assert.assertEquals(player.get(0,0).name.toString(),"A1");
+        Assert.assertEquals(player.getTile(0,0).name.toString(),"A1");
     }
 
     @Test public void testShipLength(){
