@@ -2,21 +2,20 @@ package edu.bsu.css22.topboat;
 
 
 import edu.bsu.css22.topboat.controllers.ViewController;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public abstract class Game {
     State Ended = new State(() -> Thread.currentThread().interrupt());
     State Running = new State(() -> {
-        System.out.println("Game state running on " + Thread.currentThread().getName());
         ((ViewController)UI.currentController()).gameBoardController().startGameFunctionality();
         currentPlayer = player1;
         waitingPlayer = player2;
         while(!Thread.currentThread().isInterrupted()) {
-//            currentPlayer.takeTurn();
+            currentPlayer.takeTurn();
             if (waitingPlayer.allShipsSunk()) {
-                currentState.set(Ended);
+                changeState(Ended);
                 return;
             }
             transitionPlayers();
@@ -24,6 +23,7 @@ public abstract class Game {
     });
     State Initializing = new State(() -> {
         handleShipPlacement();
+        listenForStateChange();
     });
 
     private Thread gameThread;
@@ -32,7 +32,7 @@ public abstract class Game {
     public static Player player1;
     public static Player player2;
 
-    static SimpleObjectProperty<State> currentState = new SimpleObjectProperty<>();
+    static BlockingQueue<State> stateChangeQueue = new ArrayBlockingQueue<>(1);
     static Player currentPlayer;
     static Player waitingPlayer;
 
@@ -54,18 +54,19 @@ public abstract class Game {
     }
 
     void handleShipPlacement() {
+        ((ViewController)UI.currentController()).gameBoardController().startShipPlacement();
+
         player1.attachReadyListener((observable, oldReady, newReady) -> {
             if(newReady && player2.isReady()) {
-                currentState.set(Running);
+                changeState(Running);
             }
         });
 
         player2.attachReadyListener((observable, oldReady, newReady) -> {
             if(newReady && player1.isReady()) {
-                currentState.set(Running);
+                changeState(Running);
             }
         });
-        ((ViewController)UI.currentController()).gameBoardController().startShipPlacement();
     }
 
     public static void startGame(Game game) {
@@ -74,20 +75,28 @@ public abstract class Game {
         game.gameThread.start();
     }
 
-    private class GameLoop implements Runnable {
-        @Override
-        public void run() {
-            setupStateChangeListener();
-            init();
-            currentState.set(Initializing);
-            finish();
+    private void listenForStateChange() {
+        while(!Thread.currentThread().isInterrupted()) {
+            try {
+                State newState = stateChangeQueue.take();
+                newState.operation.run();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void setupStateChangeListener() {
-        currentState.addListener((observable, oldState, newState) -> {
-            newState.operation.run();
-        });
+    void changeState(State newState) {
+        stateChangeQueue.offer(newState);
+    }
+
+    private class GameLoop implements Runnable {
+        @Override
+        public void run() {
+            init();
+            Initializing.operation.run();
+            finish();
+        }
     }
 
     static class State {
