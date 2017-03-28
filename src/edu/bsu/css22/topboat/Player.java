@@ -68,9 +68,49 @@ public class Player {
     public void takeTurn() {
         try {
             FireEvent fireEvent = fireEvents.take();
+            ArrayList<Board.Tile> hits = new ArrayList<>();
+            ArrayList<Board.Tile> misses = new ArrayList<>();
+            for(int[] affectedTile : fireEvent.getWeapon().getAffectedTiles()) {
+                int x = affectedTile[1] + fireEvent.getTarget().x;
+                int y = affectedTile[0] + fireEvent.getTarget().y;
+
+                Board.Tile target = fireEvent.getTarget().getBoard().getTile(x, y);
+                if (target == null) {
+                    continue;
+                } else {
+                    if(target.hit()) {
+                        hits.add(target);
+                    } else {
+                        misses.add(target);
+                    }
+                }
+            }
+            if(hits.size() > 0) {
+                String hitMessage = "You hit at " + buildStringFromTiles(hits);
+                Log.gameLog().addMessage(new Log.Message(hitMessage, Log.Message.Type.SUCCESS));
+            }
+            if(misses.size() > 0) {
+                String missMessage = "You missed at " + buildStringFromTiles(misses);
+                Log.gameLog().addMessage(new Log.Message(missMessage, Log.Message.Type.ERROR));
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private String buildStringFromTiles(ArrayList<Board.Tile> tiles) {
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < tiles.size(); i++) {
+            if(i != tiles.size() - 1 && i != 0) {
+                builder.append(", ");
+            }
+            if(i == tiles.size() - 1) {
+                builder.append(", and ");
+            }
+            Board.Tile tile = tiles.get(i);
+            builder.append(tile.name.toString());
+        }
+        return builder.toString();
     }
 
     public boolean allShipsSunk() {

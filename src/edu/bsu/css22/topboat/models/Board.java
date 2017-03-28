@@ -46,7 +46,11 @@ public class Board {
     }
 
     public Tile getTile(int x, int y) {
-        return tileMap[y][x];
+        try {
+            return tileMap[y][x];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public static class Tile extends StackPane {
@@ -57,7 +61,9 @@ public class Board {
             BackgroundFill oceanFill = new BackgroundFill(Color.rgb(33, 103, 182), radii, insets);
             OCEAN_BACKGROUND = new Background(oceanFill);
         }
-        public static final Image FIRE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/fire.gif"));
+        private static final Image FIRE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/fire.gif"));
+        private static final Image MISS_IMAGE = new Image(Tile.class.getResourceAsStream("../images/miss.png"));
+        private static final Image HIT_IMAGE = new Image(Tile.class.getResourceAsStream("../images/hit.png"));
 
         private Board board;
         public int x;
@@ -65,8 +71,7 @@ public class Board {
         public Ship ship;
         private ImageView imageView = new ImageView();
         public TileName name;
-
-
+        private boolean hasBeenHit = false;
 
         private Tile(Board board, int x, int y) {
             setBackground(OCEAN_BACKGROUND);
@@ -109,6 +114,24 @@ public class Board {
                 }
                 getChildren().add(imageView);
             }
+        }
+
+        public boolean hasBeenHit() {
+            return hasBeenHit;
+        }
+
+        public boolean hit() {
+            hasBeenHit = true;
+            if(isOccupied()) {
+                //TODO: display hit graphic, check if ship is sunk, if yes display ship on fire
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public Board getBoard() {
+            return board;
         }
     }
 

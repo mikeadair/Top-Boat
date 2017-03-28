@@ -52,13 +52,13 @@ public class ShipPlacementHandler {
                 int x = tile.x + (orientation.xMod * i);
                 int y = tile.y + (orientation.yMod * i);
 
-                try {
-                    Board.Tile tryTile = player.getBoard().getTile(x, y);
-                    if (tileContainsDifferentShip(tryTile)) {
-                        orientationIsValid = false;
-                        break;
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
+                Board.Tile tryTile = player.getBoard().getTile(x, y);
+                if(tryTile == null) {
+                    orientationIsValid = false;
+                    break;
+                }
+
+                if (tileContainsDifferentShip(tryTile)) {
                     orientationIsValid = false;
                     break;
                 }
