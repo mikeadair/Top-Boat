@@ -14,6 +14,9 @@ public class FireEvent {
     }
 
     public Weapon getWeapon() {
+        if(weapon == null){
+            weapon = new Weapon(Weapon.Type.SINGLESHOT);
+        }
         return weapon;
     }
 }
