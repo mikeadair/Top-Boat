@@ -51,18 +51,14 @@ public class GameBoardController implements Initializable {
     private static final ShipPlacementListener SHIP_PLACEMENT_LISTENER = new ShipPlacementListener();
 
     private static final ChangeListener<Board.Tile> MAIN_TILE_LISTENER = (observable, oldTile, newTile) -> {
-        if(newTile == null) return;
+        if(newTile == null) {
+            removeAffectedTileMarkers();
+            return;
+        }
 
         ArsenalController arsenalController = ((ViewController)UI.currentController()).arsenalController;
         int[][] weaponAffectedTiles = arsenalController.getSelectedWeapon().getAffectedTiles();
         ArrayList<Marker> usedMarkers = new ArrayList<>();
-
-        for(int i = 0; i < selectedTileMarkers.size(); i++) {
-            Marker marker = selectedTileMarkers.get(i);
-            marker.removeFromTile();
-            MARKERS.push(marker);
-        }
-        selectedTileMarkers.clear();
 
         for(int[] weaponAffectedTile : weaponAffectedTiles) {
             int x = weaponAffectedTile[1] + newTile.x;
@@ -80,6 +76,15 @@ public class GameBoardController implements Initializable {
 
     };
 
+    private static void removeAffectedTileMarkers() {
+        for(int i = 0; i < selectedTileMarkers.size(); i++) {
+            Marker marker = selectedTileMarkers.get(i);
+            marker.removeFromTile();
+            MARKERS.push(marker);
+        }
+        selectedTileMarkers.clear();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTabPane();
@@ -93,6 +98,7 @@ public class GameBoardController implements Initializable {
             Game.player1.fire(fireEvent);
 
             arsenalController.resetWeaponSelection();
+            Board.opponentBoard().selectedTileProperty.set(null);
         });
     }
 
@@ -205,7 +211,7 @@ public class GameBoardController implements Initializable {
         @Override
         public void changed(ObservableValue<? extends Board.Tile> observable, Board.Tile oldTile, Board.Tile newTile) {
             if(newTile == null) return;
-            
+
             if(shipPlacementHandler.isValidPlacementOrigin(newTile)) {
                 selectedTile = newTile;
                 Ship.Orientation validOrientation = shipPlacementHandler.getValidOrientations().get(0);
