@@ -105,6 +105,7 @@ public class ShipPlacementHandler {
 
     public void confirmShipPlacement(Board.Tile finalTile, Orientation finalOrientation) {
         newShipPlacement(finalTile, finalOrientation);
+        player.addShip(currentShip);
 
         currentTypeIndex++;
         if(currentTypeIndex < Type.values().length) {

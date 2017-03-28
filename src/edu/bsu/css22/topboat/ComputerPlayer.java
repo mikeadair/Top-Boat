@@ -23,14 +23,20 @@ public class ComputerPlayer extends Player {
 
     @Override
     public void takeTurn() {
+        System.out.println(getName() + " is taking their turn");
+        Board.Tile randomTarget = getRandomTile(Board.playerBoard());
+        while(randomTarget.hasBeenHit()) {
+            randomTarget = getRandomTile(Board.playerBoard());
+        }
 
+        randomTarget.hit();
     }
 
     public void placeShips() {
         ShipPlacementHandler placementHandler = new ShipPlacementHandler(this);
         new Thread(() -> {
             while(!placementHandler.allShipsPlaced()) {
-                Board.Tile tryTile = getRandomTile();
+                Board.Tile tryTile = getRandomTile(getBoard());
                 if (placementHandler.isValidPlacementOrigin(tryTile)) {
                     Ship.Orientation randomOrientation = getRandomOrientationFromList(placementHandler.getValidOrientations());
                     placementHandler.confirmShipPlacement(tryTile, randomOrientation);
@@ -44,11 +50,11 @@ public class ComputerPlayer extends Player {
         }, "ComputerShipPlacementThread").start();
     }
 
-    private Board.Tile getRandomTile() {
+    private Board.Tile getRandomTile(Board board) {
         int randomX = random.nextInt(Board.WIDTH);
         int randomY = random.nextInt(Board.HEIGHT);
 
-        return getBoard().getTile(randomX, randomY);
+        return board.getTile(randomX, randomY);
     }
 
     private Ship.Orientation getRandomOrientationFromList(ArrayList<Ship.Orientation> validOrientations) {

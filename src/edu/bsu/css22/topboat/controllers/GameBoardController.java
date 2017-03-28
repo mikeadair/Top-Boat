@@ -50,11 +50,13 @@ public class GameBoardController implements Initializable {
 
     private static final ShipPlacementListener SHIP_PLACEMENT_LISTENER = new ShipPlacementListener();
 
-    private static final ChangeListener<Board.Tile> MAIN_TILE_LISTENER = (observable, oldTile, newTile) -> {
+    private final ChangeListener<Board.Tile> MAIN_TILE_LISTENER = (observable, oldTile, newTile) -> {
         if(newTile == null) {
             removeAffectedTileMarkers();
+            fireButton.setDisable(true);
             return;
         }
+        fireButton.setDisable(false);
 
         ArsenalController arsenalController = ((ViewController)UI.currentController()).arsenalController;
         int[][] weaponAffectedTiles = arsenalController.getSelectedWeapon().getAffectedTiles();
@@ -89,6 +91,7 @@ public class GameBoardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initTabPane();
         initGameBoards();
+        fireButton.setDisable(true);
         fireButton.setOnAction(event -> {
             ArsenalController arsenalController = ((ViewController)UI.currentController()).arsenalController;
 

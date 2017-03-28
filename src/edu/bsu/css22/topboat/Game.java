@@ -15,6 +15,7 @@ public abstract class Game {
         while(!Thread.currentThread().isInterrupted()) {
             currentPlayer.takeTurn();
             if (waitingPlayer.allShipsSunk()) {
+                System.out.println("All ships sunk");
                 changeState(Ended);
                 return;
             }

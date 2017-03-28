@@ -14,12 +14,51 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Board {
+public abstract class Board {
     public static final int HEIGHT = 10;
     public static final int WIDTH = 10;
 
-    private static Board playerBoard = new Board();
-    private static Board opponentBoard = new Board();
+    private static Board playerBoard = new Board() {
+        @Override
+        void onTileHit(Tile hitTile) {
+            if(hitTile.isOccupied()) {
+                Platform.runLater(() -> {
+                    ImageView fireImageView = new ImageView(Tile.FIRE_IMAGE);
+                    fireImageView.fitWidthProperty().bind(hitTile.widthProperty());
+                    fireImageView.preserveRatioProperty().set(true);
+                    hitTile.getChildren().add(fireImageView);
+                });
+            } else {
+                Platform.runLater(() -> {
+                    ImageView missImageView = new ImageView(Tile.MISS_IMAGE);
+                    missImageView.fitWidthProperty().bind(hitTile.widthProperty());
+                    missImageView.preserveRatioProperty().set(true);
+                    hitTile.getChildren().add(missImageView);
+                });
+            }
+        }
+    };
+    private static Board opponentBoard = new Board() {
+        @Override
+        void onTileHit(Tile hitTile) {
+            hitTile.hasBeenHit = true;
+            if(hitTile.isOccupied()) {
+                Platform.runLater(() -> {
+                    ImageView hitImageView = new ImageView(Tile.HIT_IMAGE);
+                    hitImageView.fitWidthProperty().bind(hitTile.widthProperty());
+                    hitImageView.preserveRatioProperty().set(true);
+                    hitTile.getChildren().add(hitImageView);
+                });
+            } else {
+                Platform.runLater(() -> {
+                    ImageView missImageView = new ImageView(Tile.MISS_IMAGE);
+                    missImageView.fitWidthProperty().bind(hitTile.widthProperty());
+                    missImageView.preserveRatioProperty().set(true);
+                    hitTile.getChildren().add(missImageView);
+                });
+            }
+        }
+    };
 
     private Tile[][] tileMap;
     public SimpleObjectProperty<Tile> selectedTileProperty = new SimpleObjectProperty<>();
@@ -53,6 +92,9 @@ public class Board {
             return null;
         }
     }
+
+    abstract void onTileHit(Tile hitTile);
+
 
     public static class Tile extends StackPane {
         private static final Background OCEAN_BACKGROUND;
@@ -125,24 +167,8 @@ public class Board {
         }
 
         public boolean hit() {
-            hasBeenHit = true;
-            if(isOccupied()) {
-                Platform.runLater(() -> {
-                    ImageView hitImageView = new ImageView(HIT_IMAGE);
-                    hitImageView.fitWidthProperty().bind(this.widthProperty());
-                    hitImageView.preserveRatioProperty().set(true);
-                    getChildren().add(hitImageView);
-                });
-                return true;
-            } else {
-                Platform.runLater(() -> {
-                    ImageView missImageView = new ImageView(MISS_IMAGE);
-                    missImageView.fitWidthProperty().bind(this.widthProperty());
-                    missImageView.preserveRatioProperty().set(true);
-                    getChildren().add(missImageView);
-                });
-                return false;
-            }
+            board.onTileHit(this);
+            return isOccupied();
         }
 
         public Board getBoard() {
