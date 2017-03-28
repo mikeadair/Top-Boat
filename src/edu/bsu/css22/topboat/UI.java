@@ -1,6 +1,5 @@
 package edu.bsu.css22.topboat;
 
-import com.sun.org.apache.xml.internal.security.Init;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;

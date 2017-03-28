@@ -100,6 +100,9 @@ public class Player {
 
     private String buildStringFromTiles(ArrayList<Board.Tile> tiles) {
         StringBuilder builder = new StringBuilder();
+        if(tiles.size() == 1){
+            return tiles.get(0).name.toString() + ".";
+        }
         for(int i = 0; i < tiles.size(); i++) {
             if(i != tiles.size() - 1 && i != 0) {
                 builder.append(", ");
@@ -110,7 +113,7 @@ public class Player {
             Board.Tile tile = tiles.get(i);
             builder.append(tile.name.toString());
         }
-        return builder.toString();
+        return builder.toString() + ".";
     }
 
     public boolean allShipsSunk() {

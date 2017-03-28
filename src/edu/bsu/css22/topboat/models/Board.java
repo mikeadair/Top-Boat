@@ -1,5 +1,6 @@
 package edu.bsu.css22.topboat.models;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -126,9 +127,20 @@ public class Board {
         public boolean hit() {
             hasBeenHit = true;
             if(isOccupied()) {
-                //TODO: display hit graphic, check if ship is sunk, if yes display ship on fire
+                Platform.runLater(() -> {
+                    ImageView hitImageView = new ImageView(HIT_IMAGE);
+                    hitImageView.fitWidthProperty().bind(this.widthProperty());
+                    hitImageView.preserveRatioProperty().set(true);
+                    getChildren().add(hitImageView);
+                });
                 return true;
             } else {
+                Platform.runLater(() -> {
+                    ImageView missImageView = new ImageView(MISS_IMAGE);
+                    missImageView.fitWidthProperty().bind(this.widthProperty());
+                    missImageView.preserveRatioProperty().set(true);
+                    getChildren().add(missImageView);
+                });
                 return false;
             }
         }
