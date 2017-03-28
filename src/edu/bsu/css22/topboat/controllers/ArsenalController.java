@@ -27,9 +27,7 @@ public class ArsenalController implements Initializable {
 
             @Override
             public ListCell<Weapon> call(ListView<Weapon> p) {
-
                 ListCell<Weapon> cell = new ListCell<Weapon>(){
-
                     @Override
                     protected void updateItem(Weapon weapon, boolean bool) {
                         super.updateItem(weapon, bool);
@@ -39,6 +37,7 @@ public class ArsenalController implements Initializable {
                             } else {
                                 setText(weapon.getName() + ": " + weapon.getShotsRemaining());
                             }
+                            resetWeaponSelection();
                         }
                     }
                 };
@@ -49,7 +48,7 @@ public class ArsenalController implements Initializable {
 
     public void resetWeaponSelection() {
         System.out.println("resetting weapon selection");
-        weaponListView.getSelectionModel().select(Game.player1.getArsenal().size() - 1);
+        weaponListView.getSelectionModel().select(0);
     }
 
     public Weapon getSelectedWeapon() {

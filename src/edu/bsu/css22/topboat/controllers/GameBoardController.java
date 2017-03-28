@@ -41,22 +41,42 @@ public class GameBoardController implements Initializable {
 
     private static final Stack<Marker> MARKERS = new Stack<>();
     static {
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < 10; i++) {
             MARKERS.push(new Marker());
         }
     }
 
+    private static final ArrayList<Marker> selectedTileMarkers = new ArrayList<>();
+
     private static final ShipPlacementListener SHIP_PLACEMENT_LISTENER = new ShipPlacementListener();
 
     private static final ChangeListener<Board.Tile> MAIN_TILE_LISTENER = (observable, oldTile, newTile) -> {
-        if(oldTile != null) {
-            Marker marker = (Marker) oldTile.getChildren().remove(oldTile.getChildren().size()-1);
-            marker.cancelAnimation();
-            MARKERS.add(marker);
+        if(newTile == null) return;
+
+        ArsenalController arsenalController = ((ViewController)UI.currentController()).arsenalController;
+        int[][] weaponAffectedTiles = arsenalController.getSelectedWeapon().getAffectedTiles();
+        ArrayList<Marker> usedMarkers = new ArrayList<>();
+
+        for(int i = 0; i < selectedTileMarkers.size(); i++) {
+            Marker marker = selectedTileMarkers.get(i);
+            marker.removeFromTile();
+            MARKERS.push(marker);
         }
-        Marker marker = MARKERS.pop();
-        newTile.getChildren().add(marker);
-        marker.playAnimation();
+        selectedTileMarkers.clear();
+
+        for(int[] weaponAffectedTile : weaponAffectedTiles) {
+            int x = weaponAffectedTile[1] + newTile.x;
+            int y = weaponAffectedTile[0] + newTile.y;
+
+            Board.Tile affectedTile = Board.opponentBoard().getTile(x, y);
+            if(affectedTile != null) {
+
+                Marker marker = MARKERS.pop();
+                marker.addToTile(affectedTile);
+                usedMarkers.add(marker);
+            }
+        }
+        selectedTileMarkers.addAll(usedMarkers);
 
     };
 
@@ -153,14 +173,9 @@ public class GameBoardController implements Initializable {
     }
 
     private class HoverTileListener implements ChangeListener<Board.Tile> {
-        ScheduledExecutorService showAffectedTilesTimer = Executors.newScheduledThreadPool(1);
-        ScheduledFuture<?> showAffectedTilesHandler;
 
         @Override
         public void changed(ObservableValue observable, Board.Tile oldValue, Board.Tile newValue) {
-            if(showAffectedTilesHandler != null) {
-                showAffectedTilesHandler.cancel(true);
-            }
 
             if (newValue == null) {
                 try {
@@ -168,29 +183,6 @@ public class GameBoardController implements Initializable {
                 } catch (NullPointerException e) {
                     selectedTileText.setText("");
                 }
-            } else {
-                selectedTileText.setText(newValue.name.toString());
-                Runnable showAffectedTilesTask = () -> {
-                    int[][] weaponAffectedTiles = ((ArsenalController)UI.currentController()).getSelectedWeapon().getAffectedTiles();
-                    ArrayList<Board.Tile> affectedTiles = new ArrayList<>();
-                    for(int[] weaponAffectedTile : weaponAffectedTiles) {
-                        int x = weaponAffectedTile[1] + newValue.x;
-                        int y = weaponAffectedTile[0] + newValue.y;
-
-                        Board.Tile affectedTile = Board.opponentBoard().getTile(x, y);
-                        if(affectedTile != null) {
-                            affectedTiles.add(affectedTile);
-                        }
-                    }
-                    Platform.runLater(() -> {
-                        for(Board.Tile tile : affectedTiles) {
-                            Marker marker = MARKERS.pop();
-                            tile.getChildren().add(marker);
-                            marker.playAnimation();
-                        }
-                    });
-                };
-                showAffectedTilesHandler = showAffectedTilesTimer.schedule(showAffectedTilesTask, 250, TimeUnit.MILLISECONDS);
             }
         }
     }
@@ -212,6 +204,8 @@ public class GameBoardController implements Initializable {
 
         @Override
         public void changed(ObservableValue<? extends Board.Tile> observable, Board.Tile oldTile, Board.Tile newTile) {
+            if(newTile == null) return;
+            
             if(shipPlacementHandler.isValidPlacementOrigin(newTile)) {
                 selectedTile = newTile;
                 Ship.Orientation validOrientation = shipPlacementHandler.getValidOrientations().get(0);

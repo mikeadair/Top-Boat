@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Marker extends Rectangle {
     FadeTransition animation;
     ArrayList<Marker> siblings = new ArrayList<>();
+    Board.Tile tile;
 
     public Marker() {
         super(30, 30, Color.WHITE);
@@ -30,10 +31,14 @@ public class Marker extends Rectangle {
     }
 
     public void addToTile(Board.Tile tile) {
-
+        tile.getChildren().add(this);
+        animation.play();
+        this.tile = tile;
     }
 
     public void removeFromTile() {
-        
+        animation.stop();
+        this.tile.getChildren().remove(this);
+        this.tile = null;
     }
 }

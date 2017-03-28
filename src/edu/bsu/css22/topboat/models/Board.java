@@ -82,7 +82,10 @@ public class Board {
 
             addEventHandler(MouseEvent.MOUSE_ENTERED, event -> board.hoverTileProperty.set(this));
             addEventHandler(MouseEvent.MOUSE_EXITED, event -> board.hoverTileProperty.set(null));
-            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> board.selectedTileProperty.set(this));
+            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                board.selectedTileProperty.set(null);
+                board.selectedTileProperty.set(this);
+            });
         }
 
         public boolean isOccupied() {
