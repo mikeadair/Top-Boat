@@ -44,7 +44,6 @@ public class GameBoardController implements Initializable {
         initTabPane();
         initGameBoards();
         fireButton.setOnAction(event -> {
-            System.out.println("fire event on " + Thread.currentThread().getName());
             ArsenalController arsenalController = ((ViewController)UI.currentController()).arsenalController;
 
             Board.Tile targetTile = Board.opponentBoard().selectedTileProperty.get();

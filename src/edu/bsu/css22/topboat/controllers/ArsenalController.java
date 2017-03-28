@@ -1,5 +1,6 @@
 package edu.bsu.css22.topboat.controllers;
 
+import edu.bsu.css22.topboat.Game;
 import edu.bsu.css22.topboat.models.Weapon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,12 +17,10 @@ import java.util.ResourceBundle;
 
 public class ArsenalController implements Initializable {
     @FXML ListView<Weapon> weaponListView;
-    public List<Weapon> arsenal;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadWeapons();
-        ObservableList<Weapon> observableList = FXCollections.observableList(arsenal);
+        ObservableList<Weapon> observableList = FXCollections.observableList(Game.player1.getArsenal());
         weaponListView.setItems(observableList);
 
         weaponListView.setCellFactory(new Callback<ListView<Weapon>, ListCell<Weapon>>(){
@@ -35,31 +34,22 @@ public class ArsenalController implements Initializable {
                     protected void updateItem(Weapon weapon, boolean bool) {
                         super.updateItem(weapon, bool);
                         if(weapon != null) {
-                            if(weapon.type.quantity == -1){
-                                setText(weapon.type.name + ": Infinite");
-                            }else{
-                                setText(weapon.type.name + ": " + weapon.type.quantity);
+                            if(weapon.getShotsRemaining() == Weapon.INFINITE_AMMO) {
+                                setText(weapon.getName() + ": Infinite");
+                            } else {
+                                setText(weapon.getName() + ": " + weapon.getShotsRemaining());
                             }
                         }
                     }
-
                 };
                 return cell;
             }
         });
     }
 
-    private void loadWeapons(){
-        int i = 0;
-        arsenal = new ArrayList<>();
-        for(Weapon.Type type : Weapon.Type.values()){
-            arsenal.add(i, new Weapon(type));
-        }
-        resetWeaponSelection();
-    }
-
     public void resetWeaponSelection() {
-        weaponListView.getSelectionModel().select(arsenal.size() - 1);
+        System.out.println("resetting weapon selection");
+        weaponListView.getSelectionModel().select(Game.player1.getArsenal().size() - 1);
     }
 
     public Weapon getSelectedWeapon() {
