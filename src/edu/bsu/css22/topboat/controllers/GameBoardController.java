@@ -4,6 +4,7 @@ import edu.bsu.css22.topboat.Game;
 import edu.bsu.css22.topboat.UI;
 import edu.bsu.css22.topboat.Util.ShipPlacementHandler;
 import edu.bsu.css22.topboat.models.*;
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -15,11 +16,16 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class GameBoardController implements Initializable {
     @FXML TabPane tabPane;
@@ -33,9 +39,24 @@ public class GameBoardController implements Initializable {
     private Board selectedBoard;
     private HoverTileListener hoverTileListener = new HoverTileListener();
 
+    private static final Stack<Marker> MARKERS = new Stack<>();
+    static {
+        for(int i = 0; i < 8; i++) {
+            MARKERS.push(new Marker());
+        }
+    }
+
     private static final ShipPlacementListener SHIP_PLACEMENT_LISTENER = new ShipPlacementListener();
 
     private static final ChangeListener<Board.Tile> MAIN_TILE_LISTENER = (observable, oldTile, newTile) -> {
+        if(oldTile != null) {
+            Marker marker = (Marker) oldTile.getChildren().remove(oldTile.getChildren().size()-1);
+            marker.cancelAnimation();
+            MARKERS.add(marker);
+        }
+        Marker marker = MARKERS.pop();
+        newTile.getChildren().add(marker);
+        marker.playAnimation();
 
     };
 
@@ -127,12 +148,20 @@ public class GameBoardController implements Initializable {
     public void startGameFunctionality() {
         System.out.println("starting game functionality");
         Board.playerBoard().selectedTileProperty.addListener(MAIN_TILE_LISTENER);
+        Board.opponentBoard().selectedTileProperty.addListener(MAIN_TILE_LISTENER);
         opponentTab.setDisable(false);
     }
 
     private class HoverTileListener implements ChangeListener<Board.Tile> {
+        ScheduledExecutorService showAffectedTilesTimer = Executors.newScheduledThreadPool(1);
+        ScheduledFuture<?> showAffectedTilesHandler;
+
         @Override
         public void changed(ObservableValue observable, Board.Tile oldValue, Board.Tile newValue) {
+            if(showAffectedTilesHandler != null) {
+                showAffectedTilesHandler.cancel(true);
+            }
+
             if (newValue == null) {
                 try {
                     selectedTileText.setText(selectedBoard.selectedTileProperty.get().name.toString());
@@ -141,6 +170,27 @@ public class GameBoardController implements Initializable {
                 }
             } else {
                 selectedTileText.setText(newValue.name.toString());
+                Runnable showAffectedTilesTask = () -> {
+                    int[][] weaponAffectedTiles = ((ArsenalController)UI.currentController()).getSelectedWeapon().getAffectedTiles();
+                    ArrayList<Board.Tile> affectedTiles = new ArrayList<>();
+                    for(int[] weaponAffectedTile : weaponAffectedTiles) {
+                        int x = weaponAffectedTile[1] + newValue.x;
+                        int y = weaponAffectedTile[0] + newValue.y;
+
+                        Board.Tile affectedTile = Board.opponentBoard().getTile(x, y);
+                        if(affectedTile != null) {
+                            affectedTiles.add(affectedTile);
+                        }
+                    }
+                    Platform.runLater(() -> {
+                        for(Board.Tile tile : affectedTiles) {
+                            Marker marker = MARKERS.pop();
+                            tile.getChildren().add(marker);
+                            marker.playAnimation();
+                        }
+                    });
+                };
+                showAffectedTilesHandler = showAffectedTilesTimer.schedule(showAffectedTilesTask, 250, TimeUnit.MILLISECONDS);
             }
         }
     }
