@@ -241,7 +241,7 @@ public class GameBoardController implements Initializable {
         public void confirmPlacement() {
             if(selectedTile == null) return;
 
-            Log.gameLog().addMessage(new Log.Message(shipPlacementHandler.getCurrentShip().name + " was placed at " + selectedTile.name, Log.Message.Type.SUCCESS));
+            Log.gameLog().addMessage(new Log.Message(shipPlacementHandler.getCurrentShip().name.toLowerCase() + " was placed at " + selectedTile.name, Log.Message.Type.SUCCESS));
             shipPlacementHandler.confirmShipPlacement(selectedTile, orientation.get());
             selectedTile = null;
             if(shipPlacementHandler.allShipsPlaced()) {
