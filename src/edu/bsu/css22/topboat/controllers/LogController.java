@@ -71,27 +71,21 @@ public class LogController implements Initializable{
     private void showMessageInLog(ListView log, Message newMessage) {
         Text messageView = new Text(newMessage.getContents());
         messageView.setFill(newMessage.getColor());
-
-        if(Platform.isFxApplicationThread()) {
+        Platform.runLater(() -> {
             log.getItems().add(messageView);
-        } else {
-            Platform.runLater(() -> {
-                log.getItems().add(messageView);
-                log.scrollTo(log.getItems().toArray().length);
-                ReadOnlyObjectProperty<Tab> currentTab = logs.getSelectionModel().selectedItemProperty();
-                if (log == loglist_game && currentTab.getValue() != game_tab) {
-                    System.out.println("GAME LOG");
-                    game_message.play();
-                    notifyTab(game_tab);
-                }
-                if (log == loglist_messages && currentTab.getValue() != messages_tab) {
-                    System.out.println("MESSAGES LOG");
-                    player_message.play();
-                    notifyTab(messages_tab);
-                }
-            });
-        }
-
+            log.scrollTo(log.getItems().toArray().length);
+            ReadOnlyObjectProperty<Tab> currentTab = logs.getSelectionModel().selectedItemProperty();
+            if (log == loglist_game && currentTab.getValue() != game_tab) {
+                System.out.println("GAME LOG");
+                game_message.play();
+                notifyTab(game_tab);
+            }
+            if (log == loglist_messages && currentTab.getValue() != messages_tab) {
+                System.out.println("MESSAGES LOG");
+                player_message.play();
+                notifyTab(messages_tab);
+            }
+        });
     }
 
     private class RandomMessageThread implements Runnable {

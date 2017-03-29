@@ -1,3 +1,4 @@
+import edu.bsu.css22.topboat.Player;
 import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Ship;
 import org.testng.Assert;
@@ -6,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class ModelTests {
     Board player = Board.playerBoard();
-    Ship carrier = new Ship(Ship.Type.CARRIER,0,0);
+    Ship carrier = new Ship(new Player(),Ship.Type.CARRIER,0,0);
 
     @Test public void testTileOccupied(){
         Assert.assertFalse(player.getTile(0,4).isOccupied());
