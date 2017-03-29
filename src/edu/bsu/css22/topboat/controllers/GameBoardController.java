@@ -186,6 +186,9 @@ public class GameBoardController implements Initializable {
                     selectedTileText.setText("");
                 }
             }
+            else {
+                selectedTileText.setText(newValue.name.toString());
+            }
         }
     }
 
