@@ -18,7 +18,7 @@ public class ShipPlacementHandler {
 
     public ShipPlacementHandler(Player player) {
         this.player = player;
-        this.currentShip = new Ship(Type.values()[currentTypeIndex], -1, -1);
+        this.currentShip = new Ship(player, Type.values()[currentTypeIndex], -1, -1);
     }
 
     public ArrayList<Orientation> getValidOrientations() {
@@ -110,7 +110,7 @@ public class ShipPlacementHandler {
         currentTypeIndex++;
         if(currentTypeIndex < Type.values().length) {
             validOrientations.clear();
-            currentShip = new Ship(Type.values()[currentTypeIndex], -1, -1);
+            currentShip = new Ship(player, Type.values()[currentTypeIndex], -1, -1);
             currentShipOrigin = null;
         } else {
             allShipsPlaced = true;

@@ -1,5 +1,6 @@
 package edu.bsu.css22.topboat.models;
 
+import edu.bsu.css22.topboat.Game;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
@@ -37,6 +38,11 @@ public abstract class Board {
                 });
             }
         }
+
+        @Override
+        void onShipSunk(Ship ship) {
+            Game.player1.removeShip(ship);
+        }
     };
     private static Board opponentBoard = new Board() {
         @Override
@@ -57,6 +63,46 @@ public abstract class Board {
                     hitTile.getChildren().add(missImageView);
                 });
             }
+        }
+
+        @Override
+        void onShipSunk(Ship ship) {
+            ArrayList<Tile> tiles = new ArrayList<>();
+            Game.player2.removeShip(ship);
+            for(int i = 0; i < ship.getLength(); i++) {
+                int x = ship.getX() + (ship.orientation.xMod * i);
+                int y = ship.getY() + (ship.orientation.yMod * i);
+                Tile occupiedTile = getTile(x, y);
+                tiles.add(occupiedTile);
+            }
+
+            Platform.runLater(() -> {
+                for(int i = 0; i < tiles.size(); i++) {
+                    Tile occupiedTile = tiles.get(i);
+                    occupiedTile.getChildren().clear();
+                    ImageView shipImage = new ImageView(ship.getImageForIndex(i));
+                    switch (ship.orientation) {
+                        case UP:
+                            shipImage.setRotate(180);
+                            shipImage.fitHeightProperty().bind(occupiedTile.heightProperty());
+                            break;
+                        case DOWN:
+                            shipImage.setRotate(0);
+                            shipImage.fitHeightProperty().bind(occupiedTile.heightProperty());
+                            break;
+                        case LEFT:
+                            shipImage.setRotate(90);
+                            shipImage.fitHeightProperty().bind(occupiedTile.widthProperty());
+                            break;
+                        case RIGHT:
+                            shipImage.setRotate(270);
+                            shipImage.fitHeightProperty().bind(occupiedTile.widthProperty());
+                            break;
+                    }
+                    occupiedTile.getChildren().add(shipImage);
+                    occupiedTile.getChildren().add(new ImageView(Tile.FIRE_IMAGE));
+                }
+            });
         }
     };
 
@@ -94,6 +140,7 @@ public abstract class Board {
     }
 
     abstract void onTileHit(Tile hitTile);
+    abstract void onShipSunk(Ship ship);
 
 
     public static class Tile extends StackPane {
@@ -168,7 +215,15 @@ public abstract class Board {
 
         public boolean hit() {
             board.onTileHit(this);
-            return isOccupied();
+            if(isOccupied()) {
+                boolean shipSunk = ship.hit();
+                if(shipSunk) {
+                   board.onShipSunk(ship);
+                }
+                return true;
+            } else {
+                return false;
+            }
         }
 
         public Board getBoard() {

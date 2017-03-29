@@ -65,6 +65,10 @@ public class Player {
         ships.put(ship.type, ship);
     }
 
+    public void removeShip(Ship ship) {
+        ships.remove(ship.type);
+    }
+
     public void takeTurn() {
         try {
             FireEvent fireEvent = fireEvents.take();
@@ -75,7 +79,7 @@ public class Player {
                 int y = affectedTile[0] + fireEvent.getTarget().y;
 
                 Board.Tile target = fireEvent.getTarget().getBoard().getTile(x, y);
-                if (target == null) {
+                if (target == null || target.hasBeenHit()) {
                     continue;
                 } else {
                     if(target.hit()) {

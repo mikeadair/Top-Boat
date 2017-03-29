@@ -1,5 +1,6 @@
 package edu.bsu.css22.topboat.models;
 
+import edu.bsu.css22.topboat.Player;
 import javafx.scene.image.Image;
 
 public class Ship {
@@ -14,18 +15,21 @@ public class Ship {
             new Image(Ship.class.getResourceAsStream("../images/sub-back.png"))
     };
 
+    private Player player;
     private int x;
     private int y;
     public Type type;
     public String name;
     public Orientation orientation;
+    private int sectionsRemaining;
 
-    public Ship(Type type, int x, int y) {
+    public Ship(Player player, Type type, int x, int y) {
         this.type = type;
         this.name = type.name();
         this.x = x;
         this.y = y;
         this.orientation = null;
+        this.sectionsRemaining = type.length;
     }
 
     public int getY() {
@@ -58,6 +62,14 @@ public class Ship {
         }
     }
 
+    public boolean hit() {
+        System.out.println(name + " hit. current life: " + sectionsRemaining + ". new life: " + (sectionsRemaining-1));
+        sectionsRemaining -= 1;
+        if(sectionsRemaining == 0) {
+            return true;
+        }
+        return false;
+    }
 
     public enum Type {
         CARRIER(5, SHIP_IMAGES),
