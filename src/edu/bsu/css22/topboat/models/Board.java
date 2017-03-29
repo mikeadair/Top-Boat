@@ -24,6 +24,7 @@ public abstract class Board {
     private static Board playerBoard = new Board() {
         @Override
         void onTileHit(Tile hitTile) {
+            System.out.println("Player board hit");
             if(hitTile.isOccupied()) {
                 Platform.runLater(() -> {
                     ImageView fireImageView = new ImageView(Tile.FIRE_IMAGE);
@@ -216,6 +217,7 @@ public abstract class Board {
         }
 
         public boolean hit() {
+            hasBeenHit = true;
             board.onTileHit(this);
             if(isOccupied()) {
                 boolean shipSunk = ship.hit();

@@ -45,7 +45,6 @@ public class ArsenalController implements Initializable {
     }
 
     public void resetWeaponSelection() {
-        System.out.println("resetting weapon selection");
         weaponListView.getSelectionModel().select(0);
     }
 

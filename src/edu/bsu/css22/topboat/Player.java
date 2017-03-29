@@ -69,6 +69,7 @@ public class Player {
     }
 
     public void takeTurn() {
+        System.out.println(name + " is taking their turn");
         try {
             FireEvent fireEvent = fireEvents.take();
             ArrayList<Board.Tile> hits = new ArrayList<>();
