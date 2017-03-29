@@ -1,20 +1,17 @@
 package edu.bsu.css22.topboat.controllers;
 
+import edu.bsu.css22.topboat.models.Log;
+import edu.bsu.css22.topboat.models.Log.Message;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
-import edu.bsu.css22.topboat.models.Log;
-import edu.bsu.css22.topboat.models.Log.Message;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -76,12 +73,10 @@ public class LogController implements Initializable{
             log.scrollTo(log.getItems().toArray().length);
             ReadOnlyObjectProperty<Tab> currentTab = logs.getSelectionModel().selectedItemProperty();
             if (log == loglist_game && currentTab.getValue() != game_tab) {
-                System.out.println("GAME LOG");
                 game_message.play();
                 notifyTab(game_tab);
             }
             if (log == loglist_messages && currentTab.getValue() != messages_tab) {
-                System.out.println("MESSAGES LOG");
                 player_message.play();
                 notifyTab(messages_tab);
             }

@@ -3,8 +3,8 @@ package edu.bsu.css22.topboat.Util;
 import edu.bsu.css22.topboat.Player;
 import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Ship;
-import edu.bsu.css22.topboat.models.Ship.Type;
 import edu.bsu.css22.topboat.models.Ship.Orientation;
+import edu.bsu.css22.topboat.models.Ship.Type;
 
 import java.util.ArrayList;
 

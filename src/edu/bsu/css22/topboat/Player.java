@@ -3,7 +3,6 @@ package edu.bsu.css22.topboat;
 import edu.bsu.css22.topboat.models.*;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;

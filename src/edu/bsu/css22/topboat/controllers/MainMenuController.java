@@ -1,6 +1,9 @@
 package edu.bsu.css22.topboat.controllers;
 
-import edu.bsu.css22.topboat.*;
+import edu.bsu.css22.topboat.ConnectMultiplayerGame;
+import edu.bsu.css22.topboat.Game;
+import edu.bsu.css22.topboat.LocalMultiplayerGame;
+import edu.bsu.css22.topboat.SinglePlayerGame;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

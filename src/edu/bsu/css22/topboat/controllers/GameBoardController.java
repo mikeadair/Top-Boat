@@ -4,8 +4,6 @@ import edu.bsu.css22.topboat.Game;
 import edu.bsu.css22.topboat.UI;
 import edu.bsu.css22.topboat.Util.ShipPlacementHandler;
 import edu.bsu.css22.topboat.models.*;
-import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,18 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.Stack;
 
 public class GameBoardController implements Initializable {
     @FXML TabPane tabPane;

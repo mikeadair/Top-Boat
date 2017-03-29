@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?scenebuilder-stylesheet style.css?>
+
 <?import javafx.scene.layout.HBox?>
 <?import java.net.URL?>
-
 <HBox fx:id="root" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.css22.topboat.controllers.ViewController" stylesheets="@../styles/style.css">
     <children>
         <!-- Log Import-->
