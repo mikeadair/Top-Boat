@@ -25,32 +25,34 @@ public class StatsController implements Initializable {
 
     private Stats stats;
 
-    private Label hitsTitle;
-    private Label missesTitle;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         stats = Game.stats;
         formatGrid(playerGridPane);
         formatGrid(opponentGridPane);
-        formatTitles();
         loadStats(playerGridPane, 0);
         loadStats(opponentGridPane, 1);
         GameBoardController.boardTabPane.getSelectionModel().select(statsTab);
         System.out.println("Stats Controller Loaded");
     }
 
-    private void formatTitles() {
+    private Label[] getLabels() {
         Font font = new Font("Comic Sans MS", 25);
-        hitsTitle = new Label();
+        Label hitsTitle = new Label();
         hitsTitle.setFont(font);
         hitsTitle.setTextFill(Color.BLACK);
         hitsTitle.setText("Hits: ");
 
-        missesTitle = new Label();
+        Label missesTitle = new Label();
         missesTitle.setFont(font);
         missesTitle.setTextFill(Color.BLACK);
         missesTitle.setText("Misses: ");
+
+        Label[] labels = new Label[2];
+        labels[0] = hitsTitle;
+        labels[1] = missesTitle;
+
+        return labels;
     }
 
     private void formatGrid(GridPane grid) {
@@ -64,6 +66,8 @@ public class StatsController implements Initializable {
     }
 
     private void loadStats(GridPane grid, int player) {
+        Label[] labels = getLabels();
+
         Label name = new Label();
         name.setText(stats.getPlayer(player).getName().toString());
         name.setFont(new Font("Comic Sans MS", 25));
@@ -85,7 +89,7 @@ public class StatsController implements Initializable {
         hits.setTextFill(Color.BLACK);
 
         Platform.runLater(() -> {
-            grid.add(hitsTitle, 0, 1);
+            grid.add(labels[0], 0, 1);
             grid.add(hits, 1, 1);
         });
 
@@ -95,7 +99,7 @@ public class StatsController implements Initializable {
         misses.setTextFill(Color.BLACK);
 
         Platform.runLater(() -> {
-            grid.add(missesTitle, 0, 2);
+            grid.add(labels[1], 0, 2);
             grid.add(misses, 1, 2);
         });
     }

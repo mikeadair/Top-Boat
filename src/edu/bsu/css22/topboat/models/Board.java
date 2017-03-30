@@ -26,7 +26,7 @@ public abstract class Board {
         void onTileHit(Tile hitTile) {
             System.out.println("Player board hit");
             if(hitTile.isOccupied()) {
-                Game.stats.addHit(0);
+                Game.stats.addHit(1);
                 Platform.runLater(() -> {
                     ImageView fireImageView = new ImageView(Tile.FIRE_IMAGE);
                     fireImageView.fitWidthProperty().bind(hitTile.widthProperty());
@@ -35,7 +35,7 @@ public abstract class Board {
                 });
             } else {
                 Platform.runLater(() -> {
-                    Game.stats.addMiss(0);
+                    Game.stats.addMiss(1);
                     ImageView missImageView = new ImageView(Tile.MISS_IMAGE);
                     missImageView.fitWidthProperty().bind(hitTile.widthProperty());
                     missImageView.preserveRatioProperty().set(true);
@@ -55,7 +55,7 @@ public abstract class Board {
             hitTile.hasBeenHit = true;
             if(hitTile.isOccupied()) {
                 Platform.runLater(() -> {
-                    Game.stats.addHit(1);
+                    Game.stats.addHit(0);
                     ImageView hitImageView = new ImageView(Tile.HIT_IMAGE);
                     hitImageView.fitWidthProperty().bind(hitTile.widthProperty());
                     hitImageView.preserveRatioProperty().set(true);
@@ -63,7 +63,7 @@ public abstract class Board {
                 });
             } else {
                 Platform.runLater(() -> {
-                    Game.stats.addMiss(1);
+                    Game.stats.addMiss(0);
                     ImageView missImageView = new ImageView(Tile.MISS_IMAGE);
                     missImageView.fitWidthProperty().bind(hitTile.widthProperty());
                     missImageView.preserveRatioProperty().set(true);
