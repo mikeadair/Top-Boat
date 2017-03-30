@@ -75,7 +75,6 @@ public class ComputerPlayer extends Player {
     final FiringMode RANDOM = new FiringMode() {
         @Override
         Board.Tile getTarget() {
-            System.out.println("Firing mode is random");
             Board.Tile randomTarget = getRandomTile(Board.playerBoard());
             while(randomTarget.hasBeenHit()) {
                 randomTarget = getRandomTile(Board.playerBoard());
@@ -98,7 +97,6 @@ public class ComputerPlayer extends Player {
 
         @Override
         Board.Tile getTarget() {
-            System.out.println("Firing mode is seeking");
             if(potentialTargets == null) {
                 getPotentialTargets();
             } else if(potentialTargets.size() == 0) {
@@ -130,10 +128,10 @@ public class ComputerPlayer extends Player {
                     }
                 }
             }
+            Collections.shuffle(potentialTargets);
         }
 
         private void backToRandom() {
-            System.out.println("Going back to random mode");
             firingMode = RANDOM;
             potentialTargets = null;
             hits.clear();
@@ -164,7 +162,6 @@ public class ComputerPlayer extends Player {
         @Override
         Board.Tile getTarget() {
             if(direction == null) determineDirection();
-            System.out.println("Firing mode is destroying. direction is: (" + direction[0] + ", " + direction[1] + ")");
 
             Board.Tile initialHit = hits.get(0);
             Board.Tile mostRecentHit = hits.get(hits.size()-1);
@@ -221,7 +218,6 @@ public class ComputerPlayer extends Player {
         }
 
         private void backToSeeking() {
-            System.out.println("Going back to seeking mode");
             direction = null;
             firingMode = SEEKING;
         }
@@ -231,6 +227,9 @@ public class ComputerPlayer extends Player {
 
         @Override
         void onMiss() {
+            for(int i = 1; i < hits.size(); i++) {
+                hits.remove(i);
+            }
             determineDirection();
         }
     };
