@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -18,10 +19,9 @@ import java.util.ResourceBundle;
 
 public class StatsController implements Initializable {
 
-    @FXML
-    GridPane playerGridPane;
-    @FXML
-    GridPane opponentGridPane;
+    @FXML Tab statsTab;
+    @FXML GridPane playerGridPane;
+    @FXML GridPane opponentGridPane;
 
     private Stats stats;
 
@@ -36,6 +36,7 @@ public class StatsController implements Initializable {
         formatTitles();
         loadStats(playerGridPane, 0);
         loadStats(opponentGridPane, 1);
+        GameBoardController.boardTabPane.getSelectionModel().select(statsTab);
         System.out.println("Stats Controller Loaded");
     }
 

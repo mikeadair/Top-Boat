@@ -25,7 +25,7 @@ import java.util.Stack;
 
 public class GameBoardController implements Initializable {
     @FXML TabPane tabPane;
-    private static TabPane boardTabPane;
+    public static TabPane boardTabPane;
     @FXML Tab playerTab;
     @FXML Tab opponentTab;
     @FXML GridPane playerGrid;
