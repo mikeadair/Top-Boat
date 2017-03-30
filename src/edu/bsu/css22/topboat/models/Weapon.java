@@ -26,7 +26,8 @@ public class Weapon {
         SINGLESHOT(new int[][]{{0,0}}, "Single Shot", INFINITE_AMMO),
         CROSS_SHOT(new int[][]{{0,0},{0,1},{0,-1},{1,0},{-1,0}}, "Cross Shot", 1),
         H_LINE_SHOT(new int[][]{{0,0},{0,1},{0,2},{0,-1},{0,-2}}, "H Line Shot", 1),
-        V_LINE_SHOT(new int[][]{{0,0},{1,0},{2,0},{-1,0},{-2,0}}, "V Line Shot", 1);
+        V_LINE_SHOT(new int[][]{{0,0},{1,0},{2,0},{-1,0},{-2,0}}, "V Line Shot", 1),
+        NUKE(new int[][]{{0,0},{0,1},{0,2},{0,3},{0,4},{1,0},{1,1},{1,2},{1,3},{1,4},{2,0},{2,1},{2,2},{2,3},{2,4},{3,0},{3,1},{3,2},{3,3},{3,4},{4,0},{4,1},{4,2},{4,3},{4,4}}, "Nuke", 1);
 
         Type(int[][] affectedTiles, String name, int quantity){
             this.affectedTiles = affectedTiles;

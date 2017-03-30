@@ -4,10 +4,12 @@ import edu.bsu.css22.topboat.Game;
 import edu.bsu.css22.topboat.UI;
 import edu.bsu.css22.topboat.Util.ShipPlacementHandler;
 import edu.bsu.css22.topboat.models.*;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -15,6 +17,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -22,6 +25,7 @@ import java.util.Stack;
 
 public class GameBoardController implements Initializable {
     @FXML TabPane tabPane;
+    private static TabPane boardTabPane;
     @FXML Tab playerTab;
     @FXML Tab opponentTab;
     @FXML GridPane playerGrid;
@@ -34,9 +38,20 @@ public class GameBoardController implements Initializable {
 
     private static final Stack<Marker> MARKERS = new Stack<>();
     static {
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 25; i++) {
             MARKERS.push(new Marker());
         }
+    }
+
+    public static void loadStats() {
+        FXMLLoader loader = new FXMLLoader(GameBoardController.class.getResource("../views/stats.fxml"));
+        Platform.runLater(() -> {
+            try {
+                boardTabPane.getTabs().add(loader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private static final ArrayList<Marker> selectedTileMarkers = new ArrayList<>();
@@ -96,6 +111,7 @@ public class GameBoardController implements Initializable {
             arsenalController.resetWeaponSelection();
             Board.opponentBoard().selectedTileProperty.set(null);
         });
+        boardTabPane = tabPane;
     }
 
     private void initTabPane() {

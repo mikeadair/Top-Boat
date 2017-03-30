@@ -1,7 +1,9 @@
 package edu.bsu.css22.topboat;
 
 
+import edu.bsu.css22.topboat.controllers.GameBoardController;
 import edu.bsu.css22.topboat.controllers.ViewController;
+import edu.bsu.css22.topboat.models.Stats;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -10,12 +12,15 @@ public abstract class Game {
     State Ended = new State(() -> Thread.currentThread().interrupt());
     State Running = new State(() -> {
         ((ViewController)UI.currentController()).gameBoardController().startGameFunctionality();
+        this.stats.setPlayers(player1, player2);
         currentPlayer = player1;
         waitingPlayer = player2;
         while(!Thread.currentThread().isInterrupted()) {
             currentPlayer.takeTurn();
             if (waitingPlayer.allShipsSunk()) {
                 System.out.println("All ships sunk");
+                this.stats.setResult(player1.allShipsSunk(),player2.allShipsSunk());
+                GameBoardController.loadStats();
                 changeState(Ended);
                 return;
             }
@@ -32,6 +37,8 @@ public abstract class Game {
 
     public static Player player1;
     public static Player player2;
+
+    public static Stats stats = new Stats();
 
     static BlockingQueue<State> stateChangeQueue = new ArrayBlockingQueue<>(1);
     static Player currentPlayer;
