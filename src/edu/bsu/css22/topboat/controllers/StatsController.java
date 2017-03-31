@@ -9,8 +9,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -24,6 +24,8 @@ public class StatsController implements Initializable {
     @FXML GridPane opponentGridPane;
 
     private Stats stats;
+
+    private final Image WON_BG_IMAGE = new Image(this.getClass().getResourceAsStream("../images/firework.gif"));
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,6 +74,9 @@ public class StatsController implements Initializable {
         name.setText(stats.getPlayer(player).getName().toString());
         name.setFont(new Font("Comic Sans MS", 25));
         if (!stats.getResult(player)) {
+            BackgroundImage img = new BackgroundImage(WON_BG_IMAGE, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, true));
+            Background bg = new Background(null, img, null, null);
+            grid.setBackground(bg);
             name.setText(name.getText() + " WON!");
             name.setTextFill(Color.GREEN);
         } else {
