@@ -22,6 +22,12 @@ public class Weapon {
         return type.affectedTiles;
     }
 
+    public void fireWeapon() {
+        if(this.shotsRemaining != INFINITE_AMMO){
+            this.shotsRemaining--;
+        }
+    }
+
     public enum Type {
         SINGLESHOT(new int[][]{{0,0}}, "Single Shot", INFINITE_AMMO),
         CROSS_SHOT(new int[][]{{0,0},{0,1},{0,-1},{1,0},{-1,0}}, "Cross Shot", 1),

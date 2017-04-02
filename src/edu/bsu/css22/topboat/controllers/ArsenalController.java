@@ -29,13 +29,15 @@ public class ArsenalController implements Initializable {
                     @Override
                     protected void updateItem(Weapon weapon, boolean bool) {
                         super.updateItem(weapon, bool);
-                        if(weapon != null) {
+                        if(!bool || weapon != null) {
                             if(weapon.getShotsRemaining() == Weapon.INFINITE_AMMO) {
                                 setText(weapon.getName() + ": Infinite");
                             } else {
                                 setText(weapon.getName() + ": " + weapon.getShotsRemaining());
                             }
                             resetWeaponSelection();
+                        }else{
+                            setText("");
                         }
                     }
                 };
@@ -48,7 +50,17 @@ public class ArsenalController implements Initializable {
         weaponListView.getSelectionModel().select(0);
     }
 
+    public void useSelectedWeapon(){
+        weaponListView.getSelectionModel().getSelectedItem().fireWeapon();
+        weaponListView.refresh();
+    }
+
     public Weapon getSelectedWeapon() {
+        Weapon current = weaponListView.getSelectionModel().getSelectedItem();
+        if(current.getShotsRemaining() == 0){
+            System.out.println(current.getName() + " " + current.getShotsRemaining());
+            resetWeaponSelection();
+        }
         return weaponListView.getSelectionModel().getSelectedItem();
     }
 }

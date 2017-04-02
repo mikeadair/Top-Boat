@@ -108,6 +108,7 @@ public class GameBoardController implements Initializable {
             FireEvent fireEvent = new FireEvent(targetTile, weapon);
             Game.player1.fire(fireEvent);
 
+            arsenalController.useSelectedWeapon();
             arsenalController.resetWeaponSelection();
             Board.opponentBoard().selectedTileProperty.set(null);
         });
