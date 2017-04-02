@@ -184,7 +184,7 @@ public class GameBoardController implements Initializable {
     }
 
     public void startGameFunctionality() {
-        System.out.println("starting game functionality");
+        Board.opponentBoard().placeDrops(5);
         Board.playerBoard().selectedTileProperty.addListener(MAIN_TILE_LISTENER);
         Board.opponentBoard().selectedTileProperty.addListener(MAIN_TILE_LISTENER);
         opponentTab.setDisable(false);

@@ -15,11 +15,14 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public abstract class Board {
     public static final int HEIGHT = 10;
     public static final int WIDTH = 10;
+
+    private static final Random random = new Random();
 
     private static Board playerBoard = new Board() {
         @Override
@@ -149,6 +152,18 @@ public abstract class Board {
     abstract void onTileHit(Tile hitTile);
     abstract void onShipSunk(Ship ship);
 
+    public void placeDrops(int amount) {
+        int drops = 0;
+        while(drops != amount) {
+            int randomX = random.nextInt(Board.WIDTH);
+            int randomY = random.nextInt(Board.HEIGHT);
+            Tile randomTile = getTile(randomX, randomY);
+            if (!randomTile.isOccupied()) {
+                randomTile.addDrop();
+                drops++;
+            }
+        }
+    }
 
     public static class Tile extends StackPane {
         private static final Background OCEAN_BACKGROUND;
@@ -166,6 +181,7 @@ public abstract class Board {
         public int x;
         public int y;
         public Ship ship;
+        public Drop drop;
         private ImageView imageView = new ImageView();
         public TileName name;
         private boolean hasBeenHit = false;
@@ -187,6 +203,14 @@ public abstract class Board {
 
         public boolean isOccupied() {
             return ship != null;
+        }
+
+        public void addDrop() {
+            drop = new Drop(x,y);
+            imageView.setImage(drop.getImage());
+            Platform.runLater(() -> {
+                getChildren().add(imageView);
+            });
         }
 
         public void setImage(Image newImage) {
