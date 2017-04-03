@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?scenebuilder-stylesheet style.css?>
+
+<?import javafx.scene.layout.HBox?>
+<?import java.net.URL?>
+<HBox fx:id="root" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.css22.topboat.controllers.ViewController" stylesheets="@../styles/style.css">
+    <children>
+        <!-- Log Import-->
+        <fx:include fx:id="log" source="log.fxml" />
+        <!-- End Log Import-->
+        <!-- Game Board Import -->
+        <fx:include fx:id="gameboard" source="gameboard.fxml" />
+        <!-- End Game Board Import -->
+        <!-- Arsenal Import -->
+        <fx:include fx:id="arsenal" source="arsenal.fxml" />
+        <!-- End Arsenal Import -->
+    </children>
+</HBox>

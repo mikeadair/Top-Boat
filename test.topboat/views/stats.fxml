@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.*?>
+
+<Tab fx:id="statsTab" text="Game Stats" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.css22.topboat.controllers.StatsController">
+    <content>
+        <AnchorPane maxHeight="450.0" maxWidth="450.0" prefHeight="450.0" prefWidth="450.0">
+            <GridPane fx:id="playerGridPane" maxHeight="225.0" maxWidth="450.0" prefHeight="225.0" prefWidth="450.0" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <GridPane fx:id="opponentGridPane" maxHeight="225.0" maxWidth="450.0" prefHeight="225.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="225.0" />
+        </AnchorPane>
+    </content>
+</Tab>
