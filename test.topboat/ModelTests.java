@@ -1,24 +1,36 @@
 import edu.bsu.css22.topboat.Player;
+
 import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Ship;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 
 public class ModelTests {
-    Board player = Board.playerBoard();
+    Board playerBoard = Board.playerBoard();
     Ship carrier = new Ship(new Player(),Ship.Type.CARRIER,0,0);
 
-    @Test public void testTileOccupied(){
-        Assert.assertFalse(player.getTile(0,4).isOccupied());
+
+    @Test
+    public void testShipCreation() {
+        carrier = new Ship(new Player(), Ship.Type.CARRIER, -1, -1);
+        Assert.assertEquals(carrier.name, Ship.Type.CARRIER.name());
+    }
+
+    @Test
+    public void testAddShipToTIle(){
+        Board.Tile tile = playerBoard.getTile(0, 0);
+        tile.ship = carrier;
+        Assert.assertTrue(tile.isOccupied());
     }
 
     @Test public void testTileName(){
-        Assert.assertEquals(player.getTile(0,0).name.toString(),"A1");
+        Assert.assertEquals(playerBoard.getTile(0,0).name.toString(),"A1");
     }
 
     @Test public void testShipLength(){
-        Assert.assertEquals(carrier.type.length,5);
+        Assert.assertEquals(carrier.getLength(), 5);
     }
 
     @Test public void testShipXCoords(){
