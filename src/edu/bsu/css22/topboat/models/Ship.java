@@ -4,8 +4,16 @@ import edu.bsu.css22.topboat.Player;
 import javafx.scene.image.Image;
 
 public class Ship {
+    private static final Image[] CARRIER_IMAGES = {
+            new Image(Ship.class.getResourceAsStream("../images/carrier-1.png")),
+            new Image(Ship.class.getResourceAsStream("../images/carrier-2.png")),
+            new Image(Ship.class.getResourceAsStream("../images/carrier-3.png")),
+            new Image(Ship.class.getResourceAsStream("../images/carrier-4.png")),
+            new Image(Ship.class.getResourceAsStream("../images/carrier-5.png"))
+    };
     private static final Image[] SHIP_IMAGES = {
             new Image(Ship.class.getResourceAsStream("../images/ship-front.png")),
+            new Image(Ship.class.getResourceAsStream("../images/ship-middle.png")),
             new Image(Ship.class.getResourceAsStream("../images/ship-middle.png")),
             new Image(Ship.class.getResourceAsStream("../images/ship-back.png"))
     };
@@ -24,6 +32,7 @@ public class Ship {
     private int sectionsRemaining;
 
     public Ship(Player player, Type type, int x, int y) {
+        this.player = player;
         this.type = type;
         this.name = type.name();
         this.x = x;
@@ -56,9 +65,9 @@ public class Ship {
         if(index == 0) {
             return type.images[0];
         } else if(index == type.length-1) {
-            return type.images[2];
+            return type.images[type.images.length-1];
         } else {
-            return type.images[1];
+            return type.images[index];
         }
     }
 
@@ -72,7 +81,7 @@ public class Ship {
     }
 
     public enum Type {
-        CARRIER(5, SHIP_IMAGES),
+        CARRIER(5, CARRIER_IMAGES),
         BATTLESHIP(4, SHIP_IMAGES),
         CRUISER(3, SHIP_IMAGES),
         SUBMARINE(3, SUB_IMAGES),
