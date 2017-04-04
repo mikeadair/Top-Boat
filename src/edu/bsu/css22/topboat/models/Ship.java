@@ -5,22 +5,22 @@ import javafx.scene.image.Image;
 
 public class Ship {
     private static final Image[] CARRIER_IMAGES = {
-            new Image(Ship.class.getResourceAsStream("../images/carrier-1.png")),
-            new Image(Ship.class.getResourceAsStream("../images/carrier-2.png")),
-            new Image(Ship.class.getResourceAsStream("../images/carrier-3.png")),
-            new Image(Ship.class.getResourceAsStream("../images/carrier-4.png")),
-            new Image(Ship.class.getResourceAsStream("../images/carrier-5.png"))
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/carrier-1.png")),
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/carrier-2.png")),
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/carrier-3.png")),
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/carrier-4.png")),
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/carrier-5.png"))
     };
     private static final Image[] SHIP_IMAGES = {
-            new Image(Ship.class.getResourceAsStream("../images/ship-front.png")),
-            new Image(Ship.class.getResourceAsStream("../images/ship-middle.png")),
-            new Image(Ship.class.getResourceAsStream("../images/ship-middle.png")),
-            new Image(Ship.class.getResourceAsStream("../images/ship-back.png"))
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/ship-front.png")),
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/ship-middle.png")),
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/ship-middle.png")),
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/ship-back.png"))
     };
     private static final Image[] SUB_IMAGES = {
-            new Image(Ship.class.getResourceAsStream("../images/sub-front.png")),
-            new Image(Ship.class.getResourceAsStream("../images/sub-middle.png")),
-            new Image(Ship.class.getResourceAsStream("../images/sub-back.png"))
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/sub-front.png")),
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/sub-middle.png")),
+            new Image(Ship.class.getResourceAsStream("/edu/bsu/css22/topboat/images/sub-back.png"))
     };
 
     private Player player;
