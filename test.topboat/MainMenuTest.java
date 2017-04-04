@@ -1,6 +1,6 @@
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import org.junit.*;
+import org.junit.Assert;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 

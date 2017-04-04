@@ -5,8 +5,9 @@ import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Ship;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
-import java.util.*;
+import java.util.Stack;
 
 public class ComputerPlayer extends Player {
     private static final String[] names = new String[] {
