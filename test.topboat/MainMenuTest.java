@@ -10,6 +10,7 @@ public class MainMenuTest extends GuiTest {
 
     @Override
     protected Parent getRootNode() {
+        stage.centerOnScreen();
         Parent parent = null;
         try {
             parent = FXMLLoader.load(getClass().getResource("views/main_menu.fxml"));
@@ -20,13 +21,23 @@ public class MainMenuTest extends GuiTest {
     }
 
     @Test
-    public void testButtons() {
+    public void verifyMultiOptionsAppear() {
         click("#multiplayerSelect");
         Assert.assertTrue((find("#localSelect")).isVisible());
         Assert.assertTrue((find("#connectSelect")).isVisible());
+    }
+
+    @Test
+    public void verifySubmitAppears() {
+        click("#singlePlayerSelect");
+        Assert.assertTrue((find("#submitUsername").isVisible()));
+    }
+
+    @Test
+    public void testButtons() {
         click("#singlePlayerSelect");
         click("#usernameInput");
         type("Michael");
-        Assert.assertTrue((find("#submitUsername")).isVisible());
+        Assert.assertTrue((find("#singlePlayerSelect")).isDisabled());
     }
 }
