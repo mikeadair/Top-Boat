@@ -32,16 +32,20 @@ public  class Log {
     }
 
     public void sendMessage(String text) {
-        String finalMessage = Game.player1.getName() + ": " + text;
-        Message message = new Message(finalMessage,Message.Type.PLAYER_MESSAGE);
-        messages.add(message);
-        messageReceivedListener.onMessageReceived(message);
-        //Send Message to Opponent
+        if(!text.isEmpty()) {
+            String finalMessage = Game.player1.getName() + ": " + text;
+            Message message = new Message(finalMessage, Message.Type.PLAYER_MESSAGE);
+            messages.add(message);
+            messageReceivedListener.onMessageReceived(message);
+            //Send Message to Opponent
+        }
     }
 
     public void addMessage(Message message) {
-        messages.add(message);
-        messageReceivedListener.onMessageReceived(message);
+        if(!message.getContents().isEmpty()){
+            messages.add(message);
+            messageReceivedListener.onMessageReceived(message);
+        }
     }
 
     public void addMessageReceivedListener(MessageReceivedListener listener) {
