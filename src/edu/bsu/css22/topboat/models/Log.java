@@ -68,6 +68,7 @@ public  class Log {
         public enum Type {
             ERROR(Color.RED),
             SUCCESS(Color.GREEN),
+            INFO(Color.BLUEVIOLET),
             PLAYER_MESSAGE(Color.BLUE),
             OPPONENT_MESSAGE(Color.ORANGE);
 
