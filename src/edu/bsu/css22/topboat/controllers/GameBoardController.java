@@ -44,7 +44,7 @@ public class GameBoardController implements Initializable {
     }
 
     public static void loadStats() {
-        FXMLLoader loader = new FXMLLoader(GameBoardController.class.getResource("../views/stats.fxml"));
+        FXMLLoader loader = new FXMLLoader(GameBoardController.class.getResource("/edu/bsu/css22/topboat/views/stats.fxml"));
         Platform.runLater(() -> {
             try {
                 boardTabPane.getTabs().add(loader.load());

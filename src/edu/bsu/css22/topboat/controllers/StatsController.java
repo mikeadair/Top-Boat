@@ -25,7 +25,7 @@ public class StatsController implements Initializable {
 
     private Stats stats;
 
-    private final Image WON_BG_IMAGE = new Image(this.getClass().getResourceAsStream("../images/firework.gif"));
+    private final Image WON_BG_IMAGE = new Image(this.getClass().getResourceAsStream("/edu/bsu/css22/topboat/images/firework.gif"));
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
