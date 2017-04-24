@@ -44,7 +44,7 @@ public class GameBoardController implements Initializable {
     }
 
     public static void loadStats() {
-        FXMLLoader loader = new FXMLLoader(GameBoardController.class.getResource("../views/stats.fxml"));
+        FXMLLoader loader = new FXMLLoader(GameBoardController.class.getResource("/edu/bsu/css22/topboat/views/stats.fxml"));
         Platform.runLater(() -> {
             try {
                 boardTabPane.getTabs().add(loader.load());
@@ -253,8 +253,7 @@ public class GameBoardController implements Initializable {
 
         public void confirmPlacement() {
             if(selectedTile == null) return;
-
-            Log.gameLog().addMessage(new Log.Message(shipPlacementHandler.getCurrentShip().name.toLowerCase() + " was placed at " + selectedTile.name, Log.Message.Type.SUCCESS));
+            Log.gameLog().addMessage(new Log.Message(shipPlacementHandler.getCurrentShip().name.substring(0,1) + shipPlacementHandler.getCurrentShip().name.toLowerCase().substring(1) + " was placed at " + selectedTile.name, Log.Message.Type.SUCCESS));
             shipPlacementHandler.confirmShipPlacement(selectedTile, orientation.get());
             selectedTile = null;
             if(shipPlacementHandler.allShipsPlaced()) {

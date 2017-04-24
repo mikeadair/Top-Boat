@@ -3,6 +3,7 @@ package edu.bsu.css22.topboat;
 
 import edu.bsu.css22.topboat.controllers.GameBoardController;
 import edu.bsu.css22.topboat.controllers.ViewController;
+import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Stats;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -12,13 +13,17 @@ public abstract class Game {
     State Ended = new State(() -> Thread.currentThread().interrupt());
     State Running = new State(() -> {
         ((ViewController)UI.currentController()).gameBoardController().startGameFunctionality();
+        Log.gameLog().addMessage(new Log.Message("Battle Time!", Log.Message.Type.INFO));
+        Log.gameLog().addMessage(new Log.Message("#1: Navigate to the enemy map", Log.Message.Type.INFO));
+        Log.gameLog().addMessage(new Log.Message("#2: Select a weapon from the right side", Log.Message.Type.INFO));
+        Log.gameLog().addMessage(new Log.Message("#3: Select a cell to fire at", Log.Message.Type.INFO));
+        Log.gameLog().addMessage(new Log.Message("#4: Press 'Fire Weapon'", Log.Message.Type.INFO));
         this.stats.setPlayers(player1, player2);
         currentPlayer = player1;
         waitingPlayer = player2;
         while(!Thread.currentThread().isInterrupted()) {
             currentPlayer.takeTurn();
             if (waitingPlayer.allShipsSunk()) {
-                System.out.println("All ships sunk");
                 this.stats.setResult(player1.allShipsSunk(),player2.allShipsSunk());
                 GameBoardController.loadStats();
                 changeState(Ended);
@@ -63,7 +68,11 @@ public abstract class Game {
 
     void handleShipPlacement() {
         ((ViewController)UI.currentController()).gameBoardController().startShipPlacement();
-
+        Log.gameLog().addMessage(new Log.Message("Ship Placement Time!", Log.Message.Type.INFO));
+        Log.gameLog().addMessage(new Log.Message("#1: Select a cell to place a ship", Log.Message.Type.INFO));
+        Log.gameLog().addMessage(new Log.Message("#2: Use arrow keys to rotate", Log.Message.Type.INFO));
+        Log.gameLog().addMessage(new Log.Message("#3: Press 'enter' to confirm placement", Log.Message.Type.INFO));
+        Log.gameLog().addMessage(new Log.Message("#4: Repeat until all your ships are placed", Log.Message.Type.INFO));
         player1.attachReadyListener((observable, oldReady, newReady) -> {
             if(newReady && player2.isReady()) {
                 changeState(Running);

@@ -158,9 +158,9 @@ public abstract class Board {
             BackgroundFill oceanFill = new BackgroundFill(Color.rgb(33, 103, 182), radii, insets);
             OCEAN_BACKGROUND = new Background(oceanFill);
         }
-        private static final Image FIRE_IMAGE = new Image(Tile.class.getResourceAsStream("../images/fire.gif"));
-        private static final Image MISS_IMAGE = new Image(Tile.class.getResourceAsStream("../images/miss.png"));
-        private static final Image HIT_IMAGE = new Image(Tile.class.getResourceAsStream("../images/hit.png"));
+        private static final Image FIRE_IMAGE = new Image(Tile.class.getResourceAsStream("/edu/bsu/css22/topboat/images/fire.gif"));
+        private static final Image MISS_IMAGE = new Image(Tile.class.getResourceAsStream("/edu/bsu/css22/topboat/images/miss.png"));
+        private static final Image HIT_IMAGE = new Image(Tile.class.getResourceAsStream("/edu/bsu/css22/topboat/images/hit.png"));
 
         private Board board;
         public int x;

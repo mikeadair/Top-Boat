@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.*?>
-
 <Tab fx:id="statsTab" text="Game Stats" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.css22.topboat.controllers.StatsController">
     <content>
         <AnchorPane maxHeight="450.0" maxWidth="450.0" prefHeight="450.0" prefWidth="450.0">

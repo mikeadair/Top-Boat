@@ -3,6 +3,8 @@ import edu.bsu.css22.topboat.SinglePlayerGame;
 import edu.bsu.css22.topboat.UI;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.ListView;
+import org.junit.Assert;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 
@@ -26,9 +28,18 @@ public class LogTest extends GuiTest {
 
     @Test
     public void testSendMessage() {
-        click("#messageField");
-        type("this is a message");
-        click("#sendButton");
         click("#messages_tab");
+        for(int i = 0; i < 2; i++){
+            click("#messageField");
+            type("Sending test message.");
+            click("#sendButton");
+        }
+        Assert.assertEquals((((ListView) find("#loglist_messages")).getItems().size()),2);
+    }
+
+    @Test
+    public void testTabs() {
+        click("#messages_tab");
+        Assert.assertTrue(((ListView) find("#loglist_messages")).isVisible());
     }
 }

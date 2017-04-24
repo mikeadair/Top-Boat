@@ -1,5 +1,6 @@
 package edu.bsu.css22.topboat;
 
+import edu.bsu.css22.topboat.Util.SocketConnection;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -17,7 +18,7 @@ public class UI {
         primaryStage.setTitle("Top Boat");
         changeView(Views.MAIN_MENU);
         primaryStage.show();
-
+        SocketConnection socket = new SocketConnection();
     }
 
     public static void changeView(UI.Views view) {

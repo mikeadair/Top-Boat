@@ -27,8 +27,8 @@ public class LogController implements Initializable{
 
     Log gameLog;
     Log chatLog;
-    public static final AudioClip game_message = Applet.newAudioClip(LogController.class.getResource("../sounds/game_message.wav"));
-    public static final AudioClip player_message = Applet.newAudioClip(LogController.class.getResource("../sounds/player_message.wav"));
+    public static final AudioClip game_message = Applet.newAudioClip(LogController.class.getResource("/edu/bsu/css22/topboat/sounds/game_message.wav"));
+    public static final AudioClip player_message = Applet.newAudioClip(LogController.class.getResource("/edu/bsu/css22/topboat/sounds/player_message.wav"));
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
