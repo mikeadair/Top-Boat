@@ -1,41 +1,60 @@
 package edu.bsu.css22.topboat.Util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 public class SocketConnection {
-    private Socket socket;
+    private static final String HOST = "45.32.170.120";
 
-    public SocketConnection() throws IOException {
-        String ip = "107.191.44.5";
-        int port = 5000;
+    private SocketLoop socketLoop = new SocketLoop();
 
-        boolean status = connect(ip, port);
+    private  Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
 
-        if(!status) {
-            System.out.println("Could not connect");
-        }else{
-            echo("hi");
-        }
-    }
+    private SocketCommunicationListener listener;
 
-    private boolean connect(String ip, int port) {
+    public boolean connect(int port) {
         try {
-            this.socket = new Socket(ip, port);
-            socket.setKeepAlive(true);
-            return true;
-        } catch (IOException e) {
+            socket = new Socket(HOST, port);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch(IOException e) {
+            System.err.println("The socket connection could not be established");
+            e.printStackTrace();
             return false;
         }
+        socketLoop.run();
+        return true;
     }
 
-    public void echo(String message) throws IOException {
-        PrintWriter writer = new PrintWriter(getSocket().getOutputStream(),true);
-        writer.write(message);
+    public void onDataReceived(SocketCommunicationListener listener) {
+        this.listener = listener;
     }
 
-    private Socket getSocket() {
-        return socket;
+    public interface SocketCommunicationListener {
+        void onDataReceived(String data);
+    }
+
+    private class SocketLoop {
+        private Thread thread;
+        private Runnable runnable = () -> {
+            try {
+                String data = in.readLine();
+                if(listener != null) {
+                    listener.onDataReceived(data);
+                }
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+        };
+
+        void run() {
+            thread = new Thread(runnable);
+            thread.start();
+        }
     }
 }
