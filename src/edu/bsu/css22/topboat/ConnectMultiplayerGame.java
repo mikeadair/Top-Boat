@@ -11,9 +11,6 @@ public class ConnectMultiplayerGame extends Game {
         gameSocket = new SocketConnection();
         chatSocket = new SocketConnection();
 
-        boolean gameSocketConnected = gameSocket.connect(1000);
-        boolean chatSocketConnected = chatSocket.connect(1001);
-
         gameSocket.onDataReceived(data -> {
             System.out.println("game socket received " + data);
         });
@@ -21,6 +18,9 @@ public class ConnectMultiplayerGame extends Game {
         chatSocket.onDataReceived(data -> {
             System.out.println("chat socket received " + data);
         });
+
+        boolean gameSocketConnected = gameSocket.connect(1000);
+        boolean chatSocketConnected = chatSocket.connect(1001);
     }
 
     @Override

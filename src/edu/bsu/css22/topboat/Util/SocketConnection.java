@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SocketConnection {
-    private static final String HOST = "45.32.170.120";
+    private static final String HOST = "107.191.44.5";
 
     private SocketLoop socketLoop = new SocketLoop();
 
@@ -15,7 +17,12 @@ public class SocketConnection {
     private PrintWriter out;
     private BufferedReader in;
 
-    private SocketCommunicationListener listener;
+    private boolean connected = false;
+
+    private SocketConnectedListener connectedListener;
+    private DataReceivedListener dataListener;
+
+    private HashMap<Object, Object> params = new HashMap<>();
 
     public boolean connect(int port) {
         try {
@@ -27,15 +34,57 @@ public class SocketConnection {
             e.printStackTrace();
             return false;
         }
+        connected = true;
         socketLoop.run();
         return true;
     }
 
-    public void onDataReceived(SocketCommunicationListener listener) {
-        this.listener = listener;
+    public void disconnect() {
+        try {
+            socket.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        connected = false;
     }
 
-    public interface SocketCommunicationListener {
+    public void write(Object data) {
+        out.println(data.toString());
+    }
+
+    public void writeParams() {
+        StringBuilder paramBuilder = new StringBuilder("{");
+        for (Map.Entry<Object, Object> param : params.entrySet()) {
+            String key = param.getKey().toString();
+            String value = param.getValue().toString();
+            paramBuilder.append("\"" + key + "\" : \"" + value + "\",");
+        }
+        paramBuilder.replace(paramBuilder.lastIndexOf(","), paramBuilder.lastIndexOf(",") + 1, "");
+        paramBuilder.append("}");
+        write(paramBuilder.toString());
+    }
+
+    public SocketConnection addParam(Object key, Object value) {
+        params.put(key, value);
+        return this;
+    }
+
+    public void onSocketConnected(SocketConnectedListener listener) {
+        this.connectedListener = listener;
+        if(connected) {
+            listener.onSocketConnected();
+        }
+    }
+
+    public void onDataReceived(DataReceivedListener listener) {
+        this.dataListener = listener;
+    }
+
+    public interface SocketConnectedListener {
+        void onSocketConnected();
+    }
+
+    public interface DataReceivedListener {
         void onDataReceived(String data);
     }
 
@@ -43,9 +92,12 @@ public class SocketConnection {
         private Thread thread;
         private Runnable runnable = () -> {
             try {
-                String data = in.readLine();
-                if(listener != null) {
-                    listener.onDataReceived(data);
+                while(!Thread.currentThread().isInterrupted()) {
+                    String data = in.readLine();
+                    System.out.println("data received");
+                    if (dataListener != null) {
+                        dataListener.onDataReceived(data);
+                    }
                 }
             } catch(IOException e) {
                 e.printStackTrace();
@@ -55,6 +107,10 @@ public class SocketConnection {
         void run() {
             thread = new Thread(runnable);
             thread.start();
+        }
+
+        void end() {
+            thread.interrupt();
         }
     }
 }
