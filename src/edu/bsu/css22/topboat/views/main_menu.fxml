@@ -9,13 +9,12 @@
    <children>
       <AnchorPane prefHeight="137.0" prefWidth="460.0">
          <children>
-            <Button fx:id="singlePlayerSelect" layoutX="45.0" layoutY="20.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" text="Single Player" />
-            <Button fx:id="multiplayerSelect" layoutX="45.0" layoutY="64.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" text="Multiplayer" />
-            <Button fx:id="localSelect" layoutX="10.0" layoutY="100.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Local" visible="false" />
-            <Button fx:id="connectSelect" layoutX="108.0" layoutY="100.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Connect" visible="false" />
+            <Button fx:id="singlePlayerSelect" layoutX="45.0" layoutY="20.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" text="Single Player" disable="true"/>
+            <Button fx:id="multiplayerSelect" layoutX="45.0" layoutY="64.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" text="Multiplayer"/>
+            <Button fx:id="localSelect" layoutX="10.0" layoutY="100.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Local" visible="false" disable="true"/>
+            <Button fx:id="connectSelect" layoutX="108.0" layoutY="100.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Connect" visible="false" disable="true"/>
             <Label layoutX="202.0" layoutY="25.0" text="Username:" />
             <TextField fx:id="usernameInput" layoutX="271.0" layoutY="20.0" prefHeight="27.0" prefWidth="145.0" promptText="Username" />
-            <Button fx:id="submitUsername" layoutX="313.0" layoutY="51.0" mnemonicParsing="false" text="Go" visible="false" />
          </children>
       </AnchorPane>
    </children>
