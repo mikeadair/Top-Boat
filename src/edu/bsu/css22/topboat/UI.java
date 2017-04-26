@@ -49,7 +49,8 @@ public class UI {
     public static enum Views {
         MAIN_MENU("views/main_menu.fxml"),
         GAME_SELECTION(null),
-        MAIN_GAME("views/main.fxml");
+        MAIN_GAME("views/main.fxml"),
+        MULTI_SELECTION("views/multi_select.fxml");
 
         Views(String path) {
             this.resourcePath = path;
