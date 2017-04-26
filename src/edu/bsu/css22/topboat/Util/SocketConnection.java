@@ -13,7 +13,7 @@ public class SocketConnection {
 
     private SocketLoop socketLoop = new SocketLoop();
 
-    private  Socket socket;
+    private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
 
