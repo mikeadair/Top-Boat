@@ -1,6 +1,8 @@
 package edu.bsu.css22.topboat.controllers;
 
 import edu.bsu.css22.topboat.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,29 +29,14 @@ public class MainMenuController implements Initializable {
         multiplayerSelect.setOnAction(new MultiplayerSelectListener());
         localSelect.setOnAction(new LocalSelectListener());
         connectSelect.setOnAction(new ConnectSelectListener());
-        submitUsername.setOnAction(new UsernameButtonListener());
+        usernameInput.textProperty().addListener(new TextFieldListener());
     }
 
-    private boolean handleNoUsername() {
-        if(usernameInput.getText().equals("") || usernameInput.getText() == null) {
-            submitUsername.setVisible(true);
-            singlePlayerSelect.setDisable(true);
-            multiplayerSelect.setDisable(true);
-            localSelect.setDisable(true);
-            connectSelect.setDisable(true);
-            return true;
-        } else {
-            Game.player1.setName(usernameInput.getText());
-            return false;
-        }
-    }
 
     private class SinglePlayerSelectListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
             game = new SinglePlayerGame();
-            if(handleNoUsername()) return;
-
             Game.startGame(game);
         }
     }
@@ -66,7 +53,6 @@ public class MainMenuController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             game = new LocalMultiplayerGame();
-            handleNoUsername();
         }
     }
 
@@ -77,14 +63,19 @@ public class MainMenuController implements Initializable {
         }
     }
 
-    private class UsernameButtonListener implements EventHandler<ActionEvent> {
+    private class TextFieldListener implements ChangeListener<String> {
         @Override
-        public void handle(ActionEvent event) {
-            if(usernameInput.getText().equals("")) return;
-
-            Game.player1.setName(usernameInput.getText());
-            Game.startGame(game);
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            Game.player1.setName(newValue);
+            if(newValue == null || newValue.equals("")) {
+                singlePlayerSelect.setDisable(true);
+                localSelect.setDisable(true);
+                multiplayerSelect.setDisable(true);
+            } else {
+                singlePlayerSelect.setDisable(false);
+                localSelect.setDisable(false);
+                multiplayerSelect.setDisable(false);
+            }
         }
     }
-
 }

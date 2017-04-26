@@ -18,15 +18,6 @@ public class UI {
         primaryStage.setTitle("Top Boat");
         changeView(Views.MAIN_MENU);
         primaryStage.show();
-
-        SocketConnection socket = new SocketConnection();
-        socket.onDataReceived(data -> {
-            System.out.println(data + " received");
-        });
-        socket.connect(5000);
-        socket.addParam("reqType", "host");
-        socket.addParam("name", "Kaleb");
-        socket.writeParams();
     }
 
     public static void changeView(UI.Views view) {
@@ -48,7 +39,6 @@ public class UI {
 
     public static enum Views {
         MAIN_MENU("views/main_menu.fxml"),
-        GAME_SELECTION(null),
         MAIN_GAME("views/main.fxml"),
         MULTI_SELECTION("views/multi_select.fxml");
 
