@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="538.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.css22.topboat.controllers.MultiSelectController">
+   <children>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" fx:id="backButton"/>
+      <ListView layoutX="325.0" prefHeight="200.0" prefWidth="213.0" fx:id="playerListView"/>
+      <Button layoutX="14.0" layoutY="159.0" mnemonicParsing="false" text="Host" fx:id="hostButton"/>
+      <Button layoutX="269.0" layoutY="159.0" mnemonicParsing="false" text="Join" fx:id="joinButton"/>
+      <Text layoutX="74.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status :"/>
+      <Text layoutX="134.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connecting to Server..." fx:id="statusText"/>
+      <ProgressIndicator layoutX="121.0" layoutY="60.0" prefHeight="81.0" prefWidth="80.0" fx:id="progressIndicator"/>
+   </children>
+</AnchorPane>
