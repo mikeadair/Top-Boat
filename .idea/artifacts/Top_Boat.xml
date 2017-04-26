@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" build-on-make="true" name="Top Boat">
+    <output-path>$PROJECT_DIR$/out/artifacts/Top_Boat</output-path>
+    <properties id="ant-preprocessing">
+      <options enabled="true" />
+    </properties>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="edu.bsu.css22.topboat.TopBoatApplication" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="Top Boat" />
+        <option name="vendor" value="" />
+        <option name="version" value="0.2.0" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="Top_Boat.jar">
+        <element id="module-output" name="Top Boat" />
+      </element>
+    </root>
+  </artifact>
+</component>
