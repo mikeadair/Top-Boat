@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/out/production/Top Boat" />
-    <output-test url="file://$MODULE_DIR$/out/test/Top Boat" />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/test.topboat" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/edu/bsu/css22/topboat/images" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/edu/bsu/css22/topboat/styles" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/edu/bsu/css22/topboat/views" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/edu/bsu/css22/topboat/sounds" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/test.topboat" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="TEST" name="org.loadui:testFx:3.1.0" level="project" />
-    <orderEntry type="library" name="org.json:json:20151123" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="Top_Boat" level="project" />
   </component>
 </module>
