@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SocketConnection {
-    private static final String HOST = "107.191.44.5";
+    public static final String DEFAULT_HOST = "107.191.44.5";
 
     private SocketLoop socketLoop = new SocketLoop();
 
@@ -17,16 +17,20 @@ public class SocketConnection {
     private PrintWriter out;
     private BufferedReader in;
 
-    private boolean connected = false;
-
     private SocketConnectedListener connectedListener;
     private DataReceivedListener dataListener;
 
     private HashMap<Object, Object> params = new HashMap<>();
 
-    public boolean connect(int port) {
+    public SocketConnection() {}
+
+    public SocketConnection(Socket socket) {
+        this.socket = socket;
+    }
+
+    public boolean connect(String host, int port) {
         try {
-            socket = new Socket(HOST, port);
+            socket = new Socket(host, port);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch(IOException e) {
@@ -34,7 +38,6 @@ public class SocketConnection {
             e.printStackTrace();
             return false;
         }
-        connected = true;
         socketLoop.run();
         return true;
     }
@@ -45,7 +48,6 @@ public class SocketConnection {
         } catch(IOException e) {
             e.printStackTrace();
         }
-        connected = false;
     }
 
     public void write(Object data) {
@@ -71,7 +73,7 @@ public class SocketConnection {
 
     public void onSocketConnected(SocketConnectedListener listener) {
         this.connectedListener = listener;
-        if(connected) {
+        if(socket.isConnected()) {
             listener.onSocketConnected();
         }
     }
