@@ -40,8 +40,8 @@ public abstract class Game {
     private Thread gameThread;
     private GameLoop gameLoop;
 
-    public static Player player1;
-    public static Player player2;
+    public static Player player1 = new Player();
+    public static Player player2 = new Player();
 
     public static Stats stats = new Stats();
 

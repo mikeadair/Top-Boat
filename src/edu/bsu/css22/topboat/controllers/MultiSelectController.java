@@ -92,12 +92,13 @@ public class MultiSelectController implements Initializable{
 
     private void displayHosts(JSONObject response) {
         JSONArray hostsArray = response.getJSONArray("hosts");
-        playerListView.getItems().removeAll();
-        for(Object hostObject : hostsArray) {
-            JSONObject host = (JSONObject) hostObject;
-            playerListView.getItems().add(host);
-        }
+
         Platform.runLater(() -> {
+            playerListView.getItems().clear();
+            for(Object hostObject : hostsArray) {
+                JSONObject host = (JSONObject) hostObject;
+                playerListView.getItems().add(host);
+            }
             statusText.setText("waiting for your selection...");
             progressIndicator.setVisible(false);
         });
@@ -115,6 +116,7 @@ public class MultiSelectController implements Initializable{
     private class BackButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
+            socket.disconnect();
             UI.changeView(UI.Views.MAIN_MENU);
         }
     }

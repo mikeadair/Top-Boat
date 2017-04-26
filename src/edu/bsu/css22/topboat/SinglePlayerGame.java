@@ -5,7 +5,6 @@ import edu.bsu.css22.topboat.models.Board;
 public class SinglePlayerGame extends Game {
 
     public SinglePlayerGame() {
-        player1 = new Player();
         player1.setBoard(Board.playerBoard());
 
         player2 = new ComputerPlayer();

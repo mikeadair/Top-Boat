@@ -70,11 +70,11 @@ public class MainMenuController implements Initializable {
             if(newValue == null || newValue.equals("")) {
                 singlePlayerSelect.setDisable(true);
                 localSelect.setDisable(true);
-                multiplayerSelect.setDisable(true);
+                connectSelect.setDisable(true);
             } else {
                 singlePlayerSelect.setDisable(false);
                 localSelect.setDisable(false);
-                multiplayerSelect.setDisable(false);
+                connectSelect.setDisable(false);
             }
         }
     }

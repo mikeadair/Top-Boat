@@ -1,5 +1,7 @@
 package edu.bsu.css22.topboat.Util;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,7 +22,7 @@ public class SocketConnection {
     private SocketConnectedListener connectedListener;
     private DataReceivedListener dataListener;
 
-    private HashMap<Object, Object> params = new HashMap<>();
+    private JSONObject params = new JSONObject();
 
     public SocketConnection() {}
 
@@ -51,23 +53,16 @@ public class SocketConnection {
     }
 
     public void write(Object data) {
+        System.out.println("writing " + data.toString());
         out.println(data.toString());
     }
 
     public void writeParams() {
-        StringBuilder paramBuilder = new StringBuilder("{");
-        for (Map.Entry<Object, Object> param : params.entrySet()) {
-            String key = param.getKey().toString();
-            String value = param.getValue().toString();
-            paramBuilder.append("\"" + key + "\" : \"" + value + "\",");
-        }
-        paramBuilder.replace(paramBuilder.lastIndexOf(","), paramBuilder.lastIndexOf(",") + 1, "");
-        paramBuilder.append("}");
-        write(paramBuilder.toString());
+        write(params.toString());
     }
 
     public SocketConnection addParam(Object key, Object value) {
-        params.put(key, value);
+        params.put(key.toString(), value);
         return this;
     }
 
