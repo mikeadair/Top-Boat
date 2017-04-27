@@ -37,6 +37,7 @@ public abstract class Game {
         listenForStateChange();
     });
 
+    private static Game game;
     private Thread gameThread;
     private GameLoop gameLoop;
 
@@ -61,9 +62,22 @@ public abstract class Game {
         Player temp = currentPlayer;
         currentPlayer = waitingPlayer;
         waitingPlayer = temp;
-        /*TODO: this will be overridden by LocalMultiplayerGame to show a transition
-        screen in between players taking turns
-         */
+    }
+
+    public static void emitGameMessage(Log.Message message) {
+        Log.gameLog().addMessage(message);
+    }
+
+    public static void emitPlayerMessage(Log.Message message) {
+        Log.chatLog().addMessage(message);
+    }
+
+    void handleGameMessage(Log.Message message) {
+        Log.gameLog().addMessage(message);
+    }
+
+    void handlePlayerMessage(Log.Message message) {
+        Log.chatLog().addMessage(message);
     }
 
     void handleShipPlacement() {
@@ -86,7 +100,8 @@ public abstract class Game {
         });
     }
 
-    public static void startGame(Game game) {
+    public static void startGame(Game startGame) {
+        game = startGame;
         UI.changeView(UI.Views.MAIN_GAME);
         game.gameThread = new Thread(game.gameLoop, "GameThread");
         game.gameThread.start();

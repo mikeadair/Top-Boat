@@ -82,20 +82,4 @@ public class LogController implements Initializable{
             }
         });
     }
-
-    private class RandomMessageThread implements Runnable {
-        @Override
-        public void run() {
-            while(!Thread.currentThread().isInterrupted()) {
-                try {
-                    gameLog.addMessage(new Message("Server Message", Message.Type.SUCCESS));
-                    Thread.sleep(3000);
-                    chatLog.addMessage(new Message("Hello again, friend.", Message.Type.OPPONENT_MESSAGE));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
 }
