@@ -5,6 +5,7 @@ import edu.bsu.css22.topboat.controllers.GameBoardController;
 import edu.bsu.css22.topboat.controllers.ViewController;
 import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Stats;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -19,11 +20,11 @@ public abstract class Game {
         Log.gameLog().addMessage(new Log.Message("#3: Select a cell to fire at", Log.Message.Type.INFO));
         Log.gameLog().addMessage(new Log.Message("#4: Press 'Fire Weapon'", Log.Message.Type.INFO));
         stats.setPlayers(player1, player2);
-        currentPlayer = player1;
-        waitingPlayer = player2;
+        currentPlayer.set(player1);
+        waitingPlayer.set(player2);
         while(!Thread.currentThread().isInterrupted()) {
-            currentPlayer.takeTurn();
-            if (waitingPlayer.allShipsSunk()) {
+            currentPlayer.get().takeTurn();
+            if (waitingPlayer.get().allShipsSunk()) {
                 stats.setResult(player1.allShipsSunk(),player2.allShipsSunk());
                 GameBoardController.loadStats();
                 changeState(Ended);
@@ -47,8 +48,8 @@ public abstract class Game {
     public static Stats stats = new Stats();
 
     static BlockingQueue<State> stateChangeQueue = new ArrayBlockingQueue<>(1);
-    static Player currentPlayer;
-    static Player waitingPlayer;
+    public static SimpleObjectProperty<Player> currentPlayer;
+    static SimpleObjectProperty<Player> waitingPlayer;
 
     public Game() {
         gameLoop = new GameLoop();
@@ -59,9 +60,9 @@ public abstract class Game {
     abstract void finish();
 
     static void transitionPlayers() {
-        Player temp = currentPlayer;
-        currentPlayer = waitingPlayer;
-        waitingPlayer = temp;
+        Player temp = currentPlayer.get();
+        currentPlayer.set(waitingPlayer.get());
+        waitingPlayer.set(temp);
     }
 
     public static void emitGameMessage(Log.Message message) {

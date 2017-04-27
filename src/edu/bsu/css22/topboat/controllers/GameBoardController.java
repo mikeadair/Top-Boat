@@ -1,6 +1,7 @@
 package edu.bsu.css22.topboat.controllers;
 
 import edu.bsu.css22.topboat.Game;
+import edu.bsu.css22.topboat.Player;
 import edu.bsu.css22.topboat.UI;
 import edu.bsu.css22.topboat.Util.ShipPlacementHandler;
 import edu.bsu.css22.topboat.models.*;
@@ -113,6 +114,13 @@ public class GameBoardController implements Initializable {
             Board.opponentBoard().selectedTileProperty.set(null);
         });
         boardTabPane = tabPane;
+        Game.currentPlayer.addListener((observable, oldPlayer, newPlayer) -> {
+            if(newPlayer == Game.player1) {
+                fireButton.setDisable(false);
+            } else {
+                fireButton.setDisable(true);
+            }
+        });
     }
 
     private void initTabPane() {
@@ -132,6 +140,9 @@ public class GameBoardController implements Initializable {
                fireButton.setVisible(true);
                selectedTileText.setText("");
                Board.opponentBoard().hoverTileProperty.addListener(hoverTileListener);
+               if(Board.opponentBoard().selectedTileProperty.get() == null) {
+                   fireButton.setDisable(true);
+               }
            }
         });
     }

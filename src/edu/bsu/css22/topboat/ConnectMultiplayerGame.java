@@ -48,15 +48,15 @@ public class ConnectMultiplayerGame extends Game {
                 Log.gameLog().addMessage(new Log.Message("#4: Press 'Fire Weapon'", Log.Message.Type.INFO));
                 stats.setPlayers(player1, player2);
                 if(isHost) {
-                    currentPlayer = player1;
-                    waitingPlayer = player2;
+                    currentPlayer.set(player1);
+                    waitingPlayer.set(player2);
                 } else {
-                    currentPlayer = player2;
-                    waitingPlayer = player1;
+                    currentPlayer.set(player2);
+                    waitingPlayer.set(player1);
                 }
                 while(!Thread.currentThread().isInterrupted()) {
-                    currentPlayer.takeTurn();
-                    if (waitingPlayer.allShipsSunk()) {
+                    currentPlayer.get().takeTurn();
+                    if (waitingPlayer.get().allShipsSunk()) {
                         stats.setResult(player1.allShipsSunk(), player2.allShipsSunk());
                         GameBoardController.loadStats();
                         changeState(Ended);
