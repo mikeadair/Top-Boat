@@ -2,7 +2,9 @@ package edu.bsu.css22.topboat;
 
 import edu.bsu.css22.topboat.Util.SocketConnection;
 import edu.bsu.css22.topboat.models.Board;
+import edu.bsu.css22.topboat.models.Log;
 import javafx.application.Platform;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -43,11 +45,18 @@ public class ConnectMultiplayerGame extends Game {
     void init() {}
 
     @Override
-    void start() {
+    void start() {}
+
+    @Override
+    void finish() {}
+
+    @Override
+    void handleGameMessage(Log.Message message) {
+
     }
 
     @Override
-    void finish() {
+    void handlePlayerMessage(Log.Message message) {
 
     }
 
@@ -121,6 +130,16 @@ public class ConnectMultiplayerGame extends Game {
             } else {
                 connectToHost(host);
             }
+            chatSocket.onDataReceived(data -> {
+                JSONObject messageObject = new JSONObject(data);
+                String messageType = messageObject.getString("type");
+                String messageContents = messageObject.getString("contents");
+                if(messageType.equals("game")) {
+                    Log.chatLog().addMessage(new Log.Message(messageContents, Log.Message.Type.INFO));
+                } else if(messageType.equals("chat")) {
+                    Log.chatLog().addMessage(new Log.Message(messageContents, Log.Message.Type.OPPONENT_MESSAGE));
+                }
+            });
         }
 
         public void end() {
@@ -132,6 +151,13 @@ public class ConnectMultiplayerGame extends Game {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NullPointerException e) {}
+        }
+
+        public void emitMessage(String type, Log.Message message) {
+            JSONObject messageObject = new JSONObject();
+            messageObject.put("type", type);
+            messageObject.put("contents", message.getContents());
+            chatSocket.write(messageObject.toString());
         }
 
         private void hostServer() {
@@ -150,5 +176,6 @@ public class ConnectMultiplayerGame extends Game {
             chatSocket = new SocketConnection();
             chatSocket.connect(host, CHAT_PORT);
         }
+
     }
 }
