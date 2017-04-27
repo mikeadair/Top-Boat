@@ -1,7 +1,6 @@
 package edu.bsu.css22.topboat.controllers;
 
 import edu.bsu.css22.topboat.Game;
-import edu.bsu.css22.topboat.Player;
 import edu.bsu.css22.topboat.UI;
 import edu.bsu.css22.topboat.Util.ShipPlacementHandler;
 import edu.bsu.css22.topboat.models.*;
@@ -199,7 +198,6 @@ public class GameBoardController implements Initializable {
     }
 
     public void startGameFunctionality() {
-        System.out.println("starting game functionality");
         Board.playerBoard().selectedTileProperty.addListener(MAIN_TILE_LISTENER);
         Board.opponentBoard().selectedTileProperty.addListener(MAIN_TILE_LISTENER);
         opponentTab.setDisable(false);

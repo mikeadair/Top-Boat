@@ -1,6 +1,6 @@
-package edu.bsu.css22.topboat;
+package edu.bsu.css22.topboat.models;
 
-import edu.bsu.css22.topboat.models.Board;
+import edu.bsu.css22.topboat.ConnectMultiplayerGame;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

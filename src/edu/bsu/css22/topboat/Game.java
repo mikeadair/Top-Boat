@@ -3,8 +3,7 @@ package edu.bsu.css22.topboat;
 
 import edu.bsu.css22.topboat.controllers.GameBoardController;
 import edu.bsu.css22.topboat.controllers.ViewController;
-import edu.bsu.css22.topboat.models.Log;
-import edu.bsu.css22.topboat.models.Stats;
+import edu.bsu.css22.topboat.models.*;
 import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -42,14 +41,14 @@ public abstract class Game {
     private Thread gameThread;
     private GameLoop gameLoop;
 
-    public static Player player1 = new Player();
-    public static Player player2 = new Player();
+    public static edu.bsu.css22.topboat.models.Player player1 = new edu.bsu.css22.topboat.models.Player();
+    public static edu.bsu.css22.topboat.models.Player player2 = new edu.bsu.css22.topboat.models.Player();
 
     public static Stats stats = new Stats();
 
     static BlockingQueue<State> stateChangeQueue = new ArrayBlockingQueue<>(1);
-    public static SimpleObjectProperty<Player> currentPlayer = new SimpleObjectProperty<>();
-    static SimpleObjectProperty<Player> waitingPlayer = new SimpleObjectProperty<>();
+    public static SimpleObjectProperty<edu.bsu.css22.topboat.models.Player> currentPlayer = new SimpleObjectProperty<>();
+    static SimpleObjectProperty<edu.bsu.css22.topboat.models.Player> waitingPlayer = new SimpleObjectProperty<>();
 
     public Game() {
         gameLoop = new GameLoop();
@@ -60,7 +59,7 @@ public abstract class Game {
     abstract void finish();
 
     static void transitionPlayers() {
-        Player temp = currentPlayer.get();
+        edu.bsu.css22.topboat.models.Player temp = currentPlayer.get();
         currentPlayer.set(waitingPlayer.get());
         waitingPlayer.set(temp);
     }

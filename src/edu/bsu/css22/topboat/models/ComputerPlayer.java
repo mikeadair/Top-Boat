@@ -1,8 +1,6 @@
-package edu.bsu.css22.topboat;
+package edu.bsu.css22.topboat.models;
 
 import edu.bsu.css22.topboat.Util.ShipPlacementHandler;
-import edu.bsu.css22.topboat.models.Board;
-import edu.bsu.css22.topboat.models.Ship;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +24,6 @@ public class ComputerPlayer extends Player {
 
     @Override
     public void takeTurn() {
-        System.out.println(getName() + " is taking their turn");
         Board.Tile target = firingMode.getTarget();
         if(target.hit()) {
             hits.add(target);

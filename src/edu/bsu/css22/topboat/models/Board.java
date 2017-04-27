@@ -24,7 +24,6 @@ public abstract class Board {
     private static Board playerBoard = new Board() {
         @Override
         void onTileHit(Tile hitTile) {
-            System.out.println("Player board hit");
             if(hitTile.isOccupied()) {
                 Game.stats.addHit(1);
                 Platform.runLater(() -> {

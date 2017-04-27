@@ -1,6 +1,5 @@
 package edu.bsu.css22.topboat.models;
 
-import edu.bsu.css22.topboat.Player;
 import javafx.scene.image.Image;
 
 public class Ship {
@@ -72,7 +71,6 @@ public class Ship {
     }
 
     public boolean hit() {
-        System.out.println(name + " hit. current life: " + sectionsRemaining + ". new life: " + (sectionsRemaining-1));
         sectionsRemaining -= 1;
         if(sectionsRemaining == 0) {
             return true;

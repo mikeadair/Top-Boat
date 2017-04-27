@@ -58,7 +58,6 @@ public class ArsenalController implements Initializable {
     public Weapon getSelectedWeapon() {
         Weapon current = weaponListView.getSelectionModel().getSelectedItem();
         if(current.getShotsRemaining() == 0){
-            System.out.println(current.getName() + " " + current.getShotsRemaining());
             resetWeaponSelection();
         }
         return weaponListView.getSelectionModel().getSelectedItem();

@@ -3,9 +3,7 @@ package edu.bsu.css22.topboat;
 import edu.bsu.css22.topboat.Util.SocketConnection;
 import edu.bsu.css22.topboat.controllers.GameBoardController;
 import edu.bsu.css22.topboat.controllers.ViewController;
-import edu.bsu.css22.topboat.models.Board;
-import edu.bsu.css22.topboat.models.Log;
-import edu.bsu.css22.topboat.models.Ship;
+import edu.bsu.css22.topboat.models.*;
 import javafx.application.Platform;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -316,7 +314,6 @@ public class ConnectMultiplayerGame extends Game {
 
         @Override
         public void onDataReceived(String data) {
-            System.out.println("game data received: " + data.toString());
             JSONObject dataObject = new JSONObject(data);
             String type = dataObject.getString("type");
             JSONObject responseObject = dataObject.getJSONObject("response");

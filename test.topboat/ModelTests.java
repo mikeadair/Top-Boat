@@ -1,4 +1,4 @@
-import edu.bsu.css22.topboat.Player;
+import edu.bsu.css22.topboat.models.Player;
 
 import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Ship;

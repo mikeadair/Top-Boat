@@ -35,7 +35,6 @@ public class StatsController implements Initializable {
         loadStats(playerGridPane, 0);
         loadStats(opponentGridPane, 1);
         GameBoardController.boardTabPane.getSelectionModel().select(statsTab);
-        System.out.println("Stats Controller Loaded");
     }
 
     private Label[] getLabels() {

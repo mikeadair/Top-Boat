@@ -51,13 +51,11 @@ public class MultiSelectController implements Initializable{
         socket = new SocketConnection();
         socket.connect(SocketConnection.DEFAULT_HOST, 5000);
         socket.onSocketConnected(() -> {
-            System.out.println("connection established");
             Platform.runLater(() -> {
                 statusText.setText("Fetching players...");
             });
         });
         socket.onDataReceived(data -> {
-            System.out.println("data received " + data);
             JSONObject dataObject = new JSONObject(data);
             String responseType = dataObject.getString("responseType");
             JSONObject responseObject = dataObject.getJSONObject("response");
@@ -146,7 +144,6 @@ public class MultiSelectController implements Initializable{
         public void handle(ActionEvent event) {
             socket.disconnect();
             if(isHosting) {
-                System.out.println("Should stop servers");
                 game.stopServers();
             }
             UI.changeView(UI.Views.MAIN_MENU);
@@ -174,7 +171,6 @@ public class MultiSelectController implements Initializable{
         @Override
         public void handle(ActionEvent event) {
             JSONObject selectedHost = (JSONObject) playerListView.getSelectionModel().getSelectedItem();
-            System.out.println("joining " + selectedHost.getString("name") + " @" + selectedHost.getString("ip"));
             game = new ConnectMultiplayerGame(false);
             game.setHost(selectedHost.getString("ip"));
             game.startServers();

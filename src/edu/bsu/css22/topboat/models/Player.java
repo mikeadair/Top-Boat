@@ -1,5 +1,6 @@
-package edu.bsu.css22.topboat;
+package edu.bsu.css22.topboat.models;
 
+import edu.bsu.css22.topboat.Game;
 import edu.bsu.css22.topboat.models.*;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -75,7 +76,6 @@ public class Player {
     }
 
     public void takeTurn() {
-        System.out.println(name + " is taking their turn");
         try {
             FireEvent fireEvent = fireEvents.take();
             ArrayList<Board.Tile> hits = new ArrayList<>();

@@ -1,13 +1,13 @@
 package edu.bsu.css22.topboat;
 
-import edu.bsu.css22.topboat.models.Board;
+import edu.bsu.css22.topboat.models.*;
 
 public class SinglePlayerGame extends Game {
 
     public SinglePlayerGame() {
         player1.setBoard(Board.playerBoard());
 
-        player2 = new ComputerPlayer();
+        player2 = new edu.bsu.css22.topboat.models.ComputerPlayer();
         player2.setBoard(Board.opponentBoard());
     }
 
@@ -34,7 +34,7 @@ public class SinglePlayerGame extends Game {
                 changeState(Running);
             }
         });
-        ((ComputerPlayer)player2).placeShips();
+        ((edu.bsu.css22.topboat.models.ComputerPlayer)player2).placeShips();
     }
 
     @Override

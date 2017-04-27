@@ -1,7 +1,5 @@
 package edu.bsu.css22.topboat.models;
 
-import edu.bsu.css22.topboat.Player;
-
 public class Stats {
     private Player[] players = new Player[2];
 
