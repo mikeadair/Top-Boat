@@ -16,10 +16,7 @@ import java.util.ResourceBundle;
 public class MainMenuController implements Initializable {
     @FXML Button singlePlayerSelect;
     @FXML Button multiplayerSelect;
-    @FXML Button localSelect;
-    @FXML Button connectSelect;
     @FXML TextField usernameInput;
-    @FXML Button submitUsername;
 
     private Game game;
 
@@ -27,8 +24,6 @@ public class MainMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         singlePlayerSelect.setOnAction(new SinglePlayerSelectListener());
         multiplayerSelect.setOnAction(new MultiplayerSelectListener());
-        localSelect.setOnAction(new LocalSelectListener());
-        connectSelect.setOnAction(new ConnectSelectListener());
         usernameInput.textProperty().addListener(new TextFieldListener());
     }
 
@@ -44,21 +39,6 @@ public class MainMenuController implements Initializable {
     private class MultiplayerSelectListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            localSelect.setVisible(!localSelect.isVisible());
-            connectSelect.setVisible(!connectSelect.isVisible());
-        }
-    }
-
-    private class LocalSelectListener implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent event) {
-            game = new LocalMultiplayerGame();
-        }
-    }
-
-    private class ConnectSelectListener implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent event) {
             UI.changeView(UI.Views.MULTI_SELECTION);
         }
     }
@@ -69,12 +49,10 @@ public class MainMenuController implements Initializable {
             Game.player1.setName(newValue);
             if(newValue == null || newValue.equals("")) {
                 singlePlayerSelect.setDisable(true);
-                localSelect.setDisable(true);
-                connectSelect.setDisable(true);
+                multiplayerSelect.setDisable(true);
             } else {
                 singlePlayerSelect.setDisable(false);
-                localSelect.setDisable(false);
-                connectSelect.setDisable(false);
+                multiplayerSelect.setDisable(false);
             }
         }
     }
