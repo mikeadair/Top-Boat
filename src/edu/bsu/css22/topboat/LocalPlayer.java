@@ -56,7 +56,7 @@ public class LocalPlayer extends Player {
         JSONArray tilesHit = new JSONArray();
         for(Board.Tile tile : hits) {
             String tileJson = String.format("{" +
-                    "\"x\": %d" +
+                    "\"x\": %d," +
                     "\"y\": %d"
                     + "}", tile.x, tile.y);
             tilesHit.put(new JSONObject(tileJson));

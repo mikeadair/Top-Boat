@@ -49,8 +49,10 @@ public class ConnectMultiplayerGame extends Game {
                 stats.setPlayers(player1, player2);
                 if(isHost) {
                     currentPlayer = player1;
-                } else {
                     waitingPlayer = player2;
+                } else {
+                    currentPlayer = player1;
+                    waitingPlayer = player1;
                 }
                 while(!Thread.currentThread().isInterrupted()) {
                     currentPlayer.takeTurn();

@@ -114,9 +114,11 @@ public class SocketConnection {
                 while(!Thread.currentThread().isInterrupted()) {
                     String data = in.readLine();
                     if (waitingForData) {
+                        System.out.println("pushing data for next data method");
                         dataQueue.put(data);
                         waitingForData = false;
                     } else if (dataListener != null) {
+                        System.out.println("calling onDataReceived");
                         dataListener.onDataReceived(data);
                     }
                 }
