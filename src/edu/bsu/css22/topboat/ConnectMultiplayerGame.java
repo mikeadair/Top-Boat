@@ -119,6 +119,7 @@ public class ConnectMultiplayerGame extends Game {
         private ServerSocket serverSocket;
         private SocketConnection chatSocket;
         private boolean isHost;
+        private SocketConnection.DataReceivedListener socketListener = new ChatSocketListener();
 
         public ChatServer(boolean isHost) {
             this.isHost = isHost;
@@ -130,16 +131,6 @@ public class ConnectMultiplayerGame extends Game {
             } else {
                 connectToHost(host);
             }
-            chatSocket.onDataReceived(data -> {
-                JSONObject messageObject = new JSONObject(data);
-                String messageType = messageObject.getString("type");
-                String messageContents = messageObject.getString("contents");
-                if(messageType.equals("game")) {
-                    Log.chatLog().addMessage(new Log.Message(messageContents, Log.Message.Type.INFO));
-                } else if(messageType.equals("chat")) {
-                    Log.chatLog().addMessage(new Log.Message(messageContents, Log.Message.Type.OPPONENT_MESSAGE));
-                }
-            });
         }
 
         public void end() {
@@ -165,6 +156,7 @@ public class ConnectMultiplayerGame extends Game {
                 try {
                     serverSocket = new ServerSocket(CHAT_PORT);
                     chatSocket = new SocketConnection(serverSocket.accept());
+                    chatSocket.onDataReceived(socketListener);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -175,7 +167,22 @@ public class ConnectMultiplayerGame extends Game {
         private void connectToHost(String host) {
             chatSocket = new SocketConnection();
             chatSocket.connect(host, CHAT_PORT);
+            chatSocket.onDataReceived(socketListener);
         }
+    }
 
+    private class ChatSocketListener implements SocketConnection.DataReceivedListener {
+
+        @Override
+        public void onDataReceived(String data) {
+            JSONObject messageObject = new JSONObject(data);
+            String messageType = messageObject.getString("type");
+            String messageContents = messageObject.getString("contents");
+            if(messageType.equals("game")) {
+                Log.chatLog().addMessage(new Log.Message(messageContents, Log.Message.Type.INFO));
+            } else if(messageType.equals("chat")) {
+                Log.chatLog().addMessage(new Log.Message(messageContents, Log.Message.Type.OPPONENT_MESSAGE));
+            }
+        }
     }
 }
