@@ -112,7 +112,7 @@ public class ConnectMultiplayerGame extends Game {
         super.handleShipPlacement();
         player1.attachReadyListener((observable, oldReady, newReady) -> {
             if(newReady) {
-                sendShips();
+                sendReady();
             }
             if(newReady && player2.isReady()) {
                 changeState(Running);
@@ -126,7 +126,7 @@ public class ConnectMultiplayerGame extends Game {
         });
     }
 
-    private void sendShips() {
+    private void sendReady() {
         JSONObject dataObject = new JSONObject();
         JSONObject responseObject = new JSONObject();
         JSONArray shipsArray = new JSONArray();
@@ -141,6 +141,7 @@ public class ConnectMultiplayerGame extends Game {
         }
         dataObject.put("type", "playerReady");
         responseObject.put("ships", shipsArray);
+        responseObject.put("name", Game.player1.getName());
         responseObject.put("ready", true);
         dataObject.put("response", responseObject);
         gameServer.sendData(dataObject.toString());
@@ -281,6 +282,8 @@ public class ConnectMultiplayerGame extends Game {
 
     private void opponenentReady(JSONObject response) {
         boolean isReady = response.getBoolean("ready");
+        String playerName = response.getString("name");
+        Game.player2.setName(playerName);
         if(isReady) {
             JSONArray shipsArray = response.getJSONArray("ships");
             for(Object shipObject : shipsArray) {
