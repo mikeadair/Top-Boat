@@ -1,6 +1,7 @@
 package edu.bsu.css22.topboat;
 
 import edu.bsu.css22.topboat.Util.SocketConnection;
+import edu.bsu.css22.topboat.models.Board;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -17,6 +18,11 @@ public class ConnectMultiplayerGame extends Game {
         this.isHost = isHost;
         gameServer = new GameServer(isHost);
         chatServer = new ChatServer(isHost);
+
+        player2 = new ConnectedPlayer();
+
+        player1.setBoard(Board.playerBoard());
+        player2.setBoard(Board.opponentBoard());
     }
 
     public void startServers() {

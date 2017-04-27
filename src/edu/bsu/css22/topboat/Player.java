@@ -18,7 +18,6 @@ public class Player {
     private SimpleBooleanProperty ready = new SimpleBooleanProperty(false);
     private ArrayList<Weapon> arsenal = new ArrayList<>();
     private BlockingQueue<FireEvent> fireEvents = new ArrayBlockingQueue<>(1);
-    private boolean Won = false;
 
     public Player() {
         this.ships = new HashMap<>(Ship.Type.values().length);
