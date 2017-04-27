@@ -64,6 +64,9 @@ public class GameBoardController implements Initializable {
             removeAffectedTileMarkers();
             fireButton.setDisable(true);
             return;
+        } else if (Game.currentPlayer.get() != Game.player1){
+            fireButton.setDisable(true);
+            return;
         }
         fireButton.setDisable(false);
 
