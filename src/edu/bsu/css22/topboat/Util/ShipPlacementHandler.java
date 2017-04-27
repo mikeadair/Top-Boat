@@ -86,7 +86,7 @@ public class ShipPlacementHandler {
         }
     }
 
-    public void onNewShipPlacementInTile(Board.Tile tile, Ship ship, int index){}
+    public void onNewShipPlacementInTile(Board.Tile tile, Ship ship, int index) {}
 
     public void resetCurrentPlacement() {
         if(currentShipOrigin == null) return;

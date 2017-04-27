@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,12 +41,16 @@ public class SocketConnection {
             e.printStackTrace();
             return false;
         }
+        if(connectedListener != null) {
+            connectedListener.onSocketConnected();
+        }
         socketLoop.run();
         return true;
     }
 
     public void disconnect() {
         try {
+            socketLoop.stop();
             socket.close();
         } catch(IOException e) {
             e.printStackTrace();
@@ -53,7 +58,6 @@ public class SocketConnection {
     }
 
     public void write(Object data) {
-        System.out.println("writing " + data.toString());
         out.println(data.toString());
     }
 
@@ -91,10 +95,14 @@ public class SocketConnection {
             try {
                 while(!Thread.currentThread().isInterrupted()) {
                     String data = in.readLine();
-                    System.out.println("data received");
                     if (dataListener != null) {
                         dataListener.onDataReceived(data);
                     }
+                }
+            } catch(SocketException e) {
+                if(!Thread.currentThread().isInterrupted()) {
+                    System.err.println("The socket was closed unexpectedly");
+                    e.printStackTrace();
                 }
             } catch(IOException e) {
                 e.printStackTrace();
@@ -106,7 +114,7 @@ public class SocketConnection {
             thread.start();
         }
 
-        void end() {
+        void stop() {
             thread.interrupt();
         }
     }

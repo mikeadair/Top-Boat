@@ -1,6 +1,7 @@
 package edu.bsu.css22.topboat;
 
 import edu.bsu.css22.topboat.Util.SocketConnection;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -14,6 +15,18 @@ public class ConnectMultiplayerGame extends Game {
     public ConnectMultiplayerGame(boolean isHost) {
         super();
         this.isHost = isHost;
+        gameServer = new GameServer(isHost);
+        chatServer = new ChatServer(isHost);
+    }
+
+    public void startServers() {
+        gameServer.start(host);
+        chatServer.start(host);
+    }
+
+    public void stopServers() {
+        gameServer.end();
+        chatServer.end();
     }
 
     public void setHost(String host) {
@@ -21,12 +34,7 @@ public class ConnectMultiplayerGame extends Game {
     }
 
     @Override
-    void init() {
-        gameServer = new GameServer(isHost);
-        chatServer = new ChatServer(isHost);
-        gameServer.start(host);
-        chatServer.start(host);
-    }
+    void init() {}
 
     @Override
     void start() {
@@ -37,12 +45,12 @@ public class ConnectMultiplayerGame extends Game {
 
     }
 
-    private static class GameServer {
+    private class GameServer {
         private static final int GAME_PORT = 5000;
+        private Thread thread;
         private ServerSocket serverSocket;
         private SocketConnection gameSocket;
         private boolean isHost;
-
 
         public GameServer(boolean isHost) {
             this.isHost = isHost;
@@ -64,16 +72,25 @@ public class ConnectMultiplayerGame extends Game {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            } catch (NullPointerException e) {}
         }
 
         private void hostServer() {
-            try {
-                serverSocket = new ServerSocket(GAME_PORT);
-                gameSocket = new SocketConnection(serverSocket.accept());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            thread = new Thread(() -> {
+                try {
+                    serverSocket = new ServerSocket(GAME_PORT);
+                    waitForConnection();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
+        }
+
+        private void waitForConnection() throws IOException {
+            gameSocket = new SocketConnection(serverSocket.accept());
+            Game.startGame(ConnectMultiplayerGame.this);
+            Platform.runLater(() -> UI.changeView(UI.Views.MAIN_GAME));
         }
 
         private void connectToHost(String host) {
@@ -84,6 +101,7 @@ public class ConnectMultiplayerGame extends Game {
 
     private class ChatServer {
         private static final int CHAT_PORT = 5001;
+        private Thread thread;
         private ServerSocket serverSocket;
         private SocketConnection chatSocket;
         private boolean isHost;
@@ -108,16 +126,19 @@ public class ConnectMultiplayerGame extends Game {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            } catch (NullPointerException e) {}
         }
 
         private void hostServer() {
-            try {
-                serverSocket = new ServerSocket(CHAT_PORT);
-                chatSocket = new SocketConnection(serverSocket.accept());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            thread = new Thread(() -> {
+                try {
+                    serverSocket = new ServerSocket(CHAT_PORT);
+                    chatSocket = new SocketConnection(serverSocket.accept());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
         }
 
         private void connectToHost(String host) {

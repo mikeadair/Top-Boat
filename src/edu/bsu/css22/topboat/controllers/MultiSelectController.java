@@ -1,5 +1,6 @@
 package edu.bsu.css22.topboat.controllers;
 
+import edu.bsu.css22.topboat.ConnectMultiplayerGame;
 import edu.bsu.css22.topboat.Game;
 import edu.bsu.css22.topboat.UI;
 import edu.bsu.css22.topboat.Util.SocketConnection;
@@ -20,7 +21,9 @@ import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -32,6 +35,8 @@ public class MultiSelectController implements Initializable{
     @FXML Text statusText;
     @FXML ProgressIndicator progressIndicator;
     private SocketConnection socket;
+    private boolean isHosting;
+    private ConnectMultiplayerGame game;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,6 +57,7 @@ public class MultiSelectController implements Initializable{
             });
         });
         socket.onDataReceived(data -> {
+            System.out.println("data received " + data);
             JSONObject dataObject = new JSONObject(data);
             String responseType = dataObject.getString("responseType");
             JSONObject responseObject = dataObject.getJSONObject("response");
@@ -99,14 +105,34 @@ public class MultiSelectController implements Initializable{
                 JSONObject host = (JSONObject) hostObject;
                 playerListView.getItems().add(host);
             }
-            statusText.setText("waiting for your selection...");
+            if(isHosting) {
+                statusText.setText("waiting for another player...");
+            } else {
+                statusText.setText("waiting for your selection...");
+            }
             progressIndicator.setVisible(false);
         });
         playerListView.refresh();
     }
 
     private void showHostingStatus(JSONObject response) {
-
+        boolean success = response.getBoolean("success");
+        if(success) {
+            Platform.runLater(() -> {
+                statusText.setText("Waiting for another player...");
+                hostButton.setDisable(true);
+                joinButton.setDisable(true);
+            });
+            isHosting = true;
+            game = new ConnectMultiplayerGame(true);
+            game.startServers();
+        } else {
+            Platform.runLater(() -> {
+                statusText.setText("Could not host game...");
+                hostButton.setDisable(false);
+                joinButton.setDisable(false);
+            });
+        }
     }
 
     private void defaultResponse(JSONObject response) {
@@ -117,6 +143,9 @@ public class MultiSelectController implements Initializable{
         @Override
         public void handle(ActionEvent event) {
             socket.disconnect();
+            if(isHosting) {
+                game.stopServers();
+            }
             UI.changeView(UI.Views.MAIN_MENU);
         }
     }
@@ -127,13 +156,21 @@ public class MultiSelectController implements Initializable{
             socket.addParam("reqType", "host")
                     .addParam("name", Game.player1.getName())
                     .writeParams();
+            hostButton.setDisable(true);
+            joinButton.setDisable(true);
         }
     }
 
     private class JoinButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            //Check if playerListView has selected then attempt to join
+            JSONObject selectedHost = (JSONObject) playerListView.getSelectionModel().getSelectedItem();
+            System.out.println("joining " + selectedHost.getString("name") + " @" + selectedHost.getString("ip"));
+            game = new ConnectMultiplayerGame(false);
+            game.setHost(selectedHost.getString("ip"));
+            game.startServers();
+            Game.startGame(game);
+            UI.changeView(UI.Views.MAIN_GAME);
         }
     }
 }
