@@ -285,7 +285,7 @@ public class ConnectMultiplayerGame extends Game {
             String messageType = messageObject.getString("type");
             String messageContents = messageObject.getString("contents");
             if(messageType.equals("game")) {
-                Log.chatLog().addMessage(new Log.Message(messageContents, Log.Message.Type.INFO));
+                Log.gameLog().addMessage(new Log.Message(messageContents, Log.Message.Type.INFO));
             } else if(messageType.equals("chat")) {
                 Log.chatLog().addMessage(new Log.Message(messageContents, Log.Message.Type.OPPONENT_MESSAGE));
             }
