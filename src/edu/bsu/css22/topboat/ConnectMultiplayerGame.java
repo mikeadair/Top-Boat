@@ -102,6 +102,7 @@ public class ConnectMultiplayerGame extends Game {
         }
         dataObject.put("type", "playerReady");
         responseObject.put("ships", shipsArray);
+        responseObject.put("ready", true);
         dataObject.put("response", responseObject);
         gameServer.sendData(dataObject.toString());
     }
