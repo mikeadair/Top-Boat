@@ -244,7 +244,7 @@ public class ConnectMultiplayerGame extends Game {
                 addNewShipToOpponent(shipType, orientation, x, y);
             }
         }
-        Game.player2.setReady(isReady);
+        Game.player2.setReady(isReady, false);
     }
 
     private void addNewShipToOpponent(String t, String o, int x, int y) {

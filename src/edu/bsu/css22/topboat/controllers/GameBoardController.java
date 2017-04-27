@@ -181,7 +181,7 @@ public class GameBoardController implements Initializable {
 
     private static void endShipPlacement() {
         Board.playerBoard().selectedTileProperty.removeListener(SHIP_PLACEMENT_LISTENER);
-        Game.player1.setReady(true);
+        Game.player1.setReady(true, true);
     }
 
     public void startGameFunctionality() {

@@ -50,7 +50,7 @@ public class ComputerPlayer extends Player {
             try {
                 Thread.sleep(waitAmount);
             } catch (InterruptedException e) {}
-            setReady(true);
+            setReady(true, true);
         }, "ComputerShipPlacementThread").start();
     }
 

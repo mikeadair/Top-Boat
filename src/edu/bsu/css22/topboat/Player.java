@@ -38,13 +38,16 @@ public class Player {
         return ready.get();
     }
 
-    public void setReady(boolean isReady) {
+    public void setReady(boolean isReady, boolean shouldEmitMessage) {
+        ready.set(isReady);
+
+        if(!shouldEmitMessage) return;
+
         if(isReady) {
             Game.emitGameMessage(new Log.Message(name + " is ready!", Log.Message.Type.SUCCESS));
         } else {
             Game.emitGameMessage(new Log.Message(name + " decided they're not ready after all", Log.Message.Type.SUCCESS));
         }
-        ready.set(isReady);
     }
 
     public Board getBoard() {
