@@ -1,5 +1,6 @@
 package edu.bsu.css22.topboat.controllers;
 
+import edu.bsu.css22.topboat.Game;
 import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Log.Message;
 import javafx.application.Platform;
@@ -53,7 +54,7 @@ public class LogController implements Initializable{
     }
 
     private void sendPlayerMessage(){
-        chatLog.sendMessage(messageField.getText());
+        Game.emitPlayerMessage(new Log.Message(messageField.getText(), Message.Type.PLAYER_MESSAGE));
         messageField.setText("");
     }
 
