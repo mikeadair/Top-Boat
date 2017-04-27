@@ -51,7 +51,7 @@ public class ConnectMultiplayerGame extends Game {
                     currentPlayer = player1;
                     waitingPlayer = player2;
                 } else {
-                    currentPlayer = player1;
+                    currentPlayer = player2;
                     waitingPlayer = player1;
                 }
                 while(!Thread.currentThread().isInterrupted()) {
