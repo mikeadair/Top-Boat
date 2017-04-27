@@ -89,8 +89,7 @@ public class ConnectMultiplayerGame extends Game {
 
         private void waitForConnection() throws IOException {
             gameSocket = new SocketConnection(serverSocket.accept());
-            Game.startGame(ConnectMultiplayerGame.this);
-            Platform.runLater(() -> UI.changeView(UI.Views.MAIN_GAME));
+            Platform.runLater(() -> Game.startGame(ConnectMultiplayerGame.this));
         }
 
         private void connectToHost(String host) {

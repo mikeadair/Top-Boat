@@ -153,11 +153,16 @@ public class MultiSelectController implements Initializable{
     private class HostButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            socket.addParam("reqType", "host")
-                    .addParam("name", Game.player1.getName())
-                    .writeParams();
-            hostButton.setDisable(true);
-            joinButton.setDisable(true);
+            try {
+                socket.addParam("reqType", "host")
+                        .addParam("ip", InetAddress.getLocalHost().getHostAddress())
+                        .addParam("name", Game.player1.getName())
+                        .writeParams();
+                hostButton.setDisable(true);
+                joinButton.setDisable(true);
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -169,8 +174,7 @@ public class MultiSelectController implements Initializable{
             game = new ConnectMultiplayerGame(false);
             game.setHost(selectedHost.getString("ip"));
             game.startServers();
-            Game.startGame(game);
-            UI.changeView(UI.Views.MAIN_GAME);
+            Platform.runLater(() -> Game.startGame(game));
         }
     }
 }
