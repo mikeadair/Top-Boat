@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.SocketException;
 
 public class ConnectMultiplayerGame extends Game {
     private String host;
@@ -81,10 +82,10 @@ public class ConnectMultiplayerGame extends Game {
 
         public void end() {
             try {
-                gameSocket.disconnect();
                 if (isHost) {
                     serverSocket.close();
                 }
+                gameSocket.disconnect();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NullPointerException e) {}
@@ -103,8 +104,13 @@ public class ConnectMultiplayerGame extends Game {
         }
 
         private void waitForConnection() throws IOException {
-            gameSocket = new SocketConnection(serverSocket.accept());
-            Platform.runLater(() -> Game.startGame(ConnectMultiplayerGame.this));
+            try {
+                gameSocket = new SocketConnection(serverSocket.accept());
+            } catch(SocketException e) {}
+            Platform.runLater(() -> {
+                if(!serverSocket.isClosed())
+                    Game.startGame(ConnectMultiplayerGame.this);
+            });
         }
 
         private void connectToHost(String host) {
@@ -135,10 +141,10 @@ public class ConnectMultiplayerGame extends Game {
 
         public void end() {
             try {
-                chatSocket.disconnect();
                 if (isHost) {
                     serverSocket.close();
                 }
+                chatSocket.disconnect();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NullPointerException e) {}
@@ -158,6 +164,7 @@ public class ConnectMultiplayerGame extends Game {
                     serverSocket = new ServerSocket(CHAT_PORT);
                     chatSocket = new SocketConnection(serverSocket.accept());
                     chatSocket.onDataReceived(socketListener);
+                } catch(SocketException e) {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

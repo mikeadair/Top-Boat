@@ -110,7 +110,9 @@ public class MultiSelectController implements Initializable{
             } else {
                 statusText.setText("waiting for your selection...");
             }
-            progressIndicator.setVisible(false);
+            if(!isHosting) {
+                progressIndicator.setVisible(false);
+            }
         });
         playerListView.refresh();
     }
@@ -144,6 +146,7 @@ public class MultiSelectController implements Initializable{
         public void handle(ActionEvent event) {
             socket.disconnect();
             if(isHosting) {
+                System.out.println("Should stop servers");
                 game.stopServers();
             }
             UI.changeView(UI.Views.MAIN_MENU);
@@ -158,6 +161,7 @@ public class MultiSelectController implements Initializable{
                         .addParam("ip", InetAddress.getLocalHost().getHostAddress())
                         .addParam("name", Game.player1.getName())
                         .writeParams();
+                progressIndicator.setVisible(true);
                 hostButton.setDisable(true);
                 joinButton.setDisable(true);
             } catch (UnknownHostException e) {

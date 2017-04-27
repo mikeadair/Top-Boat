@@ -28,7 +28,14 @@ public class SocketConnection {
     public SocketConnection() {}
 
     public SocketConnection(Socket socket) {
-        this.socket = socket;
+        try {
+            this.socket = socket;
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch(IOException e) {
+            System.err.println("The socket connection could not be established");
+            e.printStackTrace();
+        }
     }
 
     public boolean connect(String host, int port) {
