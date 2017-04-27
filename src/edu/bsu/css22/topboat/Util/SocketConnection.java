@@ -36,6 +36,7 @@ public class SocketConnection {
             System.err.println("The socket connection could not be established");
             e.printStackTrace();
         }
+        socketLoop.run();
     }
 
     public boolean connect(String host, int port) {
