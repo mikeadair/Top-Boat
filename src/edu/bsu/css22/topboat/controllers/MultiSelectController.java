@@ -164,6 +164,7 @@ public class MultiSelectController implements Initializable{
                 progressIndicator.setVisible(true);
                 hostButton.setDisable(true);
                 joinButton.setDisable(true);
+                socket.disconnect();
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
@@ -178,6 +179,7 @@ public class MultiSelectController implements Initializable{
             game = new ConnectMultiplayerGame(false);
             game.setHost(selectedHost.getString("ip"));
             game.startServers();
+            socket.disconnect();
             Platform.runLater(() -> Game.startGame(game));
         }
     }
