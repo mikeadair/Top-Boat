@@ -52,12 +52,12 @@ public class ConnectMultiplayerGame extends Game {
 
     @Override
     void handleGameMessage(Log.Message message) {
-
+        chatServer.emitMessage("game", message);
     }
 
     @Override
     void handlePlayerMessage(Log.Message message) {
-
+        chatServer.emitMessage("chat", message);
     }
 
     private class GameServer {
