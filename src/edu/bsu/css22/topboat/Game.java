@@ -18,13 +18,13 @@ public abstract class Game {
         Log.gameLog().addMessage(new Log.Message("#2: Select a weapon from the right side", Log.Message.Type.INFO));
         Log.gameLog().addMessage(new Log.Message("#3: Select a cell to fire at", Log.Message.Type.INFO));
         Log.gameLog().addMessage(new Log.Message("#4: Press 'Fire Weapon'", Log.Message.Type.INFO));
-        this.stats.setPlayers(player1, player2);
+        stats.setPlayers(player1, player2);
         currentPlayer = player1;
         waitingPlayer = player2;
         while(!Thread.currentThread().isInterrupted()) {
             currentPlayer.takeTurn();
             if (waitingPlayer.allShipsSunk()) {
-                this.stats.setResult(player1.allShipsSunk(),player2.allShipsSunk());
+                stats.setResult(player1.allShipsSunk(),player2.allShipsSunk());
                 GameBoardController.loadStats();
                 changeState(Ended);
                 return;

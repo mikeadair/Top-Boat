@@ -1,6 +1,7 @@
 package edu.bsu.css22.topboat;
 
 import edu.bsu.css22.topboat.Util.SocketConnection;
+import edu.bsu.css22.topboat.controllers.GameBoardController;
 import edu.bsu.css22.topboat.controllers.ViewController;
 import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Log;
@@ -50,6 +51,16 @@ public class ConnectMultiplayerGame extends Game {
                     currentPlayer = player1;
                 } else {
                     waitingPlayer = player2;
+                }
+                while(!Thread.currentThread().isInterrupted()) {
+                    currentPlayer.takeTurn();
+                    if (waitingPlayer.allShipsSunk()) {
+                        stats.setResult(player1.allShipsSunk(), player2.allShipsSunk());
+                        GameBoardController.loadStats();
+                        changeState(Ended);
+                        return;
+                    }
+                    transitionPlayers();
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
