@@ -1,6 +1,7 @@
 package edu.bsu.css22.topboat;
 
 import edu.bsu.css22.topboat.Util.SocketConnection;
+import edu.bsu.css22.topboat.controllers.ViewController;
 import edu.bsu.css22.topboat.models.Board;
 import edu.bsu.css22.topboat.models.Log;
 import edu.bsu.css22.topboat.models.Ship;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class ConnectMultiplayerGame extends Game {
     private String host;
@@ -25,10 +27,34 @@ public class ConnectMultiplayerGame extends Game {
         gameServer = new GameServer(isHost);
         chatServer = new ChatServer(isHost);
 
-        player2 = new ConnectedPlayer();
+        LocalPlayer localPlayer = new LocalPlayer(gameServer);
+        localPlayer.setName(player1.getName());
+
+        player1 = localPlayer;
+        player2 = new ConnectedPlayer(gameServer);
 
         player1.setBoard(Board.playerBoard());
         player2.setBoard(Board.opponentBoard());
+
+        Running = new State(() -> {
+            try {
+                ((ViewController)UI.currentController()).gameBoardController().startGameFunctionality();
+                TimeUnit.MILLISECONDS.sleep(500);
+                Log.gameLog().addMessage(new Log.Message("Battle Time!", Log.Message.Type.INFO));
+                Log.gameLog().addMessage(new Log.Message("#1: Navigate to the enemy map", Log.Message.Type.INFO));
+                Log.gameLog().addMessage(new Log.Message("#2: Select a weapon from the right side", Log.Message.Type.INFO));
+                Log.gameLog().addMessage(new Log.Message("#3: Select a cell to fire at", Log.Message.Type.INFO));
+                Log.gameLog().addMessage(new Log.Message("#4: Press 'Fire Weapon'", Log.Message.Type.INFO));
+                stats.setPlayers(player1, player2);
+                if(isHost) {
+                    currentPlayer = player1;
+                } else {
+                    waitingPlayer = player2;
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void startServers() {
@@ -107,7 +133,7 @@ public class ConnectMultiplayerGame extends Game {
         gameServer.sendData(dataObject.toString());
     }
 
-    private class GameServer {
+    public class GameServer {
         private static final int GAME_PORT = 5000;
         private Thread thread;
         private ServerSocket serverSocket;
@@ -136,6 +162,15 @@ public class ConnectMultiplayerGame extends Game {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NullPointerException e) {}
+        }
+
+        public String nextData() {
+            try {
+                return gameSocket.nextData();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
 
         public void sendData(String data) {

@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="84e5481e-e138-40a9-8599-d6fda9dff7c1" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/Log.java" afterPath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/Log.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectMultiplayerGame.java" afterPath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectMultiplayerGame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectedPlayer.java" afterPath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectedPlayer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Player.java" afterPath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/SocketConnection.java" afterPath="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/SocketConnection.java" />
     </list>
     <ignored path="Top Boat.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,119 +27,135 @@
     <favorites_list name="Top Boat" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="MultiSelectController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/MultiSelectController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="26.25926">
-              <caret line="103" column="46" selection-start-line="103" selection-start-column="46" selection-end-line="103" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Game.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.0">
-              <caret line="70" column="63" selection-start-line="70" selection-start-column="63" selection-end-line="70" selection-end-column="63" />
-              <folding>
-                <element signature="e#2457#2458#0" expanded="true" />
-                <element signature="e#2504#2505#0" expanded="true" />
-                <element signature="e#2618#2619#0" expanded="true" />
-                <element signature="e#2669#2670#0" expanded="true" />
-                <element signature="e#2718#2719#0" expanded="true" />
-                <element signature="e#2771#2772#0" expanded="true" />
-                <element signature="e#2820#2821#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Log.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/Log.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.67196816">
-              <caret line="76" column="44" selection-start-line="76" selection-start-column="44" selection-end-line="76" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConnectMultiplayerGame.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectMultiplayerGame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5185184">
-              <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1156#1157#0" expanded="true" />
-                <element signature="e#1188#1189#0" expanded="true" />
-                <element signature="e#1900#1901#0" expanded="true" />
-                <element signature="e#1944#1945#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Player.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SinglePlayerGame.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/SinglePlayerGame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LogController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/LogController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConnectedPlayer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectedPlayer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SocketConnection.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/SocketConnection.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
-              <folding>
-                <element signature="e#1979#1980#0" expanded="true" />
-                <element signature="e#2023#2024#0" expanded="true" />
-                <element signature="e#2056#2057#0" expanded="true" />
-                <element signature="e#2096#2097#0" expanded="true" />
-                <element signature="e#3580#3581#0" expanded="true" />
-                <element signature="e#3622#3623#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.50905627">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="MultiSelectController.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/MultiSelectController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ConnectMultiplayerGame.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectMultiplayerGame.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.66523606">
+                  <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#2501#2502#0" expanded="true" />
+                    <element signature="e#2533#2534#0" expanded="true" />
+                    <element signature="e#4858#4859#0" expanded="true" />
+                    <element signature="e#4902#4903#0" expanded="true" />
+                    <element signature="e#5674#5675#0" expanded="true" />
+                    <element signature="e#5720#5721#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ConnectedPlayer.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectedPlayer.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#309#310#0" expanded="true" />
+                    <element signature="e#353#354#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/Board.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="148" column="18" selection-start-line="148" selection-start-column="18" selection-end-line="148" selection-end-column="18" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Player.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="111" column="39" selection-start-line="111" selection-start-column="39" selection-end-line="111" selection-end-column="39" />
+                  <folding>
+                    <element signature="e#1758#1759#0" expanded="true" />
+                    <element signature="e#1786#1787#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ShipPlacementHandler.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/ShipPlacementHandler.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="77" column="8" selection-start-line="77" selection-start-column="8" selection-end-line="79" selection-end-column="52" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Player.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-13.62963">
+                  <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ComputerPlayer.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ComputerPlayer.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="69" column="28" selection-start-line="69" selection-start-column="28" selection-end-line="69" selection-end-column="28" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SocketConnection.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/SocketConnection.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="LocalPlayer.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/LocalPlayer.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.65665233">
+                  <caret line="47" column="34" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#418#419#0" expanded="true" />
+                    <element signature="e#462#463#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -157,16 +176,20 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/MainMenuController.java" />
-        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/SinglePlayerGame.java" />
-        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectedPlayer.java" />
         <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/ShipPlacementHandler.java" />
-        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Player.java" />
-        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Game.java" />
         <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/MultiSelectController.java" />
-        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/SocketConnection.java" />
-        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectMultiplayerGame.java" />
         <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/LogController.java" />
         <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/Log.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/SinglePlayerGame.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/ComputerPlayer.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/GameBoardController.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Game.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/SocketConnection.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/HostPlayer.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/Player.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectedPlayer.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/LocalPlayer.java" />
+        <option value="$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectMultiplayerGame.java" />
       </list>
     </option>
   </component>
@@ -610,13 +633,13 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936507" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29761904" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936507" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.038359787" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936507" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -637,7 +660,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -681,107 +704,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/ShipPlacementHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/GameBoardController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33193278">
-          <caret line="236" column="19" selection-start-line="236" selection-start-column="16" selection-end-line="236" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.0">
-          <caret line="70" column="63" selection-start-line="70" selection-start-column="63" selection-end-line="70" selection-end-column="63" />
-          <folding>
-            <element signature="e#2457#2458#0" expanded="true" />
-            <element signature="e#2504#2505#0" expanded="true" />
-            <element signature="e#2618#2619#0" expanded="true" />
-            <element signature="e#2669#2670#0" expanded="true" />
-            <element signature="e#2718#2719#0" expanded="true" />
-            <element signature="e#2771#2772#0" expanded="true" />
-            <element signature="e#2820#2821#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/MultiSelectController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="26.25926">
-          <caret line="103" column="46" selection-start-line="103" selection-start-column="46" selection-end-line="103" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/SocketConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
-          <folding>
-            <element signature="e#1979#1980#0" expanded="true" />
-            <element signature="e#2023#2024#0" expanded="true" />
-            <element signature="e#2056#2057#0" expanded="true" />
-            <element signature="e#2096#2097#0" expanded="true" />
-            <element signature="e#3580#3581#0" expanded="true" />
-            <element signature="e#3622#3623#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectMultiplayerGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5185184">
-          <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1156#1157#0" expanded="true" />
-            <element signature="e#1188#1189#0" expanded="true" />
-            <element signature="e#1900#1901#0" expanded="true" />
-            <element signature="e#1944#1945#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectedPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/SinglePlayerGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/LogController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -792,9 +714,140 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/Log.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67196816">
+        <state vertical-scroll-proportion="0.0">
           <caret line="76" column="44" selection-start-line="76" selection-start-column="44" selection-end-line="76" selection-end-column="44" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/FireEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.059642147">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/Ship.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/ShipPlacementHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="77" column="8" selection-start-line="77" selection-start-column="8" selection-end-line="79" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20874752">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="19" selection-end-column="100" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/SinglePlayerGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2385685">
+          <caret line="43" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Util/SocketConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ComputerPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="69" column="28" selection-start-line="69" selection-start-column="28" selection-end-line="69" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/GameBoardController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2802198">
+          <caret line="183" column="40" selection-start-line="183" selection-start-column="40" selection-end-line="183" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/controllers/MultiSelectController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="111" column="39" selection-start-line="111" selection-start-column="39" selection-end-line="111" selection-end-column="39" />
+          <folding>
+            <element signature="e#1758#1759#0" expanded="true" />
+            <element signature="e#1786#1787#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/models/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="148" column="18" selection-start-line="148" selection-start-column="18" selection-end-line="148" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectedPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#309#310#0" expanded="true" />
+            <element signature="e#353#354#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/LocalPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65665233">
+          <caret line="47" column="34" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#418#419#0" expanded="true" />
+            <element signature="e#462#463#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/bsu/css22/topboat/ConnectMultiplayerGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.66523606">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2501#2502#0" expanded="true" />
+            <element signature="e#2533#2534#0" expanded="true" />
+            <element signature="e#4858#4859#0" expanded="true" />
+            <element signature="e#4902#4903#0" expanded="true" />
+            <element signature="e#5674#5675#0" expanded="true" />
+            <element signature="e#5720#5721#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

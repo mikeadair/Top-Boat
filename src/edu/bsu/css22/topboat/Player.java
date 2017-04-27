@@ -17,7 +17,7 @@ public class Player {
     private Board board;
     private SimpleBooleanProperty ready = new SimpleBooleanProperty(false);
     private ArrayList<Weapon> arsenal = new ArrayList<>();
-    private BlockingQueue<FireEvent> fireEvents = new ArrayBlockingQueue<>(1);
+    BlockingQueue<FireEvent> fireEvents = new ArrayBlockingQueue<>(1);
 
     public Player() {
         this.ships = new HashMap<>(Ship.Type.values().length);
@@ -108,7 +108,7 @@ public class Player {
         }
     }
 
-    private String buildStringFromTiles(ArrayList<Board.Tile> tiles) {
+    String buildStringFromTiles(ArrayList<Board.Tile> tiles) {
         StringBuilder builder = new StringBuilder();
         if(tiles.size() == 1){
             return tiles.get(0).name.toString() + ".";

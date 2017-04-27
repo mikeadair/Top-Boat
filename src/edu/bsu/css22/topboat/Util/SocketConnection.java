@@ -10,6 +10,9 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeoutException;
 
 public class SocketConnection {
     public static final String DEFAULT_HOST = "107.191.44.5";
@@ -22,6 +25,8 @@ public class SocketConnection {
 
     private SocketConnectedListener connectedListener;
     private DataReceivedListener dataListener;
+    private boolean waitingForData;
+    private BlockingQueue<String> dataQueue = new ArrayBlockingQueue<>(1);
 
     private JSONObject params = new JSONObject();
 
@@ -89,6 +94,11 @@ public class SocketConnection {
         this.dataListener = listener;
     }
 
+    public String nextData() throws InterruptedException {
+        waitingForData = true;
+        return dataQueue.take();
+    }
+
     public interface SocketConnectedListener {
         void onSocketConnected();
     }
@@ -103,7 +113,10 @@ public class SocketConnection {
             try {
                 while(!Thread.currentThread().isInterrupted()) {
                     String data = in.readLine();
-                    if (dataListener != null) {
+                    if (waitingForData) {
+                        dataQueue.put(data);
+                        waitingForData = false;
+                    } else if (dataListener != null) {
                         dataListener.onDataReceived(data);
                     }
                 }
@@ -112,7 +125,7 @@ public class SocketConnection {
                     System.err.println("The socket was closed unexpectedly");
                     e.printStackTrace();
                 }
-            } catch(IOException e) {
+            } catch(Exception e) {
                 e.printStackTrace();
             }
         };
