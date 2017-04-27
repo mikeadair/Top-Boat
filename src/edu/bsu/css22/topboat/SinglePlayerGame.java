@@ -23,6 +23,17 @@ public class SinglePlayerGame extends Game {
     @Override
      void handleShipPlacement() {
         super.handleShipPlacement();
+        player1.attachReadyListener((observable, oldReady, newReady) -> {
+            if(newReady && player2.isReady()) {
+                changeState(Running);
+            }
+        });
+
+        player2.attachReadyListener((observable, oldReady, newReady) -> {
+            if(newReady && player1.isReady()) {
+                changeState(Running);
+            }
+        });
         ((ComputerPlayer)player2).placeShips();
     }
 

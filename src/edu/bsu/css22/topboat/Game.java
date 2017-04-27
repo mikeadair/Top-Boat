@@ -87,17 +87,7 @@ public abstract class Game {
         Log.gameLog().addMessage(new Log.Message("#2: Use arrow keys to rotate", Log.Message.Type.INFO));
         Log.gameLog().addMessage(new Log.Message("#3: Press 'enter' to confirm placement", Log.Message.Type.INFO));
         Log.gameLog().addMessage(new Log.Message("#4: Repeat until all your ships are placed", Log.Message.Type.INFO));
-        player1.attachReadyListener((observable, oldReady, newReady) -> {
-            if(newReady && player2.isReady()) {
-                changeState(Running);
-            }
-        });
 
-        player2.attachReadyListener((observable, oldReady, newReady) -> {
-            if(newReady && player1.isReady()) {
-                changeState(Running);
-            }
-        });
     }
 
     public static void startGame(Game startGame) {

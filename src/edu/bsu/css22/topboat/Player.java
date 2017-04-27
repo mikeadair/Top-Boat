@@ -59,6 +59,10 @@ public class Player {
         return arsenal;
     }
 
+    public HashMap<Ship.Type, Ship> getShips() {
+        return ships;
+    }
+
     public void addShip(Ship ship) {
         ships.put(ship.type, ship);
     }
