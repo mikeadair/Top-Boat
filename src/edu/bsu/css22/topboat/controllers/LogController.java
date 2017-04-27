@@ -54,7 +54,7 @@ public class LogController implements Initializable{
     }
 
     private void sendPlayerMessage(){
-        Game.emitPlayerMessage(new Log.Message(messageField.getText(), Message.Type.PLAYER_MESSAGE));
+        Game.emitPlayerMessage(new Log.Message(Game.player1.getName() + ": " + messageField.getText(), Message.Type.PLAYER_MESSAGE));
         messageField.setText("");
     }
 

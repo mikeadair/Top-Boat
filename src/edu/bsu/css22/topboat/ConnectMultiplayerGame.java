@@ -56,11 +56,13 @@ public class ConnectMultiplayerGame extends Game {
 
     @Override
     void handleGameMessage(Log.Message message) {
+        Log.gameLog().addMessage(message);
         chatServer.emitMessage("game", message);
     }
 
     @Override
     void handlePlayerMessage(Log.Message message) {
+        Log.chatLog().addMessage(message);
         chatServer.emitMessage("chat", message);
     }
 
@@ -154,7 +156,6 @@ public class ConnectMultiplayerGame extends Game {
         }
 
         public void emitMessage(String type, Log.Message message) {
-            System.out.println("emitting message");
             JSONObject messageObject = new JSONObject();
             messageObject.put("type", type);
             messageObject.put("contents", message.getContents());
