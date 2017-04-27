@@ -74,7 +74,7 @@ public  class Log {
             SUCCESS(Color.GREEN),
             INFO(Color.BLUEVIOLET),
             PLAYER_MESSAGE(Color.BLUE),
-            OPPONENT_MESSAGE(Color.ORANGE);
+            OPPONENT_MESSAGE(Color.FIREBRICK);
 
             Type(Color c) {
                 color = c;
