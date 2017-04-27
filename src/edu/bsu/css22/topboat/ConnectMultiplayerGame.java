@@ -62,8 +62,10 @@ public class ConnectMultiplayerGame extends Game {
 
     @Override
     void handlePlayerMessage(Log.Message message) {
-        Log.chatLog().addMessage(message);
-        chatServer.emitMessage("chat", message);
+        if(!message.getContents().equals("")) {
+            Log.chatLog().addMessage(message);
+            chatServer.emitMessage("chat", message);
+        }
     }
 
     private class GameServer {
