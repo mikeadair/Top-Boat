@@ -48,8 +48,8 @@ public abstract class Game {
     public static Stats stats = new Stats();
 
     static BlockingQueue<State> stateChangeQueue = new ArrayBlockingQueue<>(1);
-    public static SimpleObjectProperty<Player> currentPlayer;
-    static SimpleObjectProperty<Player> waitingPlayer;
+    public static SimpleObjectProperty<Player> currentPlayer = new SimpleObjectProperty<>();
+    static SimpleObjectProperty<Player> waitingPlayer = new SimpleObjectProperty<>();
 
     public Game() {
         gameLoop = new GameLoop();
