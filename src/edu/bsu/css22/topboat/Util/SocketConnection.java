@@ -95,8 +95,11 @@ public class SocketConnection {
     }
 
     public String nextData() throws InterruptedException {
+        System.out.println("waiting for data");
         waitingForData = true;
-        return dataQueue.take();
+        String data = dataQueue.take();
+        System.out.println("got data in nextData method");
+        return data;
     }
 
     public interface SocketConnectedListener {
@@ -112,7 +115,9 @@ public class SocketConnection {
         private Runnable runnable = () -> {
             try {
                 while(!Thread.currentThread().isInterrupted()) {
+                    System.out.println("starting socket read loop. waitingForData: " + waitingForData);
                     String data = in.readLine();
+                    System.out.println("data received in socket read loop. waitingForData: " + waitingForData);
                     if (waitingForData) {
                         System.out.println("pushing data for next data method");
                         dataQueue.put(data);
