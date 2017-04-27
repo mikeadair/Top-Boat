@@ -65,11 +65,11 @@ public abstract class Game {
     }
 
     public static void emitGameMessage(Log.Message message) {
-        Log.gameLog().addMessage(message);
+        game.handleGameMessage(message);
     }
 
     public static void emitPlayerMessage(Log.Message message) {
-        Log.chatLog().addMessage(message);
+        game.handlePlayerMessage(message);
     }
 
     void handleGameMessage(Log.Message message) {

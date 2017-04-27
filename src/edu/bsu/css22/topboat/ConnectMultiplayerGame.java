@@ -145,6 +145,7 @@ public class ConnectMultiplayerGame extends Game {
         }
 
         public void emitMessage(String type, Log.Message message) {
+            System.out.println("emitting message");
             JSONObject messageObject = new JSONObject();
             messageObject.put("type", type);
             messageObject.put("contents", message.getContents());
@@ -175,6 +176,7 @@ public class ConnectMultiplayerGame extends Game {
 
         @Override
         public void onDataReceived(String data) {
+            System.out.println("message received " + data);
             JSONObject messageObject = new JSONObject(data);
             String messageType = messageObject.getString("type");
             String messageContents = messageObject.getString("contents");
